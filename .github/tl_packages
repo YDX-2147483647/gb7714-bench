@@ -1,0 +1,23 @@
+scheme-minimal
+
+collection-latex
+collection-luatex
+
+# collection-binextra
+latexmk
+
+# collection-langchinese
+ctex
+
+# collection-bibtexextra
+biber
+biblatex
+biblatex-gb7714-2015
+citation-style-language
+gbt7714
+
+# collection-fontsextra
+cm-unicode # 需要支持俄文的字体
+
+# collection-latexextra
+xstring # indirect

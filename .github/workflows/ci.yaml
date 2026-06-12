@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+      - uses: typst-community/setup-typst@v5
+        with:
+          typst-version: v0.14
+      - uses: hustcer/setup-nu@v3
+        with:
+          version: "0.113.1"
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11
+      - run: pnpm install
+        working-directory: processors/zotero
+
+      - uses: astral-sh/setup-uv@v8.2.0
+      - run: uv sync
+        working-directory: processors/typst_etc
+
+      - uses: zauguin/install-texlive@v4
+        with:
+          texlive_version: 2026
+          package_file: .github/tl_packages
+      - name: Install pdftotext
+        # This step is unnecessary for Windows because of `tlmgr install wintools.windows`.
+        run: |
+          sudo apt update
+          sudo apt install poppler-utils
+
+      - run: nu scripts/setup-style-cache.nu
+      - run: nu scripts/setup-typst-local-pkg.nu
+
+      - run: nu scripts/run-processors.nu data/data/GB-T_7714—2025.builtin.json
+      - run: nu scripts/run-processors.nu data/data/GB-T_7714—2025.better.json
+      - run: nu scripts/run-processors.nu data/data/GB-T_7714—2025.builtin.bib
+      - run: nu scripts/run-processors.nu data/data/GB-T_7714—2025.better.bib
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: out
+          path: target/out/
