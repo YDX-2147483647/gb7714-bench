@@ -18,8 +18,8 @@ def main []: string -> string {
     let source = $in
     $source o> ref.bib
 
-    '
-\documentclass{ctexart}
+    $'
+(documentclass_ctexart)
 
 % 让每项文献只占一行，并且无页码等文字干扰
 \usepackage[paperwidth=200em]{geometry}

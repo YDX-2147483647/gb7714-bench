@@ -15,3 +15,13 @@ def pdf_to_text [pdf: path]: nothing -> string {
     | str replace --all --regex '\n{2,}' " "
     | str replace --all --regex '\n(?!\[)' ""
 }
+
+# 根据环境变量 $CTEX_FONTSET 设置文档类 ctexart
+def documentclass_ctexart []: nothing -> string {
+    let fontset = $env | get CTEX_FONTSET --optional
+    if fontset == null {
+        '\documentclass{ctexart}'
+    } else {
+        $'\documentclass[fontset=($fontset)]{ctexart}'
+    }
+}

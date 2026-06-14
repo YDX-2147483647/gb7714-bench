@@ -9,6 +9,9 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    env:
+      # 有文献包含日文汉字，中易和思源支持，而 Fandol 缺字。故 Ubuntu 上编译 LaTeX 需从 Fandol 切换到思源
+      CTEX_FONTSET: ubuntu
 
     steps:
       - uses: actions/checkout@v6
@@ -35,11 +38,11 @@ jobs:
         with:
           texlive_version: 2026
           package_file: .github/tl_packages
-      - name: Install pdftotext
-        # This step is unnecessary for Windows because of `tlmgr install wintools.windows`.
+      - name: Install pdftotext and Noto CJK fontset
+        # This step is unnecessary for Windows because of `tlmgr install wintools.windows` and `fontset=windows`.
         run: |
           sudo apt update
-          sudo apt install poppler-utils
+          sudo apt install poppler-utils fonts-noto-cjk
 
       - run: nu scripts/setup-style-cache.nu
       - run: nu scripts/setup-typst-local-pkg.nu

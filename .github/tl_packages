@@ -8,6 +8,7 @@ latexmk
 
 # collection-langchinese
 ctex
+arphic-ttf # ctex 设置 fontset=ubuntu 需要其存在，但实际用不到
 
 # collection-bibtexextra
 biber

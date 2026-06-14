@@ -28,7 +28,7 @@ def main [
     $style o> "custom.csl"
 
     $'
-\documentclass{ctexart}
+(documentclass_ctexart)
 
 % 让每项文献只占一行，并且无页码等文字干扰
 \usepackage[paperwidth=200em]{geometry}
