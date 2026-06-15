@@ -2,7 +2,7 @@
 
 # List supported source formats and styles.
 def "main supports" [] {
-    echo {
+    {
         source: ['builtin.bib', 'better.bib'],
         style: ['gb-7714-2015-numeric.compliant'],
         # 不适用于 2025 版样式，因为它采用全宽标点符号，而 bilingual-bibliography 目前替换规则只适用于 ASCII 标点符号

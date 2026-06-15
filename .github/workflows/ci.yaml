@@ -51,6 +51,7 @@ jobs:
       - run: nu scripts/run-processors.nu data/data/GB-T_7714—2025.better.json
       - run: nu scripts/run-processors.nu data/data/GB-T_7714—2025.builtin.bib
       - run: nu scripts/run-processors.nu data/data/GB-T_7714—2025.better.bib
+      - run: nu scripts/run-processors.nu data/data/GB-T_7714—2025.original.toml
 
       - uses: actions/upload-artifact@v7
         with:

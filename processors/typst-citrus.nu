@@ -2,7 +2,7 @@
 
 # List supported source formats and styles.
 def "main supports" [] {
-    echo {
+    {
         source: ['builtin.bib', 'better.bib', 'builtin.json', 'better.json'],
         style: ['gb-7714-2025-numeric.compliant', 'gb-7714-2025-numeric.extended'],
     } | to json
