@@ -6,7 +6,7 @@ import {
   rankDataFileKey,
   simplifyProcessorName,
   simplifyStyleName,
-} from "./bench.naming";
+} from "./naming";
 
 describe("bench.naming", () => {
   it("simplifies processor names", () => {

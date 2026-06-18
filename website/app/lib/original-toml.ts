@@ -6,19 +6,7 @@ import type {
   EntrySummary,
   OriginalTomlData,
   SectionInfo,
-} from "./bench.types";
-
-export function buildIndexSectionsForTest(
-  entries: EntrySummary[],
-  sections: SectionInfo[],
-): EntrySection[] {
-  const sectionByEntryId = mapSectionByEntryId(entries, sections);
-  return buildIndexSections(entries, sections, sectionByEntryId);
-}
-
-export function parseOriginalTomlSectionsFromText(content: string): SectionInfo[] {
-  return parseOriginalTomlDataFromText(content).sections;
-}
+} from "./types";
 
 export function parseOriginalTomlDataFromText(content: string): OriginalTomlData {
   const parsed = parseToml(content) as { section?: unknown };

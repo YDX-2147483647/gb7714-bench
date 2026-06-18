@@ -4,7 +4,7 @@ import path from "node:path";
 
 import { afterEach, describe, expect, it } from "vitest";
 
-import { listFiles, parseDataFile, parseOutFile, parseOutPath, toPosix } from "./bench.files";
+import { listFiles, parseDataFile, parseOutFile, parseOutPath, toPosix } from "./files";
 
 const tempDirs: string[] = [];
 

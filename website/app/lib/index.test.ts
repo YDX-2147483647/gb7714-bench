@@ -65,7 +65,7 @@ examples = '''
 
     process.chdir(websiteDir);
 
-    const benchServer = await import("./bench.server");
+    const benchServer = await import(".");
     const index = await benchServer.getBenchIndexData();
     const entry = await benchServer.getBenchEntryByParam("gbt7714.8.5.1.1%3A1");
 

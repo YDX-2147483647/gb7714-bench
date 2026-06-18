@@ -2,10 +2,24 @@ import { describe, expect, it } from "vitest";
 
 import {
   assertNoUncategorizedSections,
-  buildIndexSectionsForTest,
+  buildIndexSections,
+  mapSectionByEntryId,
   parseOriginalTomlDataFromText,
-  parseOriginalTomlSectionsFromText,
-} from "./bench.original-toml";
+} from "./original-toml";
+import type { EntrySummary, SectionInfo, EntrySection } from "./types.js"
+
+
+function buildIndexSectionsForTest(
+  entries: EntrySummary[],
+  sections: SectionInfo[]
+): EntrySection[] {
+  const sectionByEntryId = mapSectionByEntryId(entries, sections)
+  return buildIndexSections(entries, sections, sectionByEntryId)
+}
+
+function parseOriginalTomlSectionsFromText(content: string): SectionInfo[] {
+  return parseOriginalTomlDataFromText(content).sections
+}
 
 describe("bench.original-toml", () => {
   it("parses section headings and notes from toml", () => {
@@ -87,3 +101,4 @@ examples = '''
     expect(() => assertNoUncategorizedSections(sections)).toThrow(/Uncategorized entries exist/);
   });
 });
+

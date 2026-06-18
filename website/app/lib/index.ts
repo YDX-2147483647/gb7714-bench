@@ -1,24 +1,16 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { compareDataFileKey, buildOutTitle } from "./bench.naming";
+import { compareDataFileKey, buildOutTitle } from "./naming";
 import {
   assertNoUncategorizedSections,
   buildIndexSections,
   findEntrySection,
   mapSectionByEntryId,
   parseOriginalTomlDataFromText,
-} from "./bench.original-toml";
-import { listFiles, parseDataFile, parseOutFile, parseOutPath, toPosix } from "./bench.files";
-import type { BenchCache, BenchEntryData, BenchIndexData, BuiltinEntry, EntrySummary, FileItem, OutItem } from "./bench.types";
-
-export { buildOutTitle, compareDataFileKey, rankDataFileKey, simplifyProcessorName, simplifyStyleName } from "./bench.naming";
-export {
-  assertNoUncategorizedSections,
-  buildIndexSectionsForTest,
-  parseOriginalTomlDataFromText,
-  parseOriginalTomlSectionsFromText,
-} from "./bench.original-toml";
+} from "./original-toml";
+import { listFiles, parseDataFile, parseOutFile, parseOutPath, toPosix } from "./files";
+import type { BenchCache, BenchEntryData, BenchIndexData, BuiltinEntry, EntrySummary, FileItem, OutItem } from "./types";
 
 let cachePromise: Promise<BenchCache> | undefined;
 
