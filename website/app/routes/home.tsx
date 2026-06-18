@@ -44,7 +44,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
               <ul className="entry-list">
                 {section.entries.map((entry) => (
                   <li key={entry.id}>
-                    <Link className="entry-link" to={`/entry/${encodeURIComponent(entry.id)}/`}>
+                    <Link className="entry-link" to={`/entry/${entry.id.replace(":", '-')}/`}>
                       <span className="entry-number">#{entry.index}</span>
                       <span className="entry-body">
                         <span className="entry-title">{entry.title}</span>

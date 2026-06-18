@@ -1,7 +1,14 @@
 import type { Config } from "@react-router/dev/config";
+import { readFile } from "node:fs/promises";
+
 
 export default {
-  // Config options...
-  // Server-side render by default, to enable SPA mode set this to `false`
-  ssr: true,
+  // https://reactrouter.com/how-to/pre-rendering#pre-rendering-with-ssrfalse
+  ssr: false,
+  // return a list of URLs to prerender at build time
+  async prerender({ getStaticPaths }) {
+    const entries = await readFile('../data/data/GB-T_7714—2025.builtin.json', 'utf-8');
+    const ids = (JSON.parse(entries) as {id: string}[]).map((e) => e.id);
+    return [...getStaticPaths(), ...ids.map((id) => `/entry/${id.replace(":", '-')}/`),];
+  },
 } satisfies Config;

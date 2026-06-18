@@ -10,7 +10,7 @@ export function meta({ params }: Route.MetaArgs) {
 }
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const data = await getBenchEntryByParam(params.id ?? "");
+  const data = await getBenchEntryByParam(params.id.replace("-", ":") ?? "");
   if (!data) {
     throw new Response("Entry not found", { status: 404 });
   }
@@ -45,12 +45,12 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
             Back To Index
           </Link>
           {previousEntryId ? (
-            <Link className="nav-chip" to={`/entry/${encodeURIComponent(previousEntryId)}/`}>
+            <Link className="nav-chip" to={`/entry/${previousEntryId.replace(":", '-')}/`}>
               Previous
             </Link>
           ) : null}
           {nextEntryId ? (
-            <Link className="nav-chip" to={`/entry/${encodeURIComponent(nextEntryId)}/`}>
+            <Link className="nav-chip" to={`/entry/${nextEntryId.replace(":", '-')}/`}>
               Next
             </Link>
           ) : null}
