@@ -2,7 +2,7 @@ import { diffWordsWithSpace } from "diff";
 import { useMemo, useState } from "react";
 import { isRouteErrorResponse, Link } from "react-router";
 
-import { getBenchEntryByParam } from "../lib";
+import { getBenchEntryByParam } from "../lib.server";
 import type { Route } from "./+types/entry.$id";
 
 export function meta({ params }: Route.MetaArgs) {

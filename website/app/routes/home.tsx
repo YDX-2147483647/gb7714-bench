@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { getBenchIndexData } from "../lib";
+import { getBenchIndexData } from "../lib.server";
 import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
