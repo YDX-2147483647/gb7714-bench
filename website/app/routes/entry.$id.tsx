@@ -1,4 +1,6 @@
+import { useMemo, useState } from "react";
 import { Link, isRouteErrorResponse } from "react-router";
+import { diffWordsWithSpace } from "diff";
 
 import { getBenchEntryByParam } from "../lib/bench.server";
 import type { Route } from "./+types/entry.$id";
@@ -16,7 +18,17 @@ export async function loader({ params }: Route.LoaderArgs) {
 }
 
 export default function EntryDetail({ loaderData }: Route.ComponentProps) {
-  const { entry, previousEntryId, nextEntryId, dataItems, outItems } = loaderData;
+  const { entry, entrySection, previousEntryId, nextEntryId, dataItems, outItems } = loaderData;
+  const [baseVariant, setBaseVariant] = useState("");
+
+  const outputOptions = useMemo(
+    () => Array.from(new Set(outItems.map((item) => item.fileKey))).sort((a, b) => a.localeCompare(b)),
+    [outItems],
+  );
+  const baseOutput = useMemo(
+    () => (baseVariant ? outItems.find((item) => item.fileKey === baseVariant) ?? null : null),
+    [baseVariant, outItems],
+  );
 
   return (
     <main className="page-shell detail-shell">
@@ -56,6 +68,22 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               <section className="text-block" key={item.sourcePath}>
                 <h3>{item.fileKey}</h3>
                 <p className="path-note">{item.sourcePath}</p>
+                {item.fileKey.endsWith(".original.toml") && entrySection ? (
+                  <div className="section-meta-card">
+                    <p className="section-meta-kicker">Section Headings</p>
+                    <ul>
+                      {entrySection.headings.map((heading) => (
+                        <li key={heading}>{heading}</li>
+                      ))}
+                    </ul>
+                    {entrySection.notes ? (
+                      <>
+                        <p className="section-meta-kicker">Section Notes</p>
+                        <pre className="section-notes section-notes-in-entry">{entrySection.notes}</pre>
+                      </>
+                    ) : null}
+                  </div>
+                ) : null}
                 {renderDataItem(item)}
               </section>
             ))}
@@ -67,12 +95,23 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
             <h2>Output Variants</h2>
             <p>{outItems.length} files</p>
           </div>
+          <div className="panel-filter-row">
+            <label htmlFor="diff-base">Diff Base</label>
+            <select id="diff-base" value={baseVariant} onChange={(event) => setBaseVariant(event.target.value)}>
+              <option value="">(none)</option>
+              {outputOptions.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="panel-body">
             {outItems.map((item) => (
               <section className="text-block" key={item.sourcePath}>
                 <h3>{item.fileKey}</h3>
                 <p className="path-note">{item.sourcePath}</p>
-                <pre>{item.item || "(no item at this index)"}</pre>
+                {renderOutItem(item, baseOutput)}
               </section>
             ))}
           </div>
@@ -80,6 +119,25 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
       </section>
     </main>
   );
+}
+
+function renderOutItem(item: { fileKey: string; item: string }, baseOutput: { fileKey: string; item: string } | null) {
+  const content = item.item || "(no item at this index)";
+
+  if (!baseOutput) {
+    return <pre>{content}</pre>;
+  }
+
+  if (baseOutput.fileKey === item.fileKey) {
+    return (
+      <>
+        <p className="diff-badge">Baseline</p>
+        <pre>{content}</pre>
+      </>
+    );
+  }
+
+  return <pre className="code-diff" dangerouslySetInnerHTML={{ __html: renderDiff(baseOutput.item, content) }} />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -159,4 +217,23 @@ function highlightBib(text: string): string {
   escaped = escaped.replace(/\b\d{2,}\b/g, '<span class="tok-number">$&</span>');
 
   return escaped;
+}
+
+function renderDiff(baseText: string, targetText: string): string {
+  const base = baseText || "";
+  const target = targetText || "";
+  const parts = diffWordsWithSpace(base, target);
+
+  return parts
+    .map((part) => {
+      const html = escapeHtml(part.value);
+      if (part.added) {
+        return `<span class=\"tok-added\">${html}</span>`;
+      }
+      if (part.removed) {
+        return `<span class=\"tok-removed\">${html}</span>`;
+      }
+      return `<span>${html}</span>`;
+    })
+    .join("");
 }

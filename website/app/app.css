@@ -113,6 +113,48 @@ pre {
   padding: 0;
 }
 
+.section-list {
+  display: grid;
+}
+
+.entry-section {
+  border-top: 1px solid #ead8bd;
+}
+
+.section-list .entry-section:first-child {
+  border-top: none;
+}
+
+.entry-section-head {
+  padding: 0.9rem 1rem;
+  background: #fff8eb;
+  border-bottom: 1px dashed #efdfca;
+}
+
+.entry-section-head h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1rem;
+}
+
+.entry-section-kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  color: var(--color-accent-2);
+  font-size: 0.76rem;
+}
+
+.section-notes {
+  margin: 0.5rem 0 0;
+  border: 1px solid #edd9be;
+  border-radius: 0.45rem;
+  background: #fffdf8;
+  padding: 0.55rem;
+  font-size: 0.76rem;
+  color: var(--color-ink-soft);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
 .entry-link {
   display: grid;
   grid-template-columns: 4rem 1fr;
@@ -226,6 +268,30 @@ pre {
   display: grid;
 }
 
+.panel-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.95rem;
+  border-bottom: 1px dashed #ead8bd;
+  background: #fff9ee;
+}
+
+.panel-filter-row label {
+  font-size: 0.78rem;
+  color: #694b36;
+}
+
+.panel-filter-row select {
+  max-width: 100%;
+  border: 1px solid #e7d4b8;
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--color-ink);
+  font-size: 0.78rem;
+  padding: 0.22rem 0.4rem;
+}
+
 .text-block {
   border-top: 1px dashed #eedfca;
   padding: 0.78rem 0.95rem;
@@ -238,6 +304,37 @@ pre {
 .text-block h3 {
   margin: 0;
   font-size: 0.93rem;
+}
+
+.section-meta-card {
+  margin-top: 0.5rem;
+  border: 1px solid #ecd9bf;
+  border-radius: 0.5rem;
+  background: #fff8ea;
+  padding: 0.5rem 0.6rem;
+}
+
+.section-meta-card ul {
+  margin: 0.25rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.section-meta-card li {
+  margin: 0.2rem 0;
+  font-size: 0.78rem;
+}
+
+.section-meta-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #7a4f25;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.section-notes-in-entry {
+  margin-top: 0.35rem;
+  font-size: 0.74rem;
 }
 
 .path-note {
@@ -291,6 +388,28 @@ pre {
 .code-bib .tok-entry {
   color: #a23221;
   font-weight: 700;
+}
+
+.diff-badge {
+  margin: 0.55rem 0 0;
+  display: inline-block;
+  border-radius: 999px;
+  border: 1px solid #e3cca8;
+  background: #fff1d4;
+  color: #7c5027;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.45rem;
+}
+
+.code-diff .tok-added {
+  background: #daf8dd;
+  color: #0e5b2a;
+}
+
+.code-diff .tok-removed {
+  background: #ffe1df;
+  color: #8b1b1b;
+  text-decoration: line-through;
 }
 
 @media (min-width: 1120px) {

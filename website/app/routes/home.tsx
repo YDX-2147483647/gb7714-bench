@@ -14,7 +14,7 @@ export async function loader() {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const { entries } = loaderData;
+  const { entries, sections } = loaderData;
 
   return (
     <main className="page-shell">
@@ -32,22 +32,34 @@ export default function Home({ loaderData }: Route.ComponentProps) {
           <h2>Entries</h2>
           <p>{entries.length} total</p>
         </div>
-        <ul className="entry-list">
-          {entries.map((entry) => (
-            <li key={entry.id}>
-              <Link className="entry-link" to={`/entry/${encodeURIComponent(entry.id)}/`}>
-                <span className="entry-number">#{entry.index}</span>
-                <span className="entry-body">
-                  <span className="entry-title">{entry.title}</span>
-                  <span className="entry-meta">
-                    <code>{entry.id}</code>
-                    <code>{entry.type}</code>
-                  </span>
-                </span>
-              </Link>
-            </li>
+        <div className="section-list">
+          {sections.map((section) => (
+            <section className="entry-section" key={section.idPrefix}>
+              <header className="entry-section-head">
+                <p className="entry-section-kicker">{section.idPrefix}</p>
+                <h3>{section.headings.join(" / ")}</h3>
+                {section.notes ? <pre className="section-notes">{section.notes}</pre> : null}
+              </header>
+
+              <ul className="entry-list">
+                {section.entries.map((entry) => (
+                  <li key={entry.id}>
+                    <Link className="entry-link" to={`/entry/${encodeURIComponent(entry.id)}/`}>
+                      <span className="entry-number">#{entry.index}</span>
+                      <span className="entry-body">
+                        <span className="entry-title">{entry.title}</span>
+                        <span className="entry-meta">
+                          <code>{entry.id}</code>
+                          <code>{entry.type}</code>
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
           ))}
-        </ul>
+        </div>
       </section>
     </main>
   );
