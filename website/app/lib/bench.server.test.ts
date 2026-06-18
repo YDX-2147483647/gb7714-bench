@@ -1,124 +1,79 @@
-import { describe, expect, it } from "vitest";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 
-import {
-  assertNoUncategorizedSections,
-  buildIndexSectionsForTest,
-  buildOutTitle,
-  parseOriginalTomlDataFromText,
-  parseOriginalTomlSectionsFromText,
-  simplifyProcessorName,
-  simplifyStyleName,
-} from "./bench.server";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-describe("title simplification", () => {
-  it("simplifies processor names", () => {
-    expect(simplifyProcessorName("biblatex-gb7714-2025")).toBe("biblatex");
-    expect(simplifyProcessorName("citeproc-lua")).toBe("lua");
-    expect(simplifyProcessorName("typst-modern-nju-thesis")).toBe("NJU");
-  });
+const tempDirs: string[] = [];
+const originalCwd = process.cwd();
 
-  it("simplifies style names", () => {
-    expect(simplifyStyleName("default")).toBe("");
-    expect(simplifyStyleName("gb-7714-2025-numeric.compliant")).toBe("2025 CSL");
-    expect(simplifyStyleName("gb-7714-2015-numeric.extended")).toBe("2015 CSL-M⁺");
-  });
+afterEach(async () => {
+  process.chdir(originalCwd);
+  vi.resetModules();
 
-  it("builds compact output titles", () => {
-    expect(
-      buildOutTitle({
-        dataset: "GB-T_7714—2025.better.bib",
-        processor: "typst-citrus",
-        style: "gb-7714-2025-numeric.compliant",
-      }),
-    ).toBe("better.bib · citrus · 2025 CSL");
-
-    expect(
-      buildOutTitle({
-        dataset: "GB-T_7714—2025.builtin.bib",
-        processor: "biblatex-gb7714-2025",
-        style: "default",
-      }),
-    ).toBe("builtin.bib · biblatex");
-  });
+  for (const dir of tempDirs.splice(0)) {
+    await rm(dir, { recursive: true, force: true });
+  }
 });
 
-describe("original toml sections", () => {
-  it("parses section headings and notes from toml", () => {
-    const sections = parseOriginalTomlSectionsFromText(`
-[[section]]
-id-prefix = 'gbt7714.5.1:'
-headings = [
-  '5 著录用文字',
-  '5.1 参考文献应用信息资源本身的语种著录。',
-]
-notes = '''
-示例备注
-'''
-examples = '''
-[1] A
-[2] B
-'''
-`);
+async function createTempWorkspace(): Promise<string> {
+  const dir = await mkdtemp(path.join(os.tmpdir(), "gb7714-bench-server-"));
+  tempDirs.push(dir);
+  return dir;
+}
 
-    expect(sections).toEqual([
-      {
-        idPrefix: "gbt7714.5.1:",
-        headings: ["5 著录用文字", "5.1 参考文献应用信息资源本身的语种著录。"],
-        notes: "示例备注",
-      },
-    ]);
-  });
+describe("bench.server", () => {
+  it("builds index and entry data from workspace files", async () => {
+    const workspace = await createTempWorkspace();
+    const websiteDir = path.join(workspace, "website");
+    const dataDir = path.join(workspace, "data", "data");
+    const outDir = path.join(workspace, "target", "out", "GB-T_7714—2025.builtin.bib", "zotero");
 
-  it("ignores toml sections without id-prefix", () => {
-    const sections = parseOriginalTomlSectionsFromText(`
-[[section]]
-headings = ['A']
-notes = '''B'''
-`);
+    await mkdir(websiteDir, { recursive: true });
+    await mkdir(dataDir, { recursive: true });
+    await mkdir(outDir, { recursive: true });
 
-    expect(sections).toEqual([]);
-  });
-
-  it("maps examples by exact entry id instead of flattened position", () => {
-    const parsed = parseOriginalTomlDataFromText(`
-[[section]]
-id-prefix = 'gbt7714.8.4.2:'
-headings = ['8.4.2']
-examples = '''
-[1] A
-[2] B
-[3] C
-[4] D
-'''
-
-[[section]]
+    await writeFile(
+      path.join(dataDir, "GB-T_7714—2025.builtin.json"),
+      JSON.stringify([
+        {
+          id: "gbt7714.8.5.1.1:1",
+          "citation-key": "gbt7714.8.5.1.1:1",
+          type: "article-journal",
+        },
+      ]),
+      "utf8",
+    );
+    await writeFile(
+      path.join(dataDir, "GB-T_7714—2025.original.toml"),
+      `[[section]]
 id-prefix = 'gbt7714.8.5.1.1:'
-headings = ['8.5.1.1']
+headings = ['8', '8.5', '8.5.1', '8.5.1.1']
+notes = '''note'''
 examples = '''
 2001,2 (1):5-6
-2014,510:356-363
 '''
-`);
-
-    expect(parsed.entriesById.get("gbt7714.8.4.2:3")).toBe("[3] C");
-    expect(parsed.entriesById.get("gbt7714.8.5.1.1:1")).toBe("2001,2 (1):5-6");
-  });
-
-  it("does not allow uncategorized entries", () => {
-    const sections = buildIndexSectionsForTest(
-      [
-        { index: 1, id: "gbt7714.5.1:1", citationKey: "a", title: "A", type: "book" },
-        { index: 2, id: "gbt7714.9.9:1", citationKey: "b", title: "B", type: "book" },
-      ],
-      [
-        {
-          idPrefix: "gbt7714.5.1:",
-          headings: ["H"],
-          notes: "",
-        },
-      ],
+`,
+      "utf8",
     );
+    await writeFile(
+      path.join(dataDir, "GB-T_7714—2025.builtin.bib"),
+      "@article{gbt7714.8.5.1.1:1,\n  title = {A},\n}\n",
+      "utf8",
+    );
+    await writeFile(path.join(outDir, "default.txt"), "[1] Output item\n", "utf8");
 
-    expect(() => assertNoUncategorizedSections(sections)).toThrow(/Uncategorized entries exist/);
+    process.chdir(websiteDir);
+
+    const benchServer = await import("./bench.server");
+    const index = await benchServer.getBenchIndexData();
+    const entry = await benchServer.getBenchEntryByParam("gbt7714.8.5.1.1%3A1");
+
+    expect(index.entries).toHaveLength(1);
+    expect(index.sections[0]?.idPrefix).toBe("gbt7714.8.5.1.1:");
+    expect(entry?.entry.id).toBe("gbt7714.8.5.1.1:1");
+    expect(entry?.entrySection?.notes).toBe("note");
+    expect(entry?.dataItems[0]?.item).toBe("2001,2 (1):5-6");
+    expect(entry?.outItems[0]?.item).toBe("[1] Output item");
   });
 });
