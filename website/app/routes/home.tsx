@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { getBenchIndexData } from "../lib.server";
 import type { Route } from "./+types/home";
 
-export function meta({}: Route.MetaArgs) {
+export function meta(_: Route.MetaArgs) {
   return [
     { title: "GB/T 7714 Bench Explorer" },
     {

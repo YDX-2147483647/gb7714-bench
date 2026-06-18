@@ -170,6 +170,7 @@ function renderOutItem(
   return (
     <pre
       className="code-diff"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
       dangerouslySetInnerHTML={{ __html: renderDiff(baseOutput.item, content) }}
     />
   );
@@ -200,6 +201,7 @@ function renderDataItem(item: { fileKey: string; item: string }) {
     return (
       <pre
         className="code-json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
         dangerouslySetInnerHTML={{ __html: highlightJson(content) }}
       />
     );
@@ -209,6 +211,7 @@ function renderDataItem(item: { fileKey: string; item: string }) {
     return (
       <pre
         className="code-bib"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
         dangerouslySetInnerHTML={{ __html: highlightBib(content) }}
       />
     );
