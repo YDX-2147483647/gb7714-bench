@@ -37,7 +37,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
         <h1 className="hero-title">{entry.title}</h1>
         <p className="hero-subtitle detail-meta-line">
           <code>{entry.id}</code>
-          <code>{entry.citationKey}</code>
+          {entry.citationKey !== entry.id ? <code>{entry.citationKey}</code> : null}
           <code>{entry.type}</code>
         </p>
         <div className="detail-nav">
