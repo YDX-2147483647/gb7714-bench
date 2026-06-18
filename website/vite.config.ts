@@ -7,4 +7,8 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
+  define: {
+    // https://vitest.dev/guide/in-source.html#production-build
+    'import.meta.vitest': 'undefined',
+  }, 
 });
