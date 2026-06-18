@@ -1,7 +1,13 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-
-import { compareDataFileKey, buildOutTitle } from "./naming";
+import {
+  listFiles,
+  parseDataFile,
+  parseOutFile,
+  parseOutPath,
+  toPosix,
+} from "./files";
+import { buildOutTitle, compareDataFileKey } from "./naming";
 import {
   assertNoUncategorizedSections,
   buildIndexSections,
@@ -9,8 +15,15 @@ import {
   mapSectionByEntryId,
   parseOriginalTomlDataFromText,
 } from "./original-toml";
-import { listFiles, parseDataFile, parseOutFile, parseOutPath, toPosix } from "./files";
-import type { BenchCache, BenchEntryData, BenchIndexData, BuiltinEntry, EntrySummary, FileItem, OutItem } from "./types";
+import type {
+  BenchCache,
+  BenchEntryData,
+  BenchIndexData,
+  BuiltinEntry,
+  EntrySummary,
+  FileItem,
+  OutItem,
+} from "./types";
 
 let cachePromise: Promise<BenchCache> | undefined;
 
@@ -19,7 +32,9 @@ export async function getBenchIndexData(): Promise<BenchIndexData> {
   return cache.index;
 }
 
-export async function getBenchEntryByParam(paramId: string): Promise<BenchEntryData | null> {
+export async function getBenchEntryByParam(
+  paramId: string,
+): Promise<BenchEntryData | null> {
   const cache = await getBenchCache();
   const idx = resolveEntryIndex(cache.index.entries, paramId);
 
@@ -32,8 +47,12 @@ export async function getBenchEntryByParam(paramId: string): Promise<BenchEntryD
   return {
     entry,
     totalEntries: cache.index.entries.length,
-    previousEntryId: idx > 0 ? cache.index.entries[idx - 1]?.id ?? null : null,
-    nextEntryId: idx < cache.index.entries.length - 1 ? cache.index.entries[idx + 1]?.id ?? null : null,
+    previousEntryId:
+      idx > 0 ? (cache.index.entries[idx - 1]?.id ?? null) : null,
+    nextEntryId:
+      idx < cache.index.entries.length - 1
+        ? (cache.index.entries[idx + 1]?.id ?? null)
+        : null,
     entrySection: findEntrySection(cache.index.sections, entry.id),
     dataItems: cache.dataByIndex[idx] ?? [],
     outItems: cache.outByIndex[idx] ?? [],
@@ -53,7 +72,9 @@ async function buildBenchCache(): Promise<BenchCache> {
   const outRoot = path.join(root, "target", "out");
 
   const dataPaths = await listFiles(dataRoot);
-  const outPaths = (await listFiles(outRoot)).filter((p) => p.toLowerCase().endsWith(".txt"));
+  const outPaths = (await listFiles(outRoot)).filter((p) =>
+    p.toLowerCase().endsWith(".txt"),
+  );
 
   const builtinPath = dataPaths.find((p) => p.endsWith(".builtin.json"));
   if (!builtinPath) {
@@ -70,7 +91,11 @@ async function buildBenchCache(): Promise<BenchCache> {
     : null;
   const sections = originalTomlData?.sections ?? [];
   const sectionByEntryId = mapSectionByEntryId(indexEntries, sections);
-  const indexSections = buildIndexSections(indexEntries, sections, sectionByEntryId);
+  const indexSections = buildIndexSections(
+    indexEntries,
+    sections,
+    sectionByEntryId,
+  );
   assertNoUncategorizedSections(indexSections);
 
   const dataByIndex = indexEntries.map(() => [] as FileItem[]);

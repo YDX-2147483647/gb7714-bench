@@ -1,4 +1,4 @@
-import { readFile, readdir } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 export async function parseDataFile(filePath: string): Promise<string[]> {
@@ -21,7 +21,11 @@ export async function parseOutFile(filePath: string): Promise<string[]> {
   return splitOutEntries(content);
 }
 
-export function parseOutPath(relPath: string): { dataset: string; processor: string; style: string } {
+export function parseOutPath(relPath: string): {
+  dataset: string;
+  processor: string;
+  style: string;
+} {
   const parts = relPath.split("/");
   if (parts.length < 5) {
     return {

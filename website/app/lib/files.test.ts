@@ -1,10 +1,16 @@
-import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
 import { afterEach, describe, expect, it } from "vitest";
 
-import { listFiles, parseDataFile, parseOutFile, parseOutPath, toPosix } from "./files";
+import {
+  listFiles,
+  parseDataFile,
+  parseOutFile,
+  parseOutPath,
+  toPosix,
+} from "./files";
 
 const tempDirs: string[] = [];
 
@@ -26,7 +32,9 @@ describe("bench.files", () => {
     const file = path.join(dir, "sample.json");
     await writeFile(file, JSON.stringify([{ id: "a", title: "A" }]), "utf8");
 
-    await expect(parseDataFile(file)).resolves.toEqual(['{\n  "id": "a",\n  "title": "A"\n}']);
+    await expect(parseDataFile(file)).resolves.toEqual([
+      '{\n  "id": "a",\n  "title": "A"\n}',
+    ]);
   });
 
   it("parses bib and out files by record boundary", async () => {
@@ -34,14 +42,21 @@ describe("bench.files", () => {
     const bibFile = path.join(dir, "sample.bib");
     const outFile = path.join(dir, "sample.txt");
 
-    await writeFile(bibFile, "@book{a,\n  title = {A},\n}\n@article{b,\n  title = {B},\n}\n", "utf8");
+    await writeFile(
+      bibFile,
+      "@book{a,\n  title = {A},\n}\n@article{b,\n  title = {B},\n}\n",
+      "utf8",
+    );
     await writeFile(outFile, "[1] First\ncontinued\n[2] Second\n", "utf8");
 
     await expect(parseDataFile(bibFile)).resolves.toEqual([
       "@book{a,\n  title = {A},\n}",
       "@article{b,\n  title = {B},\n}",
     ]);
-    await expect(parseOutFile(outFile)).resolves.toEqual(["[1] First\ncontinued", "[2] Second"]);
+    await expect(parseOutFile(outFile)).resolves.toEqual([
+      "[1] First\ncontinued",
+      "[2] Second",
+    ]);
   });
 
   it("lists files recursively and normalizes paths", async () => {
@@ -60,7 +75,9 @@ describe("bench.files", () => {
   });
 
   it("parses out path metadata", () => {
-    expect(parseOutPath("target/out/GB-T_7714—2025.builtin.bib/zotero/default.txt")).toEqual({
+    expect(
+      parseOutPath("target/out/GB-T_7714—2025.builtin.bib/zotero/default.txt"),
+    ).toEqual({
       dataset: "GB-T_7714—2025.builtin.bib",
       processor: "zotero",
       style: "default",

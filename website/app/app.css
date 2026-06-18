@@ -2,7 +2,8 @@
 
 @theme {
   --font-sans: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
-  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+  --font-mono:
+    "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
     monospace;
   --color-bg: #fff9ef;
   --color-bg-soft: #fff4dc;
@@ -50,7 +51,8 @@ pre {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--color-stroke);
-  background: radial-gradient(circle at 85% 15%, #ffe9c7 0%, transparent 45%),
+  background:
+    radial-gradient(circle at 85% 15%, #ffe9c7 0%, transparent 45%),
     var(--color-card);
   border-radius: 1rem;
   padding: 1.25rem;

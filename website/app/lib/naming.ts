@@ -1,9 +1,15 @@
-export function buildOutTitle(parsed: { dataset: string; processor: string; style: string }): string {
+export function buildOutTitle(parsed: {
+  dataset: string;
+  processor: string;
+  style: string;
+}): string {
   const dataset = simplifyDatasetName(parsed.dataset);
   const processor = simplifyProcessorName(parsed.processor);
   const style = simplifyStyleName(parsed.style);
 
-  return style ? `${dataset} · ${processor} · ${style}` : `${dataset} · ${processor}`;
+  return style
+    ? `${dataset} · ${processor} · ${style}`
+    : `${dataset} · ${processor}`;
 }
 
 function simplifyProcessorName(processor: string): string {
@@ -70,8 +76,16 @@ function rankDataFileKey(fileKey: string): number {
     return 0;
   }
 
-  const formatRank = fileKey.endsWith(".bib") ? 0 : fileKey.endsWith(".json") ? 1 : 2;
-  const sourceRank = fileKey.includes(".builtin.") ? 0 : fileKey.includes(".better.") ? 1 : 2;
+  const formatRank = fileKey.endsWith(".bib")
+    ? 0
+    : fileKey.endsWith(".json")
+      ? 1
+      : 2;
+  const sourceRank = fileKey.includes(".builtin.")
+    ? 0
+    : fileKey.includes(".better.")
+      ? 1
+      : 2;
 
   return 10 + formatRank * 3 + sourceRank;
 }
@@ -81,7 +95,7 @@ function simplifyDatasetName(dataset: string): string {
 }
 
 if (import.meta.vitest) {
-  const { it, expect, describe } = import.meta.vitest
+  const { it, expect, describe } = import.meta.vitest;
 
   describe("bench.naming", () => {
     it("simplifies processor names", () => {
@@ -92,8 +106,12 @@ if (import.meta.vitest) {
 
     it("simplifies style names", () => {
       expect(simplifyStyleName("default")).toBe("");
-      expect(simplifyStyleName("gb-7714-2025-numeric.compliant")).toBe("2025 CSL");
-      expect(simplifyStyleName("gb-7714-2015-numeric.extended")).toBe("2015 CSL-M⁺");
+      expect(simplifyStyleName("gb-7714-2025-numeric.compliant")).toBe(
+        "2025 CSL",
+      );
+      expect(simplifyStyleName("gb-7714-2015-numeric.extended")).toBe(
+        "2015 CSL-M⁺",
+      );
     });
 
     it("builds compact output titles", () => {
@@ -115,7 +133,12 @@ if (import.meta.vitest) {
     });
 
     it("sorts original.toml before other data files", () => {
-      expect(compareDataFileKey("GB-T_7714—2025.original.toml", "GB-T_7714—2025.builtin.bib")).toBeLessThan(0);
+      expect(
+        compareDataFileKey(
+          "GB-T_7714—2025.original.toml",
+          "GB-T_7714—2025.builtin.bib",
+        ),
+      ).toBeLessThan(0);
       expect(rankDataFileKey("GB-T_7714—2025.original.toml")).toBe(0);
     });
   });

@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
-import { Link, isRouteErrorResponse } from "react-router";
 import { diffWordsWithSpace } from "diff";
+import { useMemo, useState } from "react";
+import { isRouteErrorResponse, Link } from "react-router";
 
 import { getBenchEntryByParam } from "../lib";
 import type { Route } from "./+types/entry.$id";
@@ -18,15 +18,28 @@ export async function loader({ params }: Route.LoaderArgs) {
 }
 
 export default function EntryDetail({ loaderData }: Route.ComponentProps) {
-  const { entry, entrySection, previousEntryId, nextEntryId, dataItems, outItems } = loaderData;
+  const {
+    entry,
+    entrySection,
+    previousEntryId,
+    nextEntryId,
+    dataItems,
+    outItems,
+  } = loaderData;
   const [baseVariant, setBaseVariant] = useState("");
 
   const outputOptions = useMemo(
-    () => Array.from(new Set(outItems.map((item) => item.fileKey))).sort((a, b) => a.localeCompare(b)),
+    () =>
+      Array.from(new Set(outItems.map((item) => item.fileKey))).sort((a, b) =>
+        a.localeCompare(b),
+      ),
     [outItems],
   );
   const baseOutput = useMemo(
-    () => (baseVariant ? outItems.find((item) => item.fileKey === baseVariant) ?? null : null),
+    () =>
+      baseVariant
+        ? (outItems.find((item) => item.fileKey === baseVariant) ?? null)
+        : null,
     [baseVariant, outItems],
   );
 
@@ -37,7 +50,9 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
         <h1 className="hero-title">{entry.title}</h1>
         <p className="hero-subtitle detail-meta-line">
           <code>{entry.id}</code>
-          {entry.citationKey !== entry.id ? <code>{entry.citationKey}</code> : null}
+          {entry.citationKey !== entry.id ? (
+            <code>{entry.citationKey}</code>
+          ) : null}
           <code>{entry.type}</code>
         </p>
         <div className="detail-nav">
@@ -45,12 +60,18 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
             Back To Index
           </Link>
           {previousEntryId ? (
-            <Link className="nav-chip" to={`/entry/${previousEntryId.replace(":", '-')}/`}>
+            <Link
+              className="nav-chip"
+              to={`/entry/${previousEntryId.replace(":", "-")}/`}
+            >
               Previous
             </Link>
           ) : null}
           {nextEntryId ? (
-            <Link className="nav-chip" to={`/entry/${nextEntryId.replace(":", '-')}/`}>
+            <Link
+              className="nav-chip"
+              to={`/entry/${nextEntryId.replace(":", "-")}/`}
+            >
               Next
             </Link>
           ) : null}
@@ -79,7 +100,9 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                     {entrySection.notes ? (
                       <>
                         <p className="section-meta-kicker">Section Notes</p>
-                        <pre className="section-notes section-notes-in-entry">{entrySection.notes}</pre>
+                        <pre className="section-notes section-notes-in-entry">
+                          {entrySection.notes}
+                        </pre>
                       </>
                     ) : null}
                   </div>
@@ -97,7 +120,11 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           </div>
           <div className="panel-filter-row">
             <label htmlFor="diff-base">Diff Base</label>
-            <select id="diff-base" value={baseVariant} onChange={(event) => setBaseVariant(event.target.value)}>
+            <select
+              id="diff-base"
+              value={baseVariant}
+              onChange={(event) => setBaseVariant(event.target.value)}
+            >
               <option value="">(none)</option>
               {outputOptions.map((opt) => (
                 <option key={opt} value={opt}>
@@ -121,7 +148,10 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   );
 }
 
-function renderOutItem(item: { fileKey: string; item: string }, baseOutput: { fileKey: string; item: string } | null) {
+function renderOutItem(
+  item: { fileKey: string; item: string },
+  baseOutput: { fileKey: string; item: string } | null,
+) {
   const content = item.item || "(no item at this index)";
 
   if (!baseOutput) {
@@ -137,7 +167,12 @@ function renderOutItem(item: { fileKey: string; item: string }, baseOutput: { fi
     );
   }
 
-  return <pre className="code-diff" dangerouslySetInnerHTML={{ __html: renderDiff(baseOutput.item, content) }} />;
+  return (
+    <pre
+      className="code-diff"
+      dangerouslySetInnerHTML={{ __html: renderDiff(baseOutput.item, content) }}
+    />
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -162,11 +197,21 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 function renderDataItem(item: { fileKey: string; item: string }) {
   const content = item.item || "(no item at this index)";
   if (item.fileKey.endsWith(".json")) {
-    return <pre className="code-json" dangerouslySetInnerHTML={{ __html: highlightJson(content) }} />;
+    return (
+      <pre
+        className="code-json"
+        dangerouslySetInnerHTML={{ __html: highlightJson(content) }}
+      />
+    );
   }
 
   if (item.fileKey.endsWith(".bib")) {
-    return <pre className="code-bib" dangerouslySetInnerHTML={{ __html: highlightBib(content) }} />;
+    return (
+      <pre
+        className="code-bib"
+        dangerouslySetInnerHTML={{ __html: highlightBib(content) }}
+      />
+    );
   }
 
   return <pre>{content}</pre>;
@@ -177,7 +222,7 @@ function escapeHtml(text: string): string {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
+    .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
 
@@ -186,18 +231,21 @@ function highlightJson(text: string): string {
   const tokenRegex =
     /(&quot;(?:\\.|[^\\])*?&quot;)(\s*:)?|\b(true|false|null)\b|-?\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g;
 
-  return escaped.replace(tokenRegex, (match, strToken, keySuffix, boolOrNull) => {
-    if (strToken) {
-      if (keySuffix) {
-        return `<span class=\"tok-key\">${strToken}</span><span class=\"tok-punc\">${keySuffix}</span>`;
+  return escaped.replace(
+    tokenRegex,
+    (match, strToken, keySuffix, boolOrNull) => {
+      if (strToken) {
+        if (keySuffix) {
+          return `<span class="tok-key">${strToken}</span><span class="tok-punc">${keySuffix}</span>`;
+        }
+        return `<span class="tok-string">${strToken}</span>`;
       }
-      return `<span class=\"tok-string\">${strToken}</span>`;
-    }
-    if (boolOrNull) {
-      return `<span class=\"tok-literal\">${match}</span>`;
-    }
-    return `<span class=\"tok-number\">${match}</span>`;
-  });
+      if (boolOrNull) {
+        return `<span class="tok-literal">${match}</span>`;
+      }
+      return `<span class="tok-number">${match}</span>`;
+    },
+  );
 }
 
 function highlightBib(text: string): string {
@@ -213,8 +261,14 @@ function highlightBib(text: string): string {
     '$1<span class="tok-field">$2</span><span class="tok-punc">$3</span>',
   );
 
-  escaped = escaped.replace(/(\{[^{}\n]*\})/g, '<span class="tok-string">$1</span>');
-  escaped = escaped.replace(/\b\d{2,}\b/g, '<span class="tok-number">$&</span>');
+  escaped = escaped.replace(
+    /(\{[^{}\n]*\})/g,
+    '<span class="tok-string">$1</span>',
+  );
+  escaped = escaped.replace(
+    /\b\d{2,}\b/g,
+    '<span class="tok-number">$&</span>',
+  );
 
   return escaped;
 }
@@ -228,10 +282,10 @@ function renderDiff(baseText: string, targetText: string): string {
     .map((part) => {
       const html = escapeHtml(part.value);
       if (part.added) {
-        return `<span class=\"tok-added\">${html}</span>`;
+        return `<span class="tok-added">${html}</span>`;
       }
       if (part.removed) {
-        return `<span class=\"tok-removed\">${html}</span>`;
+        return `<span class="tok-removed">${html}</span>`;
       }
       return `<span>${html}</span>`;
     })

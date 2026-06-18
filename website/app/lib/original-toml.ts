@@ -8,7 +8,9 @@ import type {
   SectionInfo,
 } from "./types";
 
-export function parseOriginalTomlDataFromText(content: string): OriginalTomlData {
+export function parseOriginalTomlDataFromText(
+  content: string,
+): OriginalTomlData {
   const parsed = parseToml(content) as { section?: unknown };
   const rawSections = Array.isArray(parsed.section) ? parsed.section : [];
   const sections: SectionInfo[] = [];
@@ -26,7 +28,8 @@ export function parseOriginalTomlDataFromText(content: string): OriginalTomlData
       examples?: unknown;
     };
 
-    const idPrefix = typeof typed["id-prefix"] === "string" ? typed["id-prefix"].trim() : "";
+    const idPrefix =
+      typeof typed["id-prefix"] === "string" ? typed["id-prefix"].trim() : "";
     if (!idPrefix) {
       continue;
     }
@@ -54,8 +57,12 @@ export function parseOriginalTomlDataFromText(content: string): OriginalTomlData
   return { sections, entriesById };
 }
 
-export function assertNoUncategorizedSections(indexSections: EntrySection[]): void {
-  const uncategorized = indexSections.find((section) => section.idPrefix === "uncategorized");
+export function assertNoUncategorizedSections(
+  indexSections: EntrySection[],
+): void {
+  const uncategorized = indexSections.find(
+    (section) => section.idPrefix === "uncategorized",
+  );
   if (uncategorized) {
     throw new Error(
       `Uncategorized entries exist: ${uncategorized.entries

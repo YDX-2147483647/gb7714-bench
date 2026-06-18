@@ -9,6 +9,6 @@ export default defineConfig({
   },
   define: {
     // https://vitest.dev/guide/in-source.html#production-build
-    'import.meta.vitest': 'undefined',
-  }, 
+    "import.meta.vitest": "undefined",
+  },
 });

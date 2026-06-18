@@ -27,7 +27,13 @@ describe("bench.server", () => {
     const workspace = await createTempWorkspace();
     const websiteDir = path.join(workspace, "website");
     const dataDir = path.join(workspace, "data", "data");
-    const outDir = path.join(workspace, "target", "out", "GB-T_7714—2025.builtin.bib", "zotero");
+    const outDir = path.join(
+      workspace,
+      "target",
+      "out",
+      "GB-T_7714—2025.builtin.bib",
+      "zotero",
+    );
 
     await mkdir(websiteDir, { recursive: true });
     await mkdir(dataDir, { recursive: true });
@@ -61,7 +67,11 @@ examples = '''
       "@article{gbt7714.8.5.1.1:1,\n  title = {A},\n}\n",
       "utf8",
     );
-    await writeFile(path.join(outDir, "default.txt"), "[1] Output item\n", "utf8");
+    await writeFile(
+      path.join(outDir, "default.txt"),
+      "[1] Output item\n",
+      "utf8",
+    );
 
     process.chdir(websiteDir);
 

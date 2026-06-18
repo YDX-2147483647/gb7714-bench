@@ -6,19 +6,18 @@ import {
   mapSectionByEntryId,
   parseOriginalTomlDataFromText,
 } from "./original-toml";
-import type { EntrySummary, SectionInfo, EntrySection } from "./types.js"
-
+import type { EntrySection, EntrySummary, SectionInfo } from "./types.js";
 
 function buildIndexSectionsForTest(
   entries: EntrySummary[],
-  sections: SectionInfo[]
+  sections: SectionInfo[],
 ): EntrySection[] {
-  const sectionByEntryId = mapSectionByEntryId(entries, sections)
-  return buildIndexSections(entries, sections, sectionByEntryId)
+  const sectionByEntryId = mapSectionByEntryId(entries, sections);
+  return buildIndexSections(entries, sections, sectionByEntryId);
 }
 
 function parseOriginalTomlSectionsFromText(content: string): SectionInfo[] {
-  return parseOriginalTomlDataFromText(content).sections
+  return parseOriginalTomlDataFromText(content).sections;
 }
 
 describe("bench.original-toml", () => {
@@ -86,8 +85,20 @@ examples = '''
   it("does not allow uncategorized entries", () => {
     const sections = buildIndexSectionsForTest(
       [
-        { index: 1, id: "gbt7714.5.1:1", citationKey: "a", title: "A", type: "book" },
-        { index: 2, id: "gbt7714.9.9:1", citationKey: "b", title: "B", type: "book" },
+        {
+          index: 1,
+          id: "gbt7714.5.1:1",
+          citationKey: "a",
+          title: "A",
+          type: "book",
+        },
+        {
+          index: 2,
+          id: "gbt7714.9.9:1",
+          citationKey: "b",
+          title: "B",
+          type: "book",
+        },
       ],
       [
         {
@@ -98,7 +109,8 @@ examples = '''
       ],
     );
 
-    expect(() => assertNoUncategorizedSections(sections)).toThrow(/Uncategorized entries exist/);
+    expect(() => assertNoUncategorizedSections(sections)).toThrow(
+      /Uncategorized entries exist/,
+    );
   });
 });
-
