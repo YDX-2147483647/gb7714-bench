@@ -17,6 +17,11 @@ type SectionInfo = {
   notes: string;
 };
 
+type OriginalTomlData = {
+  sections: SectionInfo[];
+  entriesById: Map<string, string>;
+};
+
 type EntrySummary = {
   index: number;
   id: string;
@@ -165,33 +170,53 @@ export function buildIndexSectionsForTest(
 }
 
 export function parseOriginalTomlSectionsFromText(content: string): SectionInfo[] {
+  return parseOriginalTomlDataFromText(content).sections;
+}
+
+export function parseOriginalTomlDataFromText(content: string): OriginalTomlData {
   const parsed = parseToml(content) as { section?: unknown };
   const rawSections = Array.isArray(parsed.section) ? parsed.section : [];
+  const sections: SectionInfo[] = [];
+  const entriesById = new Map<string, string>();
 
-  return rawSections.flatMap((section) => {
+  for (const section of rawSections) {
     if (!section || typeof section !== "object") {
-      return [];
+      continue;
     }
 
     const typed = section as {
       "id-prefix"?: unknown;
       headings?: unknown;
       notes?: unknown;
+      examples?: unknown;
     };
 
     const idPrefix = typeof typed["id-prefix"] === "string" ? typed["id-prefix"].trim() : "";
     if (!idPrefix) {
-      return [];
+      continue;
     }
 
     const headings = Array.isArray(typed.headings)
-      ? typed.headings.filter((heading): heading is string => typeof heading === "string").map((heading) => heading.trim()).filter(Boolean)
+      ? typed.headings
+          .filter((heading): heading is string => typeof heading === "string")
+          .map((heading) => heading.trim())
+          .filter(Boolean)
       : [];
-
     const notes = typeof typed.notes === "string" ? typed.notes.trim() : "";
 
-    return [{ idPrefix, headings, notes } satisfies SectionInfo];
-  });
+    sections.push({ idPrefix, headings, notes });
+
+    if (typeof typed.examples !== "string") {
+      continue;
+    }
+
+    const examples = splitTomlExampleLines(typed.examples);
+    for (let i = 0; i < examples.length; i += 1) {
+      entriesById.set(`${idPrefix}${i + 1}`, examples[i]);
+    }
+  }
+
+  return { sections, entriesById };
 }
 
 export function assertNoUncategorizedSections(indexSections: EntrySection[]): void {
@@ -251,7 +276,10 @@ async function buildBenchCache(): Promise<BenchCache> {
   const indexEntries = buildIndexEntries(builtinEntries);
 
   const originalTomlPath = dataPaths.find((p) => p.endsWith(".original.toml"));
-  const sections = originalTomlPath ? parseOriginalTomlSectionsFromText(await readFile(originalTomlPath, "utf8")) : [];
+  const originalTomlData = originalTomlPath
+    ? parseOriginalTomlDataFromText(await readFile(originalTomlPath, "utf8"))
+    : null;
+  const sections = originalTomlData?.sections ?? [];
   const sectionByEntryId = mapSectionByEntryId(indexEntries, sections);
   const indexSections = buildIndexSections(indexEntries, sections, sectionByEntryId);
   assertNoUncategorizedSections(indexSections);
@@ -262,6 +290,26 @@ async function buildBenchCache(): Promise<BenchCache> {
   for (const filePath of dataPaths) {
     const rel = toPosix(path.relative(root, filePath));
     const fileKey = rel.replace(/^data\/data\//, "");
+
+    if (filePath === originalTomlPath && originalTomlData) {
+      for (let i = 0; i < indexEntries.length; i += 1) {
+        const entryId = indexEntries[i]?.id ?? "";
+        const item = originalTomlData.entriesById.get(entryId);
+
+        if (item === undefined) {
+          throw new Error(`Missing original.toml entry for ${entryId}`);
+        }
+
+        dataByIndex[i].push({
+          fileKey,
+          sourcePath: rel,
+          item,
+        });
+      }
+
+      continue;
+    }
+
     const items = await parseDataFile(filePath);
 
     for (let i = 0; i < indexEntries.length; i += 1) {
@@ -428,10 +476,6 @@ async function parseDataFile(filePath: string): Promise<string[]> {
     return splitBibEntries(content);
   }
 
-  if (ext === ".toml") {
-    return splitTomlExamples(content);
-  }
-
   return content.split(/\r?\n/).filter((line) => line.trim().length > 0);
 }
 
@@ -451,21 +495,15 @@ function splitBibEntries(content: string): string[] {
     .filter((block) => block.startsWith("@"));
 }
 
-function splitTomlExamples(content: string): string[] {
-  const blocks = [...content.matchAll(/examples\s*=\s*'''([\s\S]*?)'''/g)];
-  const entries: string[] = [];
+function splitTomlExampleLines(content: string): string[] {
+  const normalized = content.replace(/\r\n/g, "\n");
+  const lines = normalized.split("\n");
 
-  for (const block of blocks) {
-    const body = block[1] ?? "";
-    for (const line of body.split(/\r?\n/)) {
-      const text = line.trim();
-      if (text.length > 0) {
-        entries.push(text);
-      }
-    }
+  if (lines.at(-1) === "") {
+    lines.pop();
   }
 
-  return entries;
+  return lines;
 }
 
 async function parseOutFile(filePath: string): Promise<string[]> {

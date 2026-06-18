@@ -4,6 +4,7 @@ import {
   assertNoUncategorizedSections,
   buildIndexSectionsForTest,
   buildOutTitle,
+  parseOriginalTomlDataFromText,
   parseOriginalTomlSectionsFromText,
   simplifyProcessorName,
   simplifyStyleName,
@@ -76,6 +77,31 @@ notes = '''B'''
 `);
 
     expect(sections).toEqual([]);
+  });
+
+  it("maps examples by exact entry id instead of flattened position", () => {
+    const parsed = parseOriginalTomlDataFromText(`
+[[section]]
+id-prefix = 'gbt7714.8.4.2:'
+headings = ['8.4.2']
+examples = '''
+[1] A
+[2] B
+[3] C
+[4] D
+'''
+
+[[section]]
+id-prefix = 'gbt7714.8.5.1.1:'
+headings = ['8.5.1.1']
+examples = '''
+2001,2 (1):5-6
+2014,510:356-363
+'''
+`);
+
+    expect(parsed.entriesById.get("gbt7714.8.4.2:3")).toBe("[3] C");
+    expect(parsed.entriesById.get("gbt7714.8.5.1.1:1")).toBe("2001,2 (1):5-6");
   });
 
   it("does not allow uncategorized entries", () => {
