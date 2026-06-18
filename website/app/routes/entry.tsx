@@ -3,14 +3,14 @@ import { useMemo, useState } from "react";
 import { isRouteErrorResponse, Link } from "react-router";
 
 import { getBenchEntryByParam } from "../lib.server";
-import type { Route } from "./+types/entry.$id";
+import type { Route } from "./+types/entry";
 
-export function meta({ params }: Route.MetaArgs) {
-  return [{ title: `Entry ${params.id ?? ""}` }];
+export function meta({ params: { entryId } }: Route.MetaArgs) {
+  return [{ title: `Entry ${entryId}` }];
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const data = await getBenchEntryByParam(params.id.replace("-", ":") ?? "");
+export async function loader({ params: { entryId } }: Route.LoaderArgs) {
+  const data = await getBenchEntryByParam(entryId.replace("-", ":") ?? "");
   if (!data) {
     throw new Response("Entry not found", { status: 404 });
   }
