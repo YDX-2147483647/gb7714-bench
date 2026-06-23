@@ -1,5 +1,9 @@
 import type { Result, Source } from "../../plugin/load_files";
 
+export function range(n: number): number[] {
+  return Array.from({ length: n }, (_, i) => i);
+}
+
 /**
  * Compare by an array of keyword groups.
  *
@@ -58,6 +62,10 @@ export function compareKey(
 
 if (import.meta.vitest) {
   const { describe, test, expect } = import.meta.vitest;
+
+  test("range", () => {
+    expect(range(3)).toStrictEqual([0, 1, 2]);
+  });
 
   test("compareByKeywords", () => {
     const keywords = [

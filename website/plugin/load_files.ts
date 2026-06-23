@@ -13,6 +13,7 @@ const OUT_DIR = path.join(ROOT_DIR, "target/out/");
 
 export type EntryId = `gbt7714.${string}:${string}`;
 export type EntryIdUrlSafe = `gbt7714.${string}-${string}`;
+type EntryIdPrefix = `gbt7714.${string}:`;
 
 /** Typed data sources. */
 export namespace Source {
@@ -30,7 +31,7 @@ export namespace Source {
   export type OriginalTomlLibrary = {
     notes: string;
     sections: {
-      idPrefix: string;
+      idPrefix: EntryIdPrefix;
       headings: string[];
       examples: string[];
       notes: string | null;
@@ -69,7 +70,7 @@ async function loadSource(key: Source.Key): Promise<Source.Value> {
     const { notes, section } = parseToml(raw) as {
       notes: string;
       section: {
-        "id-prefix": string;
+        "id-prefix": EntryIdPrefix;
         headings: string[];
         examples: string;
         notes?: string | undefined;

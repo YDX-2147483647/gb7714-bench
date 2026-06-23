@@ -1,6 +1,6 @@
 import { RESULT, SOURCE } from "virtual:gb7714-bench-files";
 import type { EntryId, Result, Source } from "../../plugin/load_files";
-import { compareKey } from "./util";
+import { compareKey, range } from "./util";
 
 const sourceCanonical = SOURCE[
   "GB-T_7714—2025.builtin.json"
@@ -17,31 +17,45 @@ type EntryInfo = {
   /** A map from engine tuples to their results, ordered. */
   results: [Result.Key, string][];
 
-  /** Info in `original.toml`. */
+  /** Info in `sourceOriginalToml`. */
   original: {
     example: string;
     headings: string[];
     notes: string | null;
   };
 
-  /** Auxiliary info extracted from `builtin.json`, only for displaying. */
-  meta: {
-    title: string | null;
-    /** CSL entry type */
-    entryType: string;
-  };
+  meta: EntryMeta;
 };
+
+/** Auxiliary info extracted from `sourceCanonical`, only for displaying. */
+type EntryMeta = {
+  title: string | null;
+  /** CSL entry type */
+  entryType: string;
+};
+
+function getCanonicalEntry(id: EntryId): {
+  canonicalIndex: number;
+  meta: EntryMeta;
+} {
+  const canonicalIndex = sourceCanonical.findIndex((entry) => entry.id === id);
+  if (canonicalIndex === -1) {
+    throw new Error(`Entry ${id} not found.`);
+  }
+
+  const entry = sourceCanonical[canonicalIndex];
+  const meta = {
+    title: entry.title ?? null,
+    entryType: entry.type,
+  };
+
+  return { canonicalIndex, meta };
+}
 
 export function getEntryInfo(id: EntryId): EntryInfo {
   // Load from the canonical
 
-  const entryCanonicalIndex = sourceCanonical.findIndex(
-    (entry) => entry.id === id,
-  );
-  if (entryCanonicalIndex === -1) {
-    throw new Error(`Entry ${id} not found.`);
-  }
-  const entryCanonical = sourceCanonical[entryCanonicalIndex];
+  const { canonicalIndex, meta } = getCanonicalEntry(id);
 
   // Load from the original
 
@@ -67,10 +81,10 @@ export function getEntryInfo(id: EntryId): EntryInfo {
     .map(([k, lib]): [Source.Key, string] => {
       const key = k as Source.Key;
       if (k.endsWith(".json")) {
-        const v = (lib as Source.AnyJson[])[entryCanonicalIndex];
+        const v = (lib as Source.AnyJson[])[canonicalIndex];
         return [key, JSON.stringify(v, null, "\t")];
       } else if (k.endsWith(".bib")) {
-        const v = (lib as Source.AnyBib[])[entryCanonicalIndex];
+        const v = (lib as Source.AnyBib[])[canonicalIndex];
         return [key, v];
       } else {
         throw new Error(`Unknown data source: ${key}`);
@@ -79,7 +93,7 @@ export function getEntryInfo(id: EntryId): EntryInfo {
     .sort((a, b) => compareKey(a[0], b[0]));
 
   const results = Object.entries(RESULT)
-    .map(([k, v]) => [k, v[entryCanonicalIndex]] as [Result.Key, string])
+    .map(([k, v]) => [k, v[canonicalIndex]] as [Result.Key, string])
     .sort((a, b) => compareKey(a[0], b[0]));
 
   return {
@@ -91,15 +105,37 @@ export function getEntryInfo(id: EntryId): EntryInfo {
       headings: sectionOriginal.headings,
       notes: sectionOriginal.notes,
     },
-    meta: {
-      title: entryCanonical.title ?? null,
-      entryType: entryCanonical.type,
-    },
+    meta,
   };
+}
+
+type SectionInfo = {
+  headings: string[];
+  notes: string | null;
+  entries: { id: EntryId; meta: EntryMeta }[];
+};
+
+export function getSections(): SectionInfo[] {
+  return sourceOriginalToml.sections.map(
+    ({ examples, headings, idPrefix, notes }) => {
+      // 顺序编码制与著者-出版年制对照的例子只保留一份，见`data/scripts/check_consistency.py`
+      const nEntries =
+        idPrefix === "gbt7714.7.1.3:" ? examples.length / 2 : examples.length;
+
+      const entries = range(nEntries).map((i) => {
+        const id: EntryId = `${idPrefix}${i + 1}`;
+        const { meta } = getCanonicalEntry(id);
+        return { id, meta };
+      });
+
+      return { headings, notes, entries };
+    },
+  );
 }
 
 if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
+
   test("getEntryInfo", () => {
     const id = "gbt7714.9.2.1.3:4";
     const info = getEntryInfo(id);
@@ -154,5 +190,24 @@ if (import.meta.vitest) {
     expect(info.results[0][1]).toStrictEqual(
       "[187] 陈登原. 国史旧闻：卷1[M]. 北京：中华书局，2000.",
     );
+  });
+
+  test("getSections", () => {
+    const sections = getSections();
+
+    expect(sections.length).toStrictEqual(67);
+    expect(sections[0].headings).toStrictEqual([
+      "5 著录用文字",
+      "5.1 参考文献应用信息资源本身的语种著录。",
+    ]);
+    expect(sections[0].notes).toStrictEqual(null);
+    expect(sections[0].entries.length).toStrictEqual(4);
+    expect(sections[0].entries[0]).toStrictEqual({
+      id: "gbt7714.5.1:1",
+      meta: {
+        title: "银行业的未来与人工智能",
+        entryType: "book",
+      },
+    });
   });
 }
