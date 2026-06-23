@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { isRouteErrorResponse, Link } from "react-router";
+
 import { DiffText, DiffTextLegend } from "~/components/DiffText";
+import { SyntaxHighlighter } from "~/components/SyntaxHighlighter";
 import { getEntryInfo } from "~/lib/files";
 import {
   decodeEntryId,
@@ -237,87 +239,14 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 }
 
 function renderDataItem(key: string, value: string) {
-  const content = value;
-
-  if (key.endsWith(".json")) {
-    return (
-      <pre
-        className="mt-[0.55rem] max-h-72 overflow-auto whitespace-pre-wrap rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
-        dangerouslySetInnerHTML={{ __html: highlightJson(content) }}
-      />
-    );
-  }
-
-  if (key.endsWith(".bib")) {
-    return (
-      <pre
-        className="mt-[0.55rem] max-h-72 overflow-auto whitespace-pre-wrap rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
-        dangerouslySetInnerHTML={{ __html: highlightBib(content) }}
-      />
-    );
-  }
-
+  const language = key.endsWith(".json")
+    ? "json"
+    : key.endsWith(".bib")
+      ? "bibtex"
+      : "text";
   return (
-    <pre className="mt-[0.55rem] max-h-72 overflow-auto whitespace-pre-wrap rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
-      {content}
-    </pre>
+    <SyntaxHighlighter language={language} className="text-sm">
+      {value}
+    </SyntaxHighlighter>
   );
-}
-
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-function highlightJson(text: string): string {
-  const escaped = escapeHtml(text);
-  const tokenRegex =
-    /(&quot;(?:\\.|[^\\])*?&quot;)(\s*:)?|\b(true|false|null)\b|-?\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g;
-
-  return escaped.replace(
-    tokenRegex,
-    (match, strToken, keySuffix, boolOrNull) => {
-      if (strToken) {
-        if (keySuffix) {
-          return `<span class="font-semibold text-[#8a4d0f]">${strToken}</span><span class="text-[#7b7f89]">${keySuffix}</span>`;
-        }
-        return `<span class="text-[#0f6e59]">${strToken}</span>`;
-      }
-      if (boolOrNull) {
-        return `<span class="font-semibold text-[#6a3fb8]">${match}</span>`;
-      }
-      return `<span class="text-[#154fb4]">${match}</span>`;
-    },
-  );
-}
-
-function highlightBib(text: string): string {
-  let escaped = escapeHtml(text);
-
-  escaped = escaped.replace(
-    /^(@[A-Za-z]+)(\{)([^,]+)(,?)/gm,
-    '<span class="font-bold text-[#a23221]">$1</span><span class="text-[#7b7f89]">$2</span><span class="font-semibold text-[#8a4d0f]">$3</span><span class="text-[#7b7f89]">$4</span>',
-  );
-
-  escaped = escaped.replace(
-    /^(\s*)([A-Za-z][\w-]*)(\s*=\s*)/gm,
-    '$1<span class="font-semibold text-[#8a4d0f]">$2</span><span class="text-[#7b7f89]">$3</span>',
-  );
-
-  escaped = escaped.replace(
-    /(\{[^{}\n]*\})/g,
-    '<span class="text-[#0f6e59]">$1</span>',
-  );
-  escaped = escaped.replace(
-    /\b\d{2,}\b/g,
-    '<span class="text-[#154fb4]">$&</span>',
-  );
-
-  return escaped;
 }
