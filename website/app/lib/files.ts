@@ -152,76 +152,86 @@ if (import.meta.vitest) {
     const info = getEntryInfo(id);
     expect(info.id).toStrictEqual(id);
 
-    expect(info.canonicalIndex).toStrictEqual(186);
+    expect(info.canonicalIndex).toMatchInlineSnapshot(`186`);
 
-    expect(info.original).toStrictEqual({
-      example: "[4] 陈登原.国史旧闻:第1卷[M].北京:中华书局,2000:29.",
-      headings: [
-        "9 参考文献标引体系编制法",
-        "9.2 顺序编码制",
-        "9.2.1 正文中的引用",
-        "9.2.1.3 多次引用同一责任者的同一文献时",
-      ],
-      notes: "此节示例1重复序号，示例2不重复序号并标注「同上」。此处抄录前者。",
-    });
-    expect(info.meta).toStrictEqual({
-      title: "国史旧闻",
-      entryType: "book",
-    });
+    expect(info.original).toMatchInlineSnapshot(`
+      {
+        "example": "[4] 陈登原.国史旧闻:第1卷[M].北京:中华书局,2000:29.",
+        "headings": [
+          "9 参考文献标引体系编制法",
+          "9.2 顺序编码制",
+          "9.2.1 正文中的引用",
+          "9.2.1.3 多次引用同一责任者的同一文献时",
+        ],
+        "notes": "此节示例1重复序号，示例2不重复序号并标注「同上」。此处抄录前者。",
+      }
+    `);
+    expect(info.meta).toMatchInlineSnapshot(`
+      {
+        "entryType": "book",
+        "title": "国史旧闻",
+      }
+    `);
 
-    expect(info.sources.map(([k, _v]) => k)).toStrictEqual([
-      "GB-T_7714—2025.builtin.bib",
-      "GB-T_7714—2025.better.bib",
-      "GB-T_7714—2025.builtin.json",
-      "GB-T_7714—2025.better.json",
-    ]);
-    expect(info.sources[0][1]).toStrictEqual(
-      `
-@book{gbt7714.9.2.1.3:4,
-	author = {{陈登原}},
-	date = {2000},
-	isbn = {978-7-101-00992-7},
-	langid = {pinyin},
-	location = {北京},
-	note = {Pages: 29},
-	publisher = {中华书局},
-	title = {国史旧闻},
-	volume = {1},
-}
-`.trim(),
-    );
+    expect(info.sources.map(([k, _v]) => k)).toMatchInlineSnapshot(`
+      [
+        "GB-T_7714—2025.builtin.bib",
+        "GB-T_7714—2025.better.bib",
+        "GB-T_7714—2025.builtin.json",
+        "GB-T_7714—2025.better.json",
+      ]
+    `);
+    expect(info.sources[0][1]).toMatchInlineSnapshot(`
+      "@book{gbt7714.9.2.1.3:4,
+      	author = {{陈登原}},
+      	date = {2000},
+      	isbn = {978-7-101-00992-7},
+      	langid = {pinyin},
+      	location = {北京},
+      	note = {Pages: 29},
+      	publisher = {中华书局},
+      	title = {国史旧闻},
+      	volume = {1},
+      }"
+    `);
 
-    expect(info.results.map(([k, _v]) => k).slice(0, 6)).toStrictEqual([
-      "GB-T_7714—2025.builtin.bib/zotero/gb-7714-2025-numeric.compliant.txt",
-      "GB-T_7714—2025.builtin.bib/zotero/gb-7714-2025-numeric.extended.txt",
-      "GB-T_7714—2025.builtin.bib/gbt7714-bibtex-style/default.txt",
-      "GB-T_7714—2025.builtin.bib/biblatex-gb7714-2025/default.txt",
-      "GB-T_7714—2025.builtin.bib/citeproc-lua/gb-7714-2025-numeric.compliant.txt",
-      "GB-T_7714—2025.builtin.bib/citeproc-lua/gb-7714-2025-numeric.extended.txt",
-    ]);
-    expect(info.results.length).toStrictEqual(42);
-    expect(info.results[0][1]).toStrictEqual(
-      "[187] 陈登原. 国史旧闻：卷1[M]. 北京：中华书局，2000.",
+    expect(info.results.map(([k, _v]) => k).slice(0, 6)).toMatchInlineSnapshot(`
+      [
+        "GB-T_7714—2025.builtin.bib/zotero/gb-7714-2025-numeric.compliant.txt",
+        "GB-T_7714—2025.builtin.bib/zotero/gb-7714-2025-numeric.extended.txt",
+        "GB-T_7714—2025.builtin.bib/gbt7714-bibtex-style/default.txt",
+        "GB-T_7714—2025.builtin.bib/biblatex-gb7714-2025/default.txt",
+        "GB-T_7714—2025.builtin.bib/citeproc-lua/gb-7714-2025-numeric.compliant.txt",
+        "GB-T_7714—2025.builtin.bib/citeproc-lua/gb-7714-2025-numeric.extended.txt",
+      ]
+    `);
+    expect(info.results.length).toMatchInlineSnapshot(`42`);
+    expect(info.results[0][1]).toMatchInlineSnapshot(
+      `"[187] 陈登原. 国史旧闻：卷1[M]. 北京：中华书局，2000."`,
     );
   });
 
   test("getSections", () => {
     const sections = getSections();
 
-    expect(sections.length).toStrictEqual(67);
-    expect(sections[0].headings).toStrictEqual([
-      "5 著录用文字",
-      "5.1 参考文献应用信息资源本身的语种著录。",
-    ]);
-    expect(sections[0].notes).toStrictEqual(null);
-    expect(sections[0].entries.length).toStrictEqual(4);
-    expect(sections[0].entries[0]).toStrictEqual({
-      id: "gbt7714.5.1:1",
-      canonicalIndex: 0,
-      meta: {
-        title: "银行业的未来与人工智能",
-        entryType: "book",
-      },
-    });
+    expect(sections.length).toMatchInlineSnapshot(`67`);
+    expect(sections[0].headings).toMatchInlineSnapshot(`
+      [
+        "5 著录用文字",
+        "5.1 参考文献应用信息资源本身的语种著录。",
+      ]
+    `);
+    expect(sections[0].notes).toMatchInlineSnapshot(`null`);
+    expect(sections[0].entries.length).toMatchInlineSnapshot(`4`);
+    expect(sections[0].entries[0]).toMatchInlineSnapshot(`
+      {
+        "canonicalIndex": 0,
+        "id": "gbt7714.5.1:1",
+        "meta": {
+          "entryType": "book",
+          "title": "银行业的未来与人工智能",
+        },
+      }
+    `);
   });
 }
