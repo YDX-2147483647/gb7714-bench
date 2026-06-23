@@ -119,6 +119,16 @@ export function getEntryInfo(id: EntryId): EntryInfo {
   };
 }
 
+export function getAdjacentEntryIds(canonicalIndex: number): {
+  prev: EntryId | null;
+  next: EntryId | null;
+} {
+  return {
+    prev: sourceCanonical.at(canonicalIndex - 1)?.id ?? null,
+    next: sourceCanonical.at(canonicalIndex + 1)?.id ?? null,
+  };
+}
+
 type SectionInfo = {
   idPrefix: EntryIdPrefix;
   headings: string[];

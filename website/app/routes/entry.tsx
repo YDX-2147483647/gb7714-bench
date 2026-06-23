@@ -3,10 +3,11 @@ import { isRouteErrorResponse, Link } from "react-router";
 
 import { DiffText, DiffTextLegend } from "~/components/DiffText";
 import { SyntaxHighlighter } from "~/components/SyntaxHighlighter";
-import { getEntryInfo } from "~/lib/files";
+import { getAdjacentEntryIds, getEntryInfo } from "~/lib/files";
 import {
   decodeEntryId,
   type EntryIdUrlSafe,
+  encodeEntryId,
   humanizeResultKey,
   humanizeSourceKey,
 } from "~/lib/naming";
@@ -19,16 +20,15 @@ export function meta({ params: { entryId }, loaderData }: Route.MetaArgs) {
 
 export async function clientLoader({ params: { entryId } }: Route.LoaderArgs) {
   const entry = getEntryInfo(decodeEntryId(entryId as EntryIdUrlSafe));
+  const nav = getAdjacentEntryIds(entry.canonicalIndex);
   return {
     entry,
-    // TODO
-    previousEntryId: "gbt7714.5.1:1",
-    nextEntryId: "gbt7714.5.1:1",
+    nav,
   };
 }
 
 export default function EntryDetail({ loaderData }: Route.ComponentProps) {
-  const { entry, previousEntryId, nextEntryId } = loaderData;
+  const { entry, nav } = loaderData;
   const [baseVariant, setBaseVariant] = useState("");
 
   const outputOptions = useMemo(
@@ -67,18 +67,18 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           >
             Back To Index
           </Link>
-          {previousEntryId ? (
+          {nav.prev ? (
             <Link
               className="rounded-full border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
-              to={`/entry/${previousEntryId.replace(":", "-")}/`}
+              to={`/entry/${encodeEntryId(nav.prev)}/`}
             >
               Previous
             </Link>
           ) : null}
-          {nextEntryId ? (
+          {nav.next ? (
             <Link
               className="rounded-full border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
-              to={`/entry/${nextEntryId.replace(":", "-")}/`}
+              to={`/entry/${encodeEntryId(nav.next)}/`}
             >
               Next
             </Link>
