@@ -43,31 +43,31 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
 
   return (
     <main className="mx-auto grid w-[min(1320px,92vw)] gap-4 pt-5 pb-8">
-      <header className="grid gap-[0.6rem] overflow-hidden rounded-[1rem] border border-[var(--color-stroke)] bg-[radial-gradient(circle_at_85%_15%,_#ffe9c7_0%,_transparent_45%),var(--color-card)] p-5 shadow-[0_10px_24px_rgba(199,109,42,0.08)]">
-        <p className="m-0 text-[0.82rem] text-[var(--color-accent-2)] uppercase tracking-[0.08em]">
+      <header className="grid gap-[0.6rem] overflow-hidden rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow-[0_10px_24px_rgba(199,109,42,0.08)]">
+        <p className="m-0 text-[0.82rem] text-accent-2 uppercase tracking-[0.08em]">
           Entry [{entry.canonicalIndex + 1}]
         </p>
         <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.2]">
           {entry.meta.title}
         </h1>
-        <p className="mt-[0.6rem] mb-0 flex flex-wrap gap-[0.35rem] text-[0.95rem] text-[var(--color-ink-soft)] leading-[1.7]">
-          <code className="rounded-[0.35rem] border border-[var(--color-stroke)] bg-[var(--color-bg-soft)] px-[0.36rem] py-[0.06rem]">
+        <p className="mt-[0.6rem] mb-0 flex flex-wrap gap-[0.35rem] text-[0.95rem] text-ink-soft leading-[1.7]">
+          <code className="rounded-[0.35rem] border border-stroke bg-bg-soft px-[0.36rem] py-[0.06rem]">
             {entry.id}
           </code>
-          <code className="rounded-[0.35rem] border border-[var(--color-stroke)] bg-[var(--color-bg-soft)] px-[0.36rem] py-[0.06rem]">
+          <code className="rounded-[0.35rem] border border-stroke bg-bg-soft px-[0.36rem] py-[0.06rem]">
             {entry.meta.entryType}
           </code>
         </p>
         <div className="flex flex-wrap gap-2">
           <Link
-            className="rounded-full border border-[var(--color-stroke)] bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
+            className="rounded-full border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
             to="/"
           >
             Back To Index
           </Link>
           {previousEntryId ? (
             <Link
-              className="rounded-full border border-[var(--color-stroke)] bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
+              className="rounded-full border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
               to={`/entry/${previousEntryId.replace(":", "-")}/`}
             >
               Previous
@@ -75,7 +75,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           ) : null}
           {nextEntryId ? (
             <Link
-              className="rounded-full border border-[var(--color-stroke)] bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
+              className="rounded-full border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
               to={`/entry/${nextEntryId.replace(":", "-")}/`}
             >
               Next
@@ -85,22 +85,22 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
       </header>
 
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <article className="overflow-hidden rounded-[0.9rem] border border-[var(--color-stroke)] bg-[var(--color-card)]">
-          <div className="flex items-baseline justify-between border-[var(--color-stroke)] border-b bg-[var(--color-bg-soft)] px-[0.95rem] py-[0.8rem]">
+        <article className="overflow-hidden rounded-[0.9rem] border border-stroke bg-card">
+          <div className="flex items-baseline justify-between border-stroke border-b bg-bg-soft px-[0.95rem] py-[0.8rem]">
             <h2>Data Sources</h2>
             <p>Original + {entry.sources.length} files</p>
           </div>
           <div className="grid">
             <section className="border-[#eedfca] border-t border-dashed px-[0.95rem] py-[0.78rem] first:border-t-0">
               <h3 className="m-0 text-[0.93rem]">Original</h3>
-              <p className="mt-[0.3rem] break-all text-[0.75rem] text-[var(--color-ink-soft)]">
+              <p className="mt-[0.3rem] break-all text-[0.75rem] text-ink-soft">
                 GB-T_7714—2025.original.toml
               </p>
-              <div className="mt-2 rounded-[0.5rem] border border-[#ecd9bf] bg-[#fff8ea] px-[0.6rem] py-[0.5rem]">
+              <div className="mt-2 rounded-lg border border-[#ecd9bf] bg-[#fff8ea] px-[0.6rem] py-2">
                 <p className="m-0 text-[#7a4f25] text-[0.72rem] uppercase tracking-[0.06em]">
                   Section Headings
                 </p>
-                <ul className="mt-[0.25rem] mb-0 pl-[1.2rem]">
+                <ul className="mt-1 mb-0 pl-[1.2rem]">
                   {entry.original.headings.map((heading) => (
                     <li className="my-[0.2rem] text-[0.78rem]" key={heading}>
                       {heading}
@@ -112,13 +112,13 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                     <p className="m-0 text-[#7a4f25] text-[0.72rem] uppercase tracking-[0.06em]">
                       Section Notes
                     </p>
-                    <p className="mt-[0.35rem] whitespace-pre-wrap rounded-[0.45rem] border border-[#edd9be] bg-[#fffdf8] p-[0.55rem] text-[0.76rem] text-[var(--color-ink-soft)] leading-[1.55]">
+                    <p className="mt-[0.35rem] whitespace-pre-wrap rounded-[0.45rem] border border-[#edd9be] bg-card p-[0.55rem] text-[0.76rem] text-ink-soft leading-[1.55]">
                       {entry.original.notes}
                     </p>
                   </>
                 ) : null}
               </div>
-              <pre className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
+              <pre className="mt-[0.55rem] max-h-72 overflow-auto whitespace-pre-wrap rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
                 {entry.original.example}
               </pre>
             </section>
@@ -129,7 +129,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                 key={key}
               >
                 <h3 className="m-0 text-[0.93rem]">{humanizeSourceKey(key)}</h3>
-                <p className="mt-[0.3rem] break-all text-[0.75rem] text-[var(--color-ink-soft)]">
+                <p className="mt-[0.3rem] break-all text-[0.75rem] text-ink-soft">
                   {key}
                 </p>
                 {renderDataItem(key, value)}
@@ -138,8 +138,8 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           </div>
         </article>
 
-        <article className="overflow-hidden rounded-[0.9rem] border border-[var(--color-stroke)] bg-[var(--color-card)]">
-          <div className="flex items-baseline justify-between border-[var(--color-stroke)] border-b bg-[var(--color-bg-soft)] px-[0.95rem] py-[0.8rem]">
+        <article className="overflow-hidden rounded-[0.9rem] border border-stroke bg-card">
+          <div className="flex items-baseline justify-between border-stroke border-b bg-bg-soft px-[0.95rem] py-[0.8rem]">
             <h2>Processed Results</h2>
             <p>{entry.results.length} files</p>
           </div>
@@ -151,7 +151,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               Diff Base
             </label>
             <select
-              className="max-w-full rounded-[0.4rem] border border-[#e7d4b8] bg-white px-[0.4rem] py-[0.22rem] text-[0.78rem] text-[var(--color-ink)]"
+              className="max-w-full rounded-[0.4rem] border border-[#e7d4b8] bg-white px-[0.4rem] py-[0.22rem] text-[0.78rem] text-ink"
               id="diff-base"
               value={baseVariant}
               onChange={(event) => setBaseVariant(event.target.value)}
@@ -177,7 +177,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                     Baseline
                   </span>
                 )}
-                <p className="mt-[0.3rem] break-all text-[0.75rem] text-[var(--color-ink-soft)]">
+                <p className="mt-[0.3rem] break-all text-[0.75rem] text-ink-soft">
                   {key}
                 </p>
                 {renderOutItem(key, value, baseOutput)}
@@ -212,18 +212,18 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   if (isRouteErrorResponse(error) && error.status === 404) {
     return (
       <main className="mx-auto w-[min(1320px,92vw)] pt-5 pb-8">
-        <section className="relative overflow-hidden rounded-[1rem] border border-[var(--color-stroke)] bg-[radial-gradient(circle_at_85%_15%,_#ffe9c7_0%,_transparent_45%),var(--color-card)] p-5 shadow-[0_10px_24px_rgba(199,109,42,0.08)]">
-          <p className="m-0 text-[0.82rem] text-[var(--color-accent-2)] uppercase tracking-[0.08em]">
+        <section className="relative overflow-hidden rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow-[0_10px_24px_rgba(199,109,42,0.08)]">
+          <p className="m-0 text-[0.82rem] text-accent-2 uppercase tracking-[0.08em]">
             404
           </p>
           <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.2]">
             Entry Not Found
           </h1>
-          <p className="mt-[0.6rem] mb-0 text-[0.95rem] text-[var(--color-ink-soft)] leading-[1.7]">
+          <p className="mt-[0.6rem] mb-0 text-[0.95rem] text-ink-soft leading-[1.7]">
             该条目不存在，或参数格式不正确。
           </p>
           <Link
-            className="rounded-full border border-[var(--color-stroke)] bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
+            className="rounded-full border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
             to="/"
           >
             Back To Index
@@ -242,7 +242,7 @@ function renderDataItem(key: string, value: string) {
   if (key.endsWith(".json")) {
     return (
       <pre
-        className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
+        className="mt-[0.55rem] max-h-72 overflow-auto whitespace-pre-wrap rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
         dangerouslySetInnerHTML={{ __html: highlightJson(content) }}
       />
@@ -252,7 +252,7 @@ function renderDataItem(key: string, value: string) {
   if (key.endsWith(".bib")) {
     return (
       <pre
-        className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
+        className="mt-[0.55rem] max-h-72 overflow-auto whitespace-pre-wrap rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
         dangerouslySetInnerHTML={{ __html: highlightBib(content) }}
       />
@@ -260,7 +260,7 @@ function renderDataItem(key: string, value: string) {
   }
 
   return (
-    <pre className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
+    <pre className="mt-[0.55rem] max-h-72 overflow-auto whitespace-pre-wrap rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
       {content}
     </pre>
   );
