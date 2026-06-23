@@ -46,13 +46,13 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   return (
     <main className="mx-auto grid w-[min(1320px,92vw)] gap-4 pt-5 pb-8">
       <header className="grid gap-[0.6rem] overflow-hidden rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow-[0_10px_24px_rgba(199,109,42,0.08)]">
-        <p className="m-0 text-[0.82rem] text-accent-2 uppercase tracking-[0.08em]">
+        <p className="m-0 text-[0.82rem] text-accent-2">
           Entry [{entry.canonicalIndex + 1}]
         </p>
-        <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.2]">
+        <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)]">
           {entry.meta.name}
         </h1>
-        <p className="mt-[0.6rem] mb-0 flex flex-wrap gap-[0.35rem] text-[0.95rem] text-ink-soft leading-[1.7]">
+        <p className="mt-[0.6rem] mb-0 flex flex-wrap gap-[0.35rem] text-[0.95rem] text-ink-soft">
           <code className="rounded-[0.35rem] border border-stroke bg-bg-soft px-[0.36rem] py-[0.06rem]">
             {entry.id}
           </code>
@@ -114,13 +114,13 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                     <p className="m-0 text-[#7a4f25] text-[0.72rem] uppercase tracking-[0.06em]">
                       Section Notes
                     </p>
-                    <p className="mt-[0.35rem] whitespace-pre-wrap rounded-[0.45rem] border border-[#edd9be] bg-card p-[0.55rem] text-[0.76rem] text-ink-soft leading-[1.55]">
+                    <p className="mt-[0.35rem] whitespace-pre-wrap rounded-[0.45rem] border border-[#edd9be] bg-card p-[0.55rem] text-[0.76rem] text-ink-soft">
                       {entry.original.notes}
                     </p>
                   </>
                 ) : null}
               </div>
-              <pre className="mt-[0.55rem] max-h-72 overflow-auto whitespace-pre-wrap rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
+              <pre className="mt-[0.55rem] max-h-72 overflow-auto whitespace-pre-wrap rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem]">
                 {entry.original.example}
               </pre>
             </section>
@@ -215,13 +215,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     return (
       <main className="mx-auto w-[min(1320px,92vw)] pt-5 pb-8">
         <section className="relative overflow-hidden rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow-[0_10px_24px_rgba(199,109,42,0.08)]">
-          <p className="m-0 text-[0.82rem] text-accent-2 uppercase tracking-[0.08em]">
-            404
-          </p>
-          <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.2]">
+          <p className="m-0 text-[0.82rem] text-accent-2">404</p>
+          <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)]">
             Entry Not Found
           </h1>
-          <p className="mt-[0.6rem] mb-0 text-[0.95rem] text-ink-soft leading-[1.7]">
+          <p className="mt-[0.6rem] mb-0 text-[0.95rem] text-ink-soft">
             该条目不存在，或参数格式不正确。
           </p>
           <Link
