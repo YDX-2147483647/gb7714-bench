@@ -20,15 +20,16 @@ export namespace Source {
   export type Key =
     `GB-T_7714—2025.${`${"builtin" | "better"}.${"bib" | "json"}` | "original.toml"}`;
 
-  export type Value = OriginalToml | AnyBib | AnyJson;
+  /** The library of the data source. */
+  export type Value = OriginalTomlLibrary | AnyBib[] | AnyJson[];
 
   /** A representation suitable for `JSON.stringify`. */
   export type Serializable = Record<Key, Value>;
 
   /** Parsed and normalized `original.toml`. */
-  export type OriginalToml = {
+  export type OriginalTomlLibrary = {
     notes: string;
-    section: {
+    sections: {
       idPrefix: string;
       headings: string[];
       examples: string[];
@@ -36,16 +37,20 @@ export namespace Source {
     }[];
   };
 
-  /** An array of entries with their trailing comments. */
-  export type AnyBib = string[];
+  /** An entry with its trailing comments. */
+  export type AnyBib = string;
 
-  /** An array of CSL-JSON entries. */
-  export type AnyJson = ({ id: EntryId; type: string } & Record<
+  /** A CSL-JSON entry. */
+  export type AnyJson = {
+    id: EntryId;
+    type: string;
+    title?: string | undefined;
+  } & Record<
     string,
     | string
     | Array<string | number | Record<string, string>>
     | { "date-parts": (string | number)[][] }
-  >)[];
+  >;
 }
 
 async function loadSource(key: Source.Key): Promise<Source.Value> {
@@ -55,11 +60,11 @@ async function loadSource(key: Source.Key): Promise<Source.Value> {
   );
 
   if (key.endsWith(".json")) {
-    return JSON.parse(raw) as Source.AnyJson;
+    return JSON.parse(raw) as Source.AnyJson[];
   } else if (key.endsWith(".bib")) {
     return raw
       .split(/\n(?=@)/g)
-      .map((entry) => entry.trim()) satisfies Source.AnyBib;
+      .map((entry) => entry.trim() satisfies Source.AnyBib);
   } else if (key.endsWith(".original.toml")) {
     const { notes, section } = parseToml(raw) as {
       notes: string;
@@ -72,13 +77,13 @@ async function loadSource(key: Source.Key): Promise<Source.Value> {
     };
     return {
       notes,
-      section: section.map((sec) => ({
+      sections: section.map((sec) => ({
         idPrefix: sec["id-prefix"],
         headings: sec.headings,
         examples: sec.examples.trim().split("\n"),
-        notes: sec.notes ?? null,
+        notes: sec.notes?.trim() ?? null,
       })),
-    } satisfies Source.OriginalToml;
+    } satisfies Source.OriginalTomlLibrary;
   } else {
     throw new Error(`Unknown data source: ${key}`);
   }
@@ -98,7 +103,7 @@ export namespace Result {
   export type Key =
     `${Source.Key}/${string}/${"default" | `gb-7714-${"2025" | "2015"}-numeric.${"compliant" | "extended"}`}.txt`;
 
-  /** An array of formatted entries. */
+  /** The formatted library, as an array of entries. */
   export type Value = string[];
 
   /** A representation suitable for `JSON.stringify`. */
@@ -174,24 +179,25 @@ if (import.meta.vitest) {
       ].sort(),
     );
 
-    const nEntries = (sources["GB-T_7714—2025.builtin.json"] as Source.AnyJson)
-      .length;
+    const nEntries = (
+      sources["GB-T_7714—2025.builtin.json"] as Source.AnyJson[]
+    ).length;
 
     for (const [k, vRaw] of Object.entries(sources)) {
       if (k.endsWith(".bib")) {
-        const v = vRaw as Source.AnyBib;
+        const v = vRaw as Source.AnyBib[];
         expect(v.length).toBe(nEntries);
         expect(v[0]).toBeTypeOf("string");
       } else if (k.endsWith(".json")) {
-        const v = vRaw as Source.AnyJson;
+        const v = vRaw as Source.AnyJson[];
         expect(v.length).toBe(nEntries);
         expect(v[0]).toBeTypeOf("object");
         expect(v[0].id).toBeTypeOf("string");
       } else if (k.endsWith(".original.toml")) {
-        const v = vRaw as Source.OriginalToml;
-        expect(v.section.length).toBeLessThan(nEntries);
+        const v = vRaw as Source.OriginalTomlLibrary;
+        expect(v.sections.length).toBeLessThan(nEntries);
         expect(
-          v.section
+          v.sections
             .map((sec) => sec.examples.length)
             .reduce((acc, val) => acc + val, 0),
         ).toBeGreaterThanOrEqual(nEntries);
