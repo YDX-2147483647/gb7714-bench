@@ -82,7 +82,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                       </span>
                       <span className="grid gap-[0.2rem]">
                         <span className="text-[1rem] leading-[1.45]">
-                          {entry.meta.title}
+                          {entry.meta.name}
                         </span>
                         <span className="flex flex-wrap gap-[0.35rem]">
                           <code className="rounded-full border border-[#e8d8c1] px-2 py-[0.08rem] text-[0.73rem] text-ink-soft">

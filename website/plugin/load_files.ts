@@ -46,12 +46,13 @@ export namespace Source {
     id: EntryId;
     type: string;
     title?: string | undefined;
-  } & Record<
-    string,
-    | string
-    | Array<string | number | Record<string, string>>
-    | { "date-parts": (string | number)[][] }
-  >;
+    "container-title"?: string | undefined;
+    author?: Record<string, string>[] | undefined;
+    issued?:
+      | { "date-parts": (string | number)[][] }
+      | { literal: string }
+      | undefined;
+  } & Record<string, string | (string | number | Record<string, string>)[]>;
 }
 
 async function loadSource(key: Source.Key): Promise<Source.Value> {

@@ -38,10 +38,47 @@ type EntryInfo = {
 
 /** Auxiliary info extracted from `sourceCanonical`, only for displaying. */
 type EntryMeta = {
-  title: string | null;
+  /** @see buildName */
+  name: string | null;
   /** CSL entry type. */
   entryType: string;
 };
+
+/** Build the display name for an entry */
+function buildName(entry: Source.AnyJson): string | null {
+  if (entry.title) {
+    return entry.title;
+  }
+  if (entry["container-title"]) {
+    return entry["container-title"];
+  }
+
+  if (entry.author?.at(0)) {
+    return Object.values(entry.author[0]).join(" ");
+  }
+
+  if (entry.issued) {
+    if ("literal" in entry.issued) {
+      return entry.issued.literal;
+    }
+    if ("date-parts" in entry.issued) {
+      return JSON.stringify(entry.issued["date-parts"]);
+    }
+  }
+
+  const meaningful = Object.entries(entry).filter(
+    ([k, v]) =>
+      !["id", "citation-key", "type", "language", "langid", "note"].includes(
+        k,
+      ) && typeof v === "string",
+  );
+  if (meaningful.length === 1) {
+    const [k, v] = meaningful[0];
+    return `${k}: ${v}`;
+  }
+
+  return null;
+}
 
 function getCanonicalEntry(id: EntryId): {
   canonicalIndex: number;
@@ -54,7 +91,7 @@ function getCanonicalEntry(id: EntryId): {
 
   const entry = sourceCanonical[canonicalIndex];
   const meta = {
-    title: entry.title ?? null,
+    name: buildName(entry),
     entryType: entry.type,
   };
 
@@ -179,7 +216,7 @@ if (import.meta.vitest) {
     expect(info.meta).toMatchInlineSnapshot(`
       {
         "entryType": "book",
-        "title": "国史旧闻",
+        "name": "国史旧闻",
       }
     `);
 
@@ -239,9 +276,17 @@ if (import.meta.vitest) {
         "id": "gbt7714.5.1:1",
         "meta": {
           "entryType": "book",
-          "title": "银行业的未来与人工智能",
+          "name": "银行业的未来与人工智能",
         },
       }
     `);
+  });
+
+  test("buildName", () => {
+    const noName = sourceCanonical
+      .filter((entry) => buildName(entry) === null)
+      .map((entry) => entry.id);
+
+    expect(noName).toHaveLength(0);
   });
 }

@@ -50,7 +50,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           Entry [{entry.canonicalIndex + 1}]
         </p>
         <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.2]">
-          {entry.meta.title}
+          {entry.meta.name}
         </h1>
         <p className="mt-[0.6rem] mb-0 flex flex-wrap gap-[0.35rem] text-[0.95rem] text-ink-soft leading-[1.7]">
           <code className="rounded-[0.35rem] border border-stroke bg-bg-soft px-[0.36rem] py-[0.06rem]">
