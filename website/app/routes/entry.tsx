@@ -160,7 +160,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               <option value="">(none)</option>
               {outputOptions.map((opt) => (
                 <option key={opt} value={opt}>
-                  {opt}
+                  {humanizeResultKey(opt)}
                 </option>
               ))}
             </select>
