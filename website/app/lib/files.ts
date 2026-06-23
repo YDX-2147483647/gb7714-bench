@@ -1,5 +1,11 @@
 import { RESULT, SOURCE } from "virtual:gb7714-bench-files";
-import type { EntryId, Result, Source } from "../../plugin/load_files";
+import type {
+  EntryId,
+  EntryIdPrefix,
+  Result,
+  Source,
+} from "../../plugin/load_files";
+
 import { compareKey, range } from "./util";
 
 const sourceCanonical = SOURCE[
@@ -11,6 +17,9 @@ const sourceOriginalToml = SOURCE[
 
 type EntryInfo = {
   id: EntryId;
+
+  /** Index in the library, starting from zero. */
+  canonicalIndex: number;
 
   /** A map from data sources to their contents, ordered. */
   sources: [Source.Key, string][];
@@ -30,7 +39,7 @@ type EntryInfo = {
 /** Auxiliary info extracted from `sourceCanonical`, only for displaying. */
 type EntryMeta = {
   title: string | null;
-  /** CSL entry type */
+  /** CSL entry type. */
   entryType: string;
 };
 
@@ -98,6 +107,7 @@ export function getEntryInfo(id: EntryId): EntryInfo {
 
   return {
     id,
+    canonicalIndex,
     sources,
     results,
     original: {
@@ -110,9 +120,10 @@ export function getEntryInfo(id: EntryId): EntryInfo {
 }
 
 type SectionInfo = {
+  idPrefix: EntryIdPrefix;
   headings: string[];
   notes: string | null;
-  entries: { id: EntryId; meta: EntryMeta }[];
+  entries: { id: EntryId; canonicalIndex: number; meta: EntryMeta }[];
 };
 
 export function getSections(): SectionInfo[] {
@@ -124,11 +135,11 @@ export function getSections(): SectionInfo[] {
 
       const entries = range(nEntries).map((i) => {
         const id: EntryId = `${idPrefix}${i + 1}`;
-        const { meta } = getCanonicalEntry(id);
-        return { id, meta };
+        const { canonicalIndex, meta } = getCanonicalEntry(id);
+        return { id, canonicalIndex, meta };
       });
 
-      return { headings, notes, entries };
+      return { idPrefix, headings, notes, entries };
     },
   );
 }
@@ -140,6 +151,8 @@ if (import.meta.vitest) {
     const id = "gbt7714.9.2.1.3:4";
     const info = getEntryInfo(id);
     expect(info.id).toStrictEqual(id);
+
+    expect(info.canonicalIndex).toStrictEqual(186);
 
     expect(info.original).toStrictEqual({
       example: "[4] 陈登原.国史旧闻:第1卷[M].北京:中华书局,2000:29.",
@@ -204,6 +217,7 @@ if (import.meta.vitest) {
     expect(sections[0].entries.length).toStrictEqual(4);
     expect(sections[0].entries[0]).toStrictEqual({
       id: "gbt7714.5.1:1",
+      canonicalIndex: 0,
       meta: {
         title: "银行业的未来与人工智能",
         entryType: "book",

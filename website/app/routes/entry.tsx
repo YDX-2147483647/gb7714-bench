@@ -2,58 +2,49 @@ import { diffWordsWithSpace } from "diff";
 import { useMemo, useState } from "react";
 import { isRouteErrorResponse, Link } from "react-router";
 
-import { getBenchEntryByParam } from "../lib.server";
+import { getEntryInfo } from "~/lib/files";
+import { decodeEntryId, type EntryIdUrlSafe } from "~/lib/naming";
 import type { Route } from "./+types/entry";
 
-export function meta({ params: { entryId } }: Route.MetaArgs) {
-  return [{ title: `Entry ${entryId}` }];
+export function meta({ params: { entryId }, loaderData }: Route.MetaArgs) {
+  const canonicalIndex = loaderData?.entry?.canonicalIndex ?? -1;
+  return [{ title: `Entry [${canonicalIndex + 1}] ${entryId}` }];
 }
 
-export async function loader({ params: { entryId } }: Route.LoaderArgs) {
-  const data = await getBenchEntryByParam(entryId.replace("-", ":") ?? "");
-  if (!data) {
-    throw new Response("Entry not found", { status: 404 });
-  }
-  return data;
+export async function clientLoader({ params: { entryId } }: Route.LoaderArgs) {
+  const entry = getEntryInfo(decodeEntryId(entryId as EntryIdUrlSafe));
+  return {
+    entry,
+    // TODO
+    previousEntryId: "gbt7714.5.1:1",
+    nextEntryId: "gbt7714.5.1:1",
+  };
 }
 
 export default function EntryDetail({ loaderData }: Route.ComponentProps) {
-  const {
-    entry,
-    entrySection,
-    previousEntryId,
-    nextEntryId,
-    dataItems,
-    outItems,
-  } = loaderData;
+  const { entry, previousEntryId, nextEntryId } = loaderData;
   const [baseVariant, setBaseVariant] = useState("");
 
   const outputOptions = useMemo(
-    () =>
-      Array.from(new Set(outItems.map((item) => item.fileKey))).sort((a, b) =>
-        a.localeCompare(b),
-      ),
-    [outItems],
+    () => entry.results.map(([key, _]) => key),
+    [entry.results],
   );
   const baseOutput = useMemo(
     () =>
       baseVariant
-        ? (outItems.find((item) => item.fileKey === baseVariant) ?? null)
+        ? (entry.results.find(([key, _]) => key === baseVariant) ?? null)
         : null,
-    [baseVariant, outItems],
+    [baseVariant, entry.results],
   );
 
   return (
     <main className="page-shell detail-shell">
       <header className="hero-card detail-hero">
-        <p className="hero-kicker">Entry #{entry.index}</p>
-        <h1 className="hero-title">{entry.title}</h1>
+        <p className="hero-kicker">Entry [{entry.canonicalIndex + 1}]</p>
+        <h1 className="hero-title">{entry.meta.title}</h1>
         <p className="hero-subtitle detail-meta-line">
           <code>{entry.id}</code>
-          {entry.citationKey !== entry.id ? (
-            <code>{entry.citationKey}</code>
-          ) : null}
-          <code>{entry.type}</code>
+          <code>{entry.meta.entryType}</code>
         </p>
         <div className="detail-nav">
           <Link className="nav-chip" to="/">
@@ -82,32 +73,35 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
         <article className="panel">
           <div className="panel-head">
             <h2>Data Sources</h2>
-            <p>{dataItems.length} files</p>
+            <p>Original + {entry.sources.length} files</p>
           </div>
           <div className="panel-body">
-            {dataItems.map((item) => (
-              <section className="text-block" key={item.sourcePath}>
-                <h3>{item.fileKey}</h3>
-                <p className="path-note">{item.sourcePath}</p>
-                {item.fileKey.endsWith(".original.toml") && entrySection ? (
-                  <div className="section-meta-card">
-                    <p className="section-meta-kicker">Section Headings</p>
-                    <ul>
-                      {entrySection.headings.map((heading) => (
-                        <li key={heading}>{heading}</li>
-                      ))}
-                    </ul>
-                    {entrySection.notes ? (
-                      <>
-                        <p className="section-meta-kicker">Section Notes</p>
-                        <pre className="section-notes section-notes-in-entry">
-                          {entrySection.notes}
-                        </pre>
-                      </>
-                    ) : null}
-                  </div>
+            <section className="text-block">
+              <h3>Original</h3>
+              <p className="path-note">GB-T_7714—2025.original.toml</p>
+              <div className="section-meta-card">
+                <p className="section-meta-kicker">Section Headings</p>
+                <ul>
+                  {entry.original.headings.map((heading) => (
+                    <li key={heading}>{heading}</li>
+                  ))}
+                </ul>
+                {entry.original.notes ? (
+                  <>
+                    <p className="section-meta-kicker">Section Notes</p>
+                    <p className="section-notes section-notes-in-entry">
+                      {entry.original.notes}
+                    </p>
+                  </>
                 ) : null}
-                {renderDataItem(item)}
+              </div>
+              <pre>{entry.original.example}</pre>
+            </section>
+            {entry.sources.map(([key, value]) => (
+              <section className="text-block" key={key}>
+                <h3>{key}</h3>
+                <p className="path-note">{key}</p>
+                {renderDataItem(key, value)}
               </section>
             ))}
           </div>
@@ -115,8 +109,8 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
 
         <article className="panel">
           <div className="panel-head">
-            <h2>Output Variants</h2>
-            <p>{outItems.length} files</p>
+            <h2>Processed Results</h2>
+            <p>{entry.results.length} files</p>
           </div>
           <div className="panel-filter-row">
             <label htmlFor="diff-base">Diff Base</label>
@@ -134,11 +128,11 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
             </select>
           </div>
           <div className="panel-body">
-            {outItems.map((item) => (
-              <section className="text-block" key={item.sourcePath}>
-                <h3>{item.fileKey}</h3>
-                <p className="path-note">{item.sourcePath}</p>
-                {renderOutItem(item, baseOutput)}
+            {entry.results.map(([key, value]) => (
+              <section className="text-block" key={key}>
+                <h3>{key}</h3>
+                <p className="path-note">{key}</p>
+                {renderOutItem(key, value, baseOutput)}
               </section>
             ))}
           </div>
@@ -149,16 +143,19 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
 }
 
 function renderOutItem(
-  item: { fileKey: string; item: string },
-  baseOutput: { fileKey: string; item: string } | null,
+  key: string,
+  value: string,
+  baseOutput: [string, string] | null,
 ) {
-  const content = item.item || "(no item at this index)";
+  const content = value;
 
   if (!baseOutput) {
     return <pre>{content}</pre>;
   }
 
-  if (baseOutput.fileKey === item.fileKey) {
+  const [baseKey, baseValue] = baseOutput;
+
+  if (baseKey === key) {
     return (
       <>
         <p className="diff-badge">Baseline</p>
@@ -171,7 +168,7 @@ function renderOutItem(
     <pre
       className="code-diff"
       // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
-      dangerouslySetInnerHTML={{ __html: renderDiff(baseOutput.item, content) }}
+      dangerouslySetInnerHTML={{ __html: renderDiff(baseValue, content) }}
     />
   );
 }
@@ -195,9 +192,9 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   throw error;
 }
 
-function renderDataItem(item: { fileKey: string; item: string }) {
-  const content = item.item || "(no item at this index)";
-  if (item.fileKey.endsWith(".json")) {
+function renderDataItem(key: string, value: string) {
+  const content = value;
+  if (key.endsWith(".json")) {
     return (
       <pre
         className="code-json"
@@ -207,7 +204,7 @@ function renderDataItem(item: { fileKey: string; item: string }) {
     );
   }
 
-  if (item.fileKey.endsWith(".bib")) {
+  if (key.endsWith(".bib")) {
     return (
       <pre
         className="code-bib"

@@ -13,7 +13,7 @@ const OUT_DIR = path.join(ROOT_DIR, "target/out/");
 
 export type EntryId = `gbt7714.${string}:${string}`;
 export type EntryIdUrlSafe = `gbt7714.${string}-${string}`;
-type EntryIdPrefix = `gbt7714.${string}:`;
+export type EntryIdPrefix = `gbt7714.${string}:`;
 
 /** Typed data sources. */
 export namespace Source {

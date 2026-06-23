@@ -1,5 +1,6 @@
 import { Link } from "react-router";
-import { getBenchIndexData } from "../lib.server";
+import { getSections } from "~/lib/files";
+import { encodeEntryId } from "~/lib/naming";
 import type { Route } from "./+types/home";
 
 export function meta(_: Route.MetaArgs) {
@@ -13,11 +14,11 @@ export function meta(_: Route.MetaArgs) {
 }
 
 export async function loader() {
-  return getBenchIndexData();
+  return { sections: getSections() };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const { entries, sections } = loaderData;
+  const { sections } = loaderData;
 
   return (
     <main className="page-shell">
@@ -34,7 +35,6 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       <section className="entry-list-wrap">
         <div className="entry-list-head">
           <h2>Entries</h2>
-          <p>{entries.length} total</p>
         </div>
         <div className="section-list">
           {sections.map((section) => (
@@ -52,14 +52,16 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                   <li key={entry.id}>
                     <Link
                       className="entry-link"
-                      to={`/entry/${entry.id.replace(":", "-")}/`}
+                      to={`/entry/${encodeEntryId(entry.id)}/`}
                     >
-                      <span className="entry-number">#{entry.index}</span>
+                      <span className="entry-number">
+                        [{entry.canonicalIndex + 1}]
+                      </span>
                       <span className="entry-body">
-                        <span className="entry-title">{entry.title}</span>
+                        <span className="entry-title">{entry.meta.title}</span>
                         <span className="entry-meta">
                           <code>{entry.id}</code>
-                          <code>{entry.type}</code>
+                          <code>{entry.meta.entryType}</code>
                         </span>
                       </span>
                     </Link>

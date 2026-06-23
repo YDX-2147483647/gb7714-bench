@@ -60,36 +60,6 @@ function simplifyStyleName(style: string): string {
   return style;
 }
 
-export function compareDataFileKey(a: string, b: string): number {
-  const rankA = rankDataFileKey(a);
-  const rankB = rankDataFileKey(b);
-
-  if (rankA !== rankB) {
-    return rankA - rankB;
-  }
-
-  return a.localeCompare(b);
-}
-
-function rankDataFileKey(fileKey: string): number {
-  if (fileKey.endsWith(".original.toml")) {
-    return 0;
-  }
-
-  const formatRank = fileKey.endsWith(".bib")
-    ? 0
-    : fileKey.endsWith(".json")
-      ? 1
-      : 2;
-  const sourceRank = fileKey.includes(".builtin.")
-    ? 0
-    : fileKey.includes(".better.")
-      ? 1
-      : 2;
-
-  return 10 + formatRank * 3 + sourceRank;
-}
-
 function simplifyDatasetName(dataset: string): string {
   return dataset.replace(/^GB-T_7714—2025\./, "");
 }
@@ -130,16 +100,6 @@ if (import.meta.vitest) {
           style: "default",
         }),
       ).toBe("builtin.bib · biblatex");
-    });
-
-    it("sorts original.toml before other data files", () => {
-      expect(
-        compareDataFileKey(
-          "GB-T_7714—2025.original.toml",
-          "GB-T_7714—2025.builtin.bib",
-        ),
-      ).toBeLessThan(0);
-      expect(rankDataFileKey("GB-T_7714—2025.original.toml")).toBe(0);
     });
   });
 }
