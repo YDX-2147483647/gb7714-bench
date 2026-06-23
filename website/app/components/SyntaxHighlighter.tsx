@@ -1,5 +1,16 @@
 import type { JSX } from "react";
-import ShikiHighlighter from "react-shiki";
+
+import ShikiHighlighter, {
+  createHighlighterCore,
+  createOnigurumaEngine,
+} from "react-shiki/core";
+
+// https://www.npmjs.com/package/react-shiki#react-shikicore-minimal-bundle
+const highlighter = await createHighlighterCore({
+  themes: [import("@shikijs/themes/github-light")],
+  langs: [import("@shikijs/langs/bibtex"), import("@shikijs/langs/json")],
+  engine: createOnigurumaEngine(import("shiki/wasm")),
+});
 
 export function SyntaxHighlighter({
   language,
@@ -12,6 +23,7 @@ export function SyntaxHighlighter({
 }): JSX.Element {
   return (
     <ShikiHighlighter
+      highlighter={highlighter}
       language={language}
       theme="github-light"
       // outputFormat="react" leads to the following client error, so `html` is used instead.

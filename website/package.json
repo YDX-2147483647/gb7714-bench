@@ -13,13 +13,16 @@
   "dependencies": {
     "@react-router/node": "8.0.0",
     "@react-router/serve": "8.0.0",
+    "@shikijs/langs": "^4.2.0",
+    "@shikijs/themes": "^4.2.0",
     "@std/toml": "jsr:^1.0.11",
     "diff": "^9.0.0",
     "isbot": "^5.1.36",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router": "8.0.0",
-    "react-shiki": "^0.10.1"
+    "react-shiki": "^0.10.1",
+    "shiki": "^4.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.0",

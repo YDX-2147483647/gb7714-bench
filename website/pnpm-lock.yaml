@@ -194,6 +194,12 @@ importers:
       '@react-router/serve':
         specifier: 8.0.0
         version: 8.0.0(react-router@8.0.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(typescript@5.9.3)
+      '@shikijs/langs':
+        specifier: ^4.2.0
+        version: 4.2.0
+      '@shikijs/themes':
+        specifier: ^4.2.0
+        version: 4.2.0
       '@std/toml':
         specifier: jsr:^1.0.11
         version: '@jsr/std__toml@1.0.11'
@@ -215,6 +221,9 @@ importers:
       react-shiki:
         specifier: ^0.10.1
         version: 0.10.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      shiki:
+        specifier: ^4.2.0
+        version: 4.2.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.5.0
