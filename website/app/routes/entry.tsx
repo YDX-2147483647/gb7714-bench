@@ -38,21 +38,32 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   );
 
   return (
-    <main className="page-shell detail-shell">
-      <header className="hero-card detail-hero">
-        <p className="hero-kicker">Entry [{entry.canonicalIndex + 1}]</p>
-        <h1 className="hero-title">{entry.meta.title}</h1>
-        <p className="hero-subtitle detail-meta-line">
-          <code>{entry.id}</code>
-          <code>{entry.meta.entryType}</code>
+    <main className="mx-auto grid w-[min(1320px,92vw)] gap-4 pt-5 pb-8">
+      <header className="grid gap-[0.6rem] overflow-hidden rounded-[1rem] border border-[var(--color-stroke)] bg-[radial-gradient(circle_at_85%_15%,_#ffe9c7_0%,_transparent_45%),var(--color-card)] p-5 shadow-[0_10px_24px_rgba(199,109,42,0.08)]">
+        <p className="m-0 text-[0.82rem] uppercase tracking-[0.08em] text-[var(--color-accent-2)]">
+          Entry [{entry.canonicalIndex + 1}]
         </p>
-        <div className="detail-nav">
-          <Link className="nav-chip" to="/">
+        <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.2]">
+          {entry.meta.title}
+        </h1>
+        <p className="flex flex-wrap gap-[0.35rem] mt-[0.6rem] mb-0 text-[0.95rem] leading-[1.7] text-[var(--color-ink-soft)]">
+          <code className="rounded-[0.35rem] border border-[var(--color-stroke)] bg-[var(--color-bg-soft)] px-[0.36rem] py-[0.06rem]">
+            {entry.id}
+          </code>
+          <code className="rounded-[0.35rem] border border-[var(--color-stroke)] bg-[var(--color-bg-soft)] px-[0.36rem] py-[0.06rem]">
+            {entry.meta.entryType}
+          </code>
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            className="rounded-full border border-[var(--color-stroke)] bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[0.78rem] text-[#5e3f2d] hover:bg-[#ffeccc]"
+            to="/"
+          >
             Back To Index
           </Link>
           {previousEntryId ? (
             <Link
-              className="nav-chip"
+              className="rounded-full border border-[var(--color-stroke)] bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[0.78rem] text-[#5e3f2d] hover:bg-[#ffeccc]"
               to={`/entry/${previousEntryId.replace(":", "-")}/`}
             >
               Previous
@@ -60,7 +71,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           ) : null}
           {nextEntryId ? (
             <Link
-              className="nav-chip"
+              className="rounded-full border border-[var(--color-stroke)] bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[0.78rem] text-[#5e3f2d] hover:bg-[#ffeccc]"
               to={`/entry/${nextEntryId.replace(":", "-")}/`}
             >
               Next
@@ -69,52 +80,74 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
         </div>
       </header>
 
-      <section className="detail-grid">
-        <article className="panel">
-          <div className="panel-head">
+      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <article className="overflow-hidden rounded-[0.9rem] border border-[var(--color-stroke)] bg-[var(--color-card)]">
+          <div className="flex items-baseline justify-between border-b border-[var(--color-stroke)] bg-[var(--color-bg-soft)] px-[0.95rem] py-[0.8rem]">
             <h2>Data Sources</h2>
             <p>Original + {entry.sources.length} files</p>
           </div>
-          <div className="panel-body">
-            <section className="text-block">
-              <h3>Original</h3>
-              <p className="path-note">GB-T_7714—2025.original.toml</p>
-              <div className="section-meta-card">
-                <p className="section-meta-kicker">Section Headings</p>
-                <ul>
+          <div className="grid">
+            <section className="border-t border-dashed border-[#eedfca] px-[0.95rem] py-[0.78rem] first:border-t-0">
+              <h3 className="m-0 text-[0.93rem]">Original</h3>
+              <p className="mt-[0.3rem] break-all text-[0.75rem] text-[var(--color-ink-soft)]">
+                GB-T_7714—2025.original.toml
+              </p>
+              <div className="mt-2 rounded-[0.5rem] border border-[#ecd9bf] bg-[#fff8ea] px-[0.6rem] py-[0.5rem]">
+                <p className="m-0 text-[0.72rem] uppercase tracking-[0.06em] text-[#7a4f25]">
+                  Section Headings
+                </p>
+                <ul className="mt-[0.25rem] mb-0 pl-[1.2rem]">
                   {entry.original.headings.map((heading) => (
-                    <li key={heading}>{heading}</li>
+                    <li className="my-[0.2rem] text-[0.78rem]" key={heading}>
+                      {heading}
+                    </li>
                   ))}
                 </ul>
                 {entry.original.notes ? (
                   <>
-                    <p className="section-meta-kicker">Section Notes</p>
-                    <p className="section-notes section-notes-in-entry">
+                    <p className="m-0 text-[0.72rem] uppercase tracking-[0.06em] text-[#7a4f25]">
+                      Section Notes
+                    </p>
+                    <p className="mt-[0.35rem] whitespace-pre-wrap rounded-[0.45rem] border border-[#edd9be] bg-[#fffdf8] p-[0.55rem] text-[0.76rem] leading-[1.55] text-[var(--color-ink-soft)]">
                       {entry.original.notes}
                     </p>
                   </>
                 ) : null}
               </div>
-              <pre>{entry.original.example}</pre>
+              <pre className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
+                {entry.original.example}
+              </pre>
             </section>
+
             {entry.sources.map(([key, value]) => (
-              <section className="text-block" key={key}>
-                <h3>{key}</h3>
-                <p className="path-note">{key}</p>
+              <section
+                className="border-t border-dashed border-[#eedfca] px-[0.95rem] py-[0.78rem] first:border-t-0"
+                key={key}
+              >
+                <h3 className="m-0 text-[0.93rem]">{key}</h3>
+                <p className="mt-[0.3rem] break-all text-[0.75rem] text-[var(--color-ink-soft)]">
+                  {key}
+                </p>
                 {renderDataItem(key, value)}
               </section>
             ))}
           </div>
         </article>
 
-        <article className="panel">
-          <div className="panel-head">
+        <article className="overflow-hidden rounded-[0.9rem] border border-[var(--color-stroke)] bg-[var(--color-card)]">
+          <div className="flex items-baseline justify-between border-b border-[var(--color-stroke)] bg-[var(--color-bg-soft)] px-[0.95rem] py-[0.8rem]">
             <h2>Processed Results</h2>
             <p>{entry.results.length} files</p>
           </div>
-          <div className="panel-filter-row">
-            <label htmlFor="diff-base">Diff Base</label>
+          <div className="flex items-center gap-[0.65rem] border-b border-dashed border-[#ead8bd] bg-[#fff9ee] px-[0.95rem] py-[0.55rem]">
+            <label
+              className="text-[0.78rem] text-[#694b36]"
+              htmlFor="diff-base"
+            >
+              Diff Base
+            </label>
             <select
+              className="max-w-full rounded-[0.4rem] border border-[#e7d4b8] bg-white px-[0.4rem] py-[0.22rem] text-[0.78rem] text-[var(--color-ink)]"
               id="diff-base"
               value={baseVariant}
               onChange={(event) => setBaseVariant(event.target.value)}
@@ -127,11 +160,16 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               ))}
             </select>
           </div>
-          <div className="panel-body">
+          <div className="grid">
             {entry.results.map(([key, value]) => (
-              <section className="text-block" key={key}>
-                <h3>{key}</h3>
-                <p className="path-note">{key}</p>
+              <section
+                className="border-t border-dashed border-[#eedfca] px-[0.95rem] py-[0.78rem] first:border-t-0"
+                key={key}
+              >
+                <h3 className="m-0 text-[0.93rem]">{key}</h3>
+                <p className="mt-[0.3rem] break-all text-[0.75rem] text-[var(--color-ink-soft)]">
+                  {key}
+                </p>
                 {renderOutItem(key, value, baseOutput)}
               </section>
             ))}
@@ -150,7 +188,11 @@ function renderOutItem(
   const content = value;
 
   if (!baseOutput) {
-    return <pre>{content}</pre>;
+    return (
+      <pre className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
+        {content}
+      </pre>
+    );
   }
 
   const [baseKey, baseValue] = baseOutput;
@@ -158,15 +200,19 @@ function renderOutItem(
   if (baseKey === key) {
     return (
       <>
-        <p className="diff-badge">Baseline</p>
-        <pre>{content}</pre>
+        <p className="mt-[0.55rem] inline-block rounded-full border border-[#e3cca8] bg-[#fff1d4] px-[0.45rem] py-[0.1rem] text-[0.7rem] text-[#7c5027]">
+          Baseline
+        </p>
+        <pre className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
+          {content}
+        </pre>
       </>
     );
   }
 
   return (
     <pre
-      className="code-diff"
+      className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
       // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
       dangerouslySetInnerHTML={{ __html: renderDiff(baseValue, content) }}
     />
@@ -176,12 +222,21 @@ function renderOutItem(
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   if (isRouteErrorResponse(error) && error.status === 404) {
     return (
-      <main className="page-shell">
-        <section className="hero-card">
-          <p className="hero-kicker">404</p>
-          <h1 className="hero-title">Entry Not Found</h1>
-          <p className="hero-subtitle">该条目不存在，或参数格式不正确。</p>
-          <Link className="nav-chip" to="/">
+      <main className="mx-auto w-[min(1320px,92vw)] pt-5 pb-8">
+        <section className="relative overflow-hidden rounded-[1rem] border border-[var(--color-stroke)] bg-[radial-gradient(circle_at_85%_15%,_#ffe9c7_0%,_transparent_45%),var(--color-card)] p-5 shadow-[0_10px_24px_rgba(199,109,42,0.08)]">
+          <p className="m-0 text-[0.82rem] uppercase tracking-[0.08em] text-[var(--color-accent-2)]">
+            404
+          </p>
+          <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.2]">
+            Entry Not Found
+          </h1>
+          <p className="mt-[0.6rem] mb-0 text-[0.95rem] leading-[1.7] text-[var(--color-ink-soft)]">
+            该条目不存在，或参数格式不正确。
+          </p>
+          <Link
+            className="rounded-full border border-[var(--color-stroke)] bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[0.78rem] text-[#5e3f2d] hover:bg-[#ffeccc]"
+            to="/"
+          >
             Back To Index
           </Link>
         </section>
@@ -194,10 +249,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
 function renderDataItem(key: string, value: string) {
   const content = value;
+
   if (key.endsWith(".json")) {
     return (
       <pre
-        className="code-json"
+        className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
         dangerouslySetInnerHTML={{ __html: highlightJson(content) }}
       />
@@ -207,14 +263,18 @@ function renderDataItem(key: string, value: string) {
   if (key.endsWith(".bib")) {
     return (
       <pre
-        className="code-bib"
+        className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
         dangerouslySetInnerHTML={{ __html: highlightBib(content) }}
       />
     );
   }
 
-  return <pre>{content}</pre>;
+  return (
+    <pre className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
+      {content}
+    </pre>
+  );
 }
 
 function escapeHtml(text: string): string {
@@ -236,14 +296,14 @@ function highlightJson(text: string): string {
     (match, strToken, keySuffix, boolOrNull) => {
       if (strToken) {
         if (keySuffix) {
-          return `<span class="tok-key">${strToken}</span><span class="tok-punc">${keySuffix}</span>`;
+          return `<span class="font-semibold text-[#8a4d0f]">${strToken}</span><span class="text-[#7b7f89]">${keySuffix}</span>`;
         }
-        return `<span class="tok-string">${strToken}</span>`;
+        return `<span class="text-[#0f6e59]">${strToken}</span>`;
       }
       if (boolOrNull) {
-        return `<span class="tok-literal">${match}</span>`;
+        return `<span class="font-semibold text-[#6a3fb8]">${match}</span>`;
       }
-      return `<span class="tok-number">${match}</span>`;
+      return `<span class="text-[#154fb4]">${match}</span>`;
     },
   );
 }
@@ -253,21 +313,21 @@ function highlightBib(text: string): string {
 
   escaped = escaped.replace(
     /^(@[A-Za-z]+)(\{)([^,]+)(,?)/gm,
-    '<span class="tok-entry">$1</span><span class="tok-punc">$2</span><span class="tok-key">$3</span><span class="tok-punc">$4</span>',
+    '<span class="font-bold text-[#a23221]">$1</span><span class="text-[#7b7f89]">$2</span><span class="font-semibold text-[#8a4d0f]">$3</span><span class="text-[#7b7f89]">$4</span>',
   );
 
   escaped = escaped.replace(
     /^(\s*)([A-Za-z][\w-]*)(\s*=\s*)/gm,
-    '$1<span class="tok-field">$2</span><span class="tok-punc">$3</span>',
+    '$1<span class="font-semibold text-[#8a4d0f]">$2</span><span class="text-[#7b7f89]">$3</span>',
   );
 
   escaped = escaped.replace(
     /(\{[^{}\n]*\})/g,
-    '<span class="tok-string">$1</span>',
+    '<span class="text-[#0f6e59]">$1</span>',
   );
   escaped = escaped.replace(
     /\b\d{2,}\b/g,
-    '<span class="tok-number">$&</span>',
+    '<span class="text-[#154fb4]">$&</span>',
   );
 
   return escaped;
@@ -282,10 +342,10 @@ function renderDiff(baseText: string, targetText: string): string {
     .map((part) => {
       const html = escapeHtml(part.value);
       if (part.added) {
-        return `<span class="tok-added">${html}</span>`;
+        return `<span class="bg-[#daf8dd] text-[#0e5b2a]">${html}</span>`;
       }
       if (part.removed) {
-        return `<span class="tok-removed">${html}</span>`;
+        return `<span class="bg-[#ffe1df] text-[#8b1b1b] line-through">${html}</span>`;
       }
       return `<span>${html}</span>`;
     })
