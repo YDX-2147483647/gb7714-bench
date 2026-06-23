@@ -40,3 +40,18 @@ code,
 pre {
   font-family: var(--font-mono);
 }
+
+pre {
+  /* .wrap-break-word is necessary for long URL, DOI, etc. */
+  @apply wrap-break-word whitespace-pre-wrap;
+}
+
+.diff-text {
+  /* The colors are reversed, because good = ref = old = del and bad = actual = new = ins. */
+  del {
+    @apply bg-green-200 dark:bg-green-700;
+  }
+  ins {
+    @apply bg-red-200 dark:bg-red-700;
+  }
+}

@@ -1,7 +1,6 @@
-import { diffWordsWithSpace } from "diff";
 import { useMemo, useState } from "react";
 import { isRouteErrorResponse, Link } from "react-router";
-
+import { DiffText, DiffTextLegend } from "~/components/DiffText";
 import { getEntryInfo } from "~/lib/files";
 import {
   decodeEntryId,
@@ -164,6 +163,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                 </option>
               ))}
             </select>
+            <DiffTextLegend />
           </div>
           <div className="grid">
             {entry.results.map(([key, value]) => (
@@ -172,6 +172,11 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                 key={key}
               >
                 <h3 className="m-0 text-[0.93rem]">{humanizeResultKey(key)}</h3>
+                {baseVariant === key && (
+                  <span className="float-right mt-[0.55rem] inline-block rounded-full border border-[#e3cca8] bg-[#fff1d4] px-[0.45rem] py-[0.1rem] text-[#7c5027] text-sm">
+                    Baseline
+                  </span>
+                )}
                 <p className="mt-[0.3rem] break-all text-[0.75rem] text-[var(--color-ink-soft)]">
                   {key}
                 </p>
@@ -190,37 +195,16 @@ function renderOutItem(
   value: string,
   baseOutput: [string, string] | null,
 ) {
-  const content = value;
-
-  if (!baseOutput) {
-    return (
-      <pre className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
-        {content}
-      </pre>
-    );
-  }
-
-  const [baseKey, baseValue] = baseOutput;
-
-  if (baseKey === key) {
-    return (
-      <>
-        <p className="mt-[0.55rem] inline-block rounded-full border border-[#e3cca8] bg-[#fff1d4] px-[0.45rem] py-[0.1rem] text-[#7c5027] text-[0.7rem]">
-          Baseline
-        </p>
-        <pre className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]">
-          {content}
-        </pre>
-      </>
-    );
-  }
+  const [baseKey, baseValue] = baseOutput ?? [null, null];
 
   return (
-    <pre
-      className="mt-[0.55rem] max-h-[18rem] overflow-auto whitespace-pre-wrap break-words rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-[0.78rem] leading-[1.55]"
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
-      dangerouslySetInnerHTML={{ __html: renderDiff(baseValue, content) }}
-    />
+    <div className="mt-[0.55rem] max-h-72 rounded-[0.55rem] border border-[#efdfca] bg-[#fffbf5] p-[0.6rem] text-sm">
+      {baseKey === null || baseKey === key ? (
+        <pre>{value}</pre>
+      ) : (
+        <DiffText actual={value} ref={baseValue} />
+      )}
+    </div>
   );
 }
 
@@ -336,23 +320,4 @@ function highlightBib(text: string): string {
   );
 
   return escaped;
-}
-
-function renderDiff(baseText: string, targetText: string): string {
-  const base = baseText || "";
-  const target = targetText || "";
-  const parts = diffWordsWithSpace(base, target);
-
-  return parts
-    .map((part) => {
-      const html = escapeHtml(part.value);
-      if (part.added) {
-        return `<span class="bg-[#daf8dd] text-[#0e5b2a]">${html}</span>`;
-      }
-      if (part.removed) {
-        return `<span class="bg-[#ffe1df] text-[#8b1b1b] line-through">${html}</span>`;
-      }
-      return `<span>${html}</span>`;
-    })
-    .join("");
 }
