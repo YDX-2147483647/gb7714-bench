@@ -21,8 +21,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   const { sections } = loaderData;
 
   return (
-    <main className="mx-auto w-[min(1320px,92vw)] pt-5 pb-8">
-      <section className="rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow-[0_10px_24px_rgba(199,109,42,0.08)]">
+    <main className="mx-auto p-4 lg:px-8">
+      <section className="rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow">
         <p className="text-accent-2 text-sm">GB/T 7714 Benchmark</p>
         <h1 className="my-2 text-3xl">逐条目浏览</h1>
         <p className="text-ink-soft">
