@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  run:
+  run-processors:
     runs-on: ubuntu-latest
     env:
       # 有文献包含日文汉字，中易和思源支持，而 Fandol 缺字。故 Ubuntu 上编译 LaTeX 需从 Fandol 切换到思源
@@ -55,5 +55,57 @@ jobs:
 
       - uses: actions/upload-artifact@v7
         with:
-          name: out
+          name: target-out
           path: target/out/
+
+  build-website:
+    runs-on: ubuntu-latest
+    needs: run-processors
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+      - uses: actions/download-artifact@v8
+        with:
+          name: target-out
+          path: target/out/
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11
+      - run: pnpm install
+        working-directory: website
+        
+      - run: pnpm test
+        working-directory: website
+      - run: pnpm fmt
+        working-directory: website
+      - run: pnpm typecheck
+        working-directory: website
+      - run: pnpm build
+        working-directory: website
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: website-build-client
+          path: website/build/client/
+
+  deploy-netlify:
+    runs-on: ubuntu-latest
+    needs: build-website
+    environment: deploy-netlify
+    steps:
+      - uses: actions/checkout@v6
+      - run: mkdir -p website/build/
+      - uses: actions/download-artifact@v8
+        with:
+          name: website-build-client
+          path: website/build/client/
+      - name: Run netlify deploy
+        shell: bash
+        run: |
+          set -euxo pipefail
+          npx netlify deploy --dir website/build/client/ --message "Deployed from $(git describe --dirty --always)" --no-build --debug
+        env:
+          NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
