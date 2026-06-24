@@ -57,7 +57,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   return (
     <main className="mx-auto grid gap-4 p-4 lg:px-8">
       <header className="grid gap-2 rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow">
-        <p className="flex flex-wrap gap-2 text-sm">
+        <p className="flex flex-wrap items-baseline gap-2 text-sm">
           <span className="text-accent-2">
             条目 [{entry.canonicalIndex + 1}]
           </span>
@@ -92,7 +92,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
             return (
               <Link
                 key={to}
-                className="rounded border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
+                className="rounded border border-stroke bg-[#fff5df] px-2 py-1 text-[#5e3f2d] text-xs hover:bg-[#ffeccc]"
                 to={to}
               >
                 {body}
@@ -260,7 +260,7 @@ export function ErrorBoundary({
 
           <p>
             <Link
-              className="rounded border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
+              className="rounded border border-stroke bg-[#fff5df] px-2 py-1 text-[#5e3f2d] text-xs hover:bg-[#ffeccc]"
               to="/"
             >
               返回条目索引
