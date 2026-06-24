@@ -1,3 +1,4 @@
+import { StrictMode } from "react";
 import {
   isRouteErrorResponse,
   Links,
@@ -42,7 +43,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <StrictMode>
+      <Outlet />
+    </StrictMode>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
