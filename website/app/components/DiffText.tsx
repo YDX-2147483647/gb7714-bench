@@ -26,5 +26,9 @@ export function DiffText({
 }
 
 export function DiffTextLegend(): JSX.Element {
-  return <DiffText ref="ref " actual=" actual" />;
+  return (
+    <code className="diff-text">
+      <del>参考</del> <ins>实际</ins>
+    </code>
+  );
 }

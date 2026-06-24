@@ -41,10 +41,10 @@ export async function clientLoader({ params: { entryId } }: Route.LoaderArgs) {
 export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   const { entry, nav } = loaderData;
 
-  const resultKeys = entry.results.map(([key, _]) => key);
-
   // `resultRef` is the result selected for reference in diff. Empty if diff is disabled.
-  const [resultRefKey, setResultRefKey] = useState<Result.Key | "">("");
+  const [resultRefKey, setResultRefKey] = useState<Result.Key | null>(
+    entry.results.at(0)?.[0] ?? null,
+  );
   const resultRefValue = useMemo(
     () =>
       resultRefKey
@@ -155,27 +155,37 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               {entry.results.length} 种「数据源 · 引擎 · 样式」组合
             </p>
           </div>
-          <div className="sticky top-0 flex items-center gap-[0.65rem] border-[#ead8bd] border-b border-dashed bg-[#fff9ee] px-4 py-[0.55rem]">
-            {/* TODO: Improve UI logic */}
-            <label className="text-[#694b36] text-[0.78rem]" htmlFor="diff-ref">
-              Diff Ref
-            </label>
-            <select
-              className="max-w-full rounded-[0.4rem] border border-[#e7d4b8] bg-white px-[0.4rem] py-[0.22rem] text-[0.78rem] text-ink"
-              id="diff-ref"
-              value={resultRefKey}
-              onChange={(event) =>
-                setResultRefKey(event.target.value as Result.Key | "")
-              }
-            >
-              <option value="">(none)</option>
-              {resultKeys.map((opt) => (
-                <option key={opt} value={opt}>
-                  {humanizeResultKey(opt)}
-                </option>
-              ))}
-            </select>
-            <DiffTextLegend />
+          <div className="sticky top-0 border-[#ead8bd] border-b border-dashed bg-[#fff9ee] p-4 text-[#694b36] text-sm">
+            {resultRefKey ? (
+              <>
+                <p className="mb-2">
+                  参考：
+                  <span className="font-semibold">
+                    {humanizeResultKey(resultRefKey)}
+                  </span>
+                </p>
+                <p className="flex items-center justify-between">
+                  <span>
+                    图例：
+                    <DiffTextLegend />
+                  </span>
+                  <button
+                    type="button"
+                    className="mx-2 -my-2 rounded border border-stroke bg-[#fff5df] px-2 py-1 text-[#5e3f2d] text-xs hover:bg-[#ffeccc]"
+                    onClick={() => setResultRefKey(null)}
+                  >
+                    退出对比
+                  </button>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="mb-2">参考：未选择</p>
+                <p>
+                  可通过单击标题选择某一结果作为参考对象，让其它结果与之比较
+                </p>
+              </>
+            )}
           </div>
           <div className="grid">
             {entry.results.map(([key, value]) => (
@@ -183,12 +193,21 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                 className="border-[#eedfca] border-t border-dashed px-4 py-2 first:border-t-0"
                 key={key}
               >
-                <h3 className="my-1">{humanizeResultKey(key)}</h3>
-                {resultRefKey === key && (
-                  <span className="float-right mt-[0.55rem] inline-block rounded-full border border-[#e3cca8] bg-[#fff1d4] px-[0.45rem] py-[0.1rem] text-[#7c5027] text-sm">
-                    Baseline
-                  </span>
-                )}
+                <h3 className="my-1">
+                  {resultRefKey === key ? (
+                    <span className="-mx-1 rounded bg-green-200 px-1 font-bold">
+                      {humanizeResultKey(key)}
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      className="-mx-1 rounded px-1 hover:bg-green-100 focus:bg-green-100"
+                      onClick={() => setResultRefKey(key)}
+                    >
+                      {humanizeResultKey(key)}
+                    </button>
+                  )}
+                </h3>
                 <p className="my-1 text-ink-soft text-xs">{key}</p>
                 {renderResultItem(key, value, resultRefKey, resultRefValue)}
               </section>
@@ -216,7 +235,7 @@ function renderSourceItem(key: Source.Key, value: string): JSX.Element {
 function renderResultItem(
   key: Result.Key,
   value: string,
-  refKey: Result.Key | "",
+  refKey: Result.Key | null,
   refValue: string | null,
 ): JSX.Element {
   return (
