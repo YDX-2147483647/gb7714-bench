@@ -76,7 +76,7 @@ jobs:
           version: 11
       - run: pnpm install
         working-directory: website
-        
+
       - run: pnpm test
         working-directory: website
       - run: pnpm fmt
@@ -94,7 +94,9 @@ jobs:
   deploy-netlify:
     runs-on: ubuntu-latest
     needs: build-website
-    environment: deploy-netlify
+    environment:
+      name: deploy-netlify
+      url: ${{ steps.netlify-deploy.outputs.deploy_url }}
     steps:
       - uses: actions/checkout@v6
       - run: mkdir -p website/build/
@@ -102,11 +104,24 @@ jobs:
         with:
           name: website-build-client
           path: website/build/client/
-      - name: Run netlify deploy
+      - name: Install netlify-cli
+        run: npm install -g netlify-cli@^26.1.0
+      - name: Run netlify deploy ${{ github.ref == 'refs/heads/main' && '--prod' || '' }}
+        id: netlify-deploy
         shell: bash
         run: |
           set -euxo pipefail
-          npx netlify deploy --dir website/build/client/ --message "Deployed from $(git describe --dirty --always)" --no-build --debug
+          netlify deploy \
+            --dir website/build/client/ \
+            --message "Deployed from $(git describe --dirty --always) (run ${{ github.run_id }} by ${{ github.triggering_actor }} from ${{ github.ref }} in ${{ github.repository }})" \
+            ${{ github.ref == 'refs/heads/main' && '--prod' || '' }} \
+            --no-build \
+            --json \
+            --debug | tee netlify-deploy.log
+          cat netlify-deploy.log
+
+          deploy_url=$(cat netlify-deploy.log | grep --invert-match '^\[project.\ts\]: detect' | jq .deploy_url --raw-output)
+          echo "deploy_url=$deploy_url" >> "$GITHUB_OUTPUT"
         env:
           NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
