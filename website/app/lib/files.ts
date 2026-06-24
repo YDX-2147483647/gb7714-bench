@@ -161,7 +161,7 @@ export function getAdjacentEntryIds(canonicalIndex: number): {
   next: EntryId | null;
 } {
   return {
-    prev: sourceCanonical.at(canonicalIndex - 1)?.id ?? null,
+    prev: canonicalIndex >= 1 ? sourceCanonical[canonicalIndex - 1].id : null,
     next: sourceCanonical.at(canonicalIndex + 1)?.id ?? null,
   };
 }
