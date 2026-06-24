@@ -115,7 +115,7 @@ export namespace Result {
 async function loadAllResults(): Promise<Result.Serializable> {
   const files = (
     await readdir(OUT_DIR, { withFileTypes: true, recursive: true })
-  ).filter((item) => item.isFile());
+  ).filter((item) => item.isFile() && item.name.endsWith(".txt"));
   const keys = files.map((f) =>
     path
       .join(path.relative(OUT_DIR, f.parentPath), f.name)

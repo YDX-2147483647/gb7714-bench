@@ -248,8 +248,9 @@ if (import.meta.vitest) {
       }"
     `);
 
-    expect(info.results.map(([k, _v]) => k).slice(0, 6)).toMatchInlineSnapshot(`
+    expect(info.results.map(([k, _v]) => k).slice(0, 7)).toMatchInlineSnapshot(`
       [
+        "GB-T_7714—2025.original.toml/naive-copy/default.txt",
         "GB-T_7714—2025.builtin.bib/zotero/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.builtin.bib/zotero/gb-7714-2025-numeric.extended.txt",
         "GB-T_7714—2025.builtin.bib/gbt7714-bibtex-style/default.txt",
@@ -258,8 +259,8 @@ if (import.meta.vitest) {
         "GB-T_7714—2025.builtin.bib/citeproc-lua/gb-7714-2025-numeric.extended.txt",
       ]
     `);
-    expect(info.results.length).toMatchInlineSnapshot(`42`);
-    expect(info.results[0][1]).toMatchInlineSnapshot(
+    expect(info.results.length).toMatchInlineSnapshot(`43`);
+    expect(info.results[1][1]).toMatchInlineSnapshot(
       `"[187] 陈登原. 国史旧闻：卷1[M]. 北京：中华书局，2000."`,
     );
   });

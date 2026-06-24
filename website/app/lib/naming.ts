@@ -16,6 +16,9 @@ export function decodeEntryId(id: EntryIdUrlSafe): EntryId {
 
 export function humanizeSourceKey(key: Source.Key): string {
   const [kind, suffix] = key.replace(/^GB-T_7714—2025\./, "").split(".");
+  if (kind === "original" && suffix === "toml") {
+    return "国标原文";
+  }
   return `${kind[0].toUpperCase()}${kind.slice(1)} ${suffix}`;
 }
 
@@ -32,6 +35,7 @@ export function humanizeResultKey(key: Result.Key): string {
     "typst-modern-nju-thesis": "NJU",
     "typst-omni-gb7714": "Omni",
     zotero: "Zotero",
+    "naive-copy": "朴素复制",
   };
 
   const sourceHuman = humanizeSourceKey(source as Source.Key);
@@ -69,7 +73,7 @@ if (import.meta.vitest) {
 
     expect(keys.map(humanizeSourceKey)).toMatchInlineSnapshot(`
       [
-        "Original toml",
+        "国标原文",
         "Builtin bib",
         "Better bib",
         "Builtin json",
@@ -80,6 +84,7 @@ if (import.meta.vitest) {
 
   test("humanizeResultKey", () => {
     const keys: Result.Key[] = [
+      "GB-T_7714—2025.original.toml/naive-copy/default.txt",
       "GB-T_7714—2025.builtin.bib/zotero/gb-7714-2025-numeric.compliant.txt",
       "GB-T_7714—2025.better.bib/zotero/gb-7714-2025-numeric.compliant.txt",
       "GB-T_7714—2025.better.bib/zotero/gb-7714-2025-numeric.extended.txt",
@@ -103,6 +108,7 @@ if (import.meta.vitest) {
     expect(new Set(keysHuman).size).toBe(keysHuman.length);
     expect(keysHuman).toMatchInlineSnapshot(`
       [
+        "国标原文 · 朴素复制",
         "Builtin bib · Zotero · 2025 CSL",
         "Better bib · Zotero · 2025 CSL",
         "Better bib · Zotero · 2025 CSL-M⁺",

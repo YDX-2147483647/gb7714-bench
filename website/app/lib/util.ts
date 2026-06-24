@@ -147,9 +147,11 @@ if (import.meta.vitest) {
         "GB-T_7714—2025.better.bib/zotero/gb-7714-2025-numeric.extended.txt",
         "GB-T_7714—2025.builtin.bib/zotero/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.builtin.json/zotero/gb-7714-2025-numeric.compliant.txt",
+        "GB-T_7714—2025.original.toml/naive-copy/default.txt",
       ];
 
       expect(keys.sort(compareKey)).toStrictEqual([
+        "GB-T_7714—2025.original.toml/naive-copy/default.txt",
         "GB-T_7714—2025.builtin.bib/zotero/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.better.bib/zotero/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.better.bib/zotero/gb-7714-2025-numeric.extended.txt",
