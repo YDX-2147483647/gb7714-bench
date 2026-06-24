@@ -5,10 +5,10 @@ import type { Route } from "./+types/home";
 
 export function meta(_: Route.MetaArgs) {
   return [
-    { title: "GB/T 7714 Bench Explorer" },
+    { title: "逐条目浏览 | GB/T 7714 Benchmark" },
     {
       name: "description",
-      content: "Browse benchmark entries and formatted outputs.",
+      content: "按 GB/T 7714—2025 章节示例顺序，逐条目浏览数据源与处理结果。",
     },
   ];
 }
@@ -50,7 +50,12 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
             <ul className="m-0 list-none p-0">
               {section.entries.map((entry) => (
-                <li key={entry.id}>
+                // 访问`/#id`时，需滚动到此元素，但要避让 sticky header
+                <li
+                  key={entry.id}
+                  className="scroll-mt-30"
+                  id={encodeEntryId(entry.id)}
+                >
                   <Link
                     className="grid grid-cols-[auto_1fr] gap-4 border-[#eedfca] border-t border-dashed p-4 transition-colors duration-150 hover:bg-[#fff8e8]"
                     to={`/entry/${encodeEntryId(entry.id)}/`}

@@ -18,7 +18,7 @@ export function meta({ params: { entryId }, loaderData }: Route.MetaArgs) {
   const canonicalIndex = loaderData?.entry?.canonicalIndex;
   return [
     {
-      title: `条目 [${canonicalIndex !== undefined ? canonicalIndex + 1 : "?"}] ${entryId}`,
+      title: `条目 [${canonicalIndex !== undefined ? canonicalIndex + 1 : "?"}] ${entryId} | GB/T 7714 Benchmark`,
     },
   ];
 }
@@ -78,7 +78,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               body: "上一条目",
             },
             {
-              to: "/",
+              to: `/#${encodeEntryId(entry.id)}`,
               body: "返回条目索引",
             },
             {
