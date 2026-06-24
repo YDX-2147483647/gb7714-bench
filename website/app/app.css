@@ -56,3 +56,8 @@ pre {
     @apply bg-red-200;
   }
 }
+
+.syntax-highlighter pre {
+  /* Ref: https://www.npmjs.com/package/react-shiki */
+  @apply px-5 py-6 rounded-2xl;
+}
