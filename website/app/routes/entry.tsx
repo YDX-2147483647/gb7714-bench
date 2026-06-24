@@ -1,9 +1,9 @@
 import { type JSX, useMemo, useState } from "react";
-import { isRouteErrorResponse, Link } from "react-router";
+import { data, isRouteErrorResponse, Link } from "react-router";
 
 import { DiffText, DiffTextLegend } from "~/components/DiffText";
 import { SyntaxHighlighter } from "~/components/SyntaxHighlighter";
-import { getAdjacentEntryIds, getEntryInfo } from "~/lib/files";
+import { type EntryInfo, getAdjacentEntryIds, getEntryInfo } from "~/lib/files";
 import {
   decodeEntryId,
   type EntryIdUrlSafe,
@@ -24,12 +24,18 @@ export function meta({ params: { entryId }, loaderData }: Route.MetaArgs) {
 }
 
 export async function clientLoader({ params: { entryId } }: Route.LoaderArgs) {
-  const entry = getEntryInfo(decodeEntryId(entryId as EntryIdUrlSafe));
+  let entry: EntryInfo;
+  try {
+    entry = getEntryInfo(decodeEntryId(entryId as EntryIdUrlSafe));
+  } catch (error) {
+    if (error instanceof Error) {
+      throw data(error.message, { status: 404, statusText: "Entry Not Found" });
+    }
+    throw error;
+  }
+
   const nav = getAdjacentEntryIds(entry.canonicalIndex);
-  return {
-    entry,
-    nav,
-  };
+  return { entry, nav };
 }
 
 export default function EntryDetail({ loaderData }: Route.ComponentProps) {
@@ -224,25 +230,42 @@ function renderResultItem(
   );
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  // TODO: This isn't working.
+export function ErrorBoundary({
+  error,
+  params: { entryId },
+}: Route.ErrorBoundaryProps) {
   if (isRouteErrorResponse(error) && error.status === 404) {
     return (
-      <main className="mx-auto w-[min(1320px,92vw)] pt-5 pb-8">
-        <section className="relative overflow-clip rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow">
-          <p className="m-0 text-[0.82rem] text-accent-2">404</p>
-          <h1 className="mt-[0.35rem] mb-0 text-[clamp(1.5rem,3vw,2.4rem)]">
-            Entry Not Found
-          </h1>
-          <p className="mt-[0.6rem] mb-0 text-[0.95rem] text-ink-soft">
-            该条目不存在，或参数格式不正确。
+      <main className="mx-auto max-w-max p-8">
+        <section className="grid gap-4 overflow-clip rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow">
+          <p className="text-accent-2">
+            {error.status} {error.statusText}
           </p>
-          <Link
-            className="rounded-full border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
-            to="/"
-          >
-            Back To Index
-          </Link>
+          <h1 className="text-3xl">
+            条目 [?] {decodeEntryId(entryId as EntryIdUrlSafe)} 不存在
+          </h1>
+          <div>{error.data}</div>
+          <p>
+            正常不应该有此问题，请通过{" "}
+            <a
+              className="decoration-accent-2 hover:underline"
+              href="https://github.com/YDX-2147483647/gb7714-bench/issues/new/choose"
+              target="_blank"
+              rel="noopener"
+            >
+              GitHub issue
+            </a>{" "}
+            或其它方式反馈。
+          </p>
+
+          <p>
+            <Link
+              className="rounded border border-stroke bg-[#fff5df] px-[0.68rem] py-[0.24rem] text-[#5e3f2d] text-[0.78rem] hover:bg-[#ffeccc]"
+              to="/"
+            >
+              返回条目索引
+            </Link>
+          </p>
         </section>
       </main>
     );

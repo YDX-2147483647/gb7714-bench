@@ -15,7 +15,7 @@ const sourceOriginalToml = SOURCE[
   "GB-T_7714—2025.original.toml"
 ] as Source.OriginalTomlLibrary;
 
-type EntryInfo = {
+export type EntryInfo = {
   id: EntryId;
 
   /** Index in the library, starting from zero. */
@@ -80,6 +80,9 @@ function buildName(entry: Source.AnyJson): string | null {
   return null;
 }
 
+/**
+ * @throws Error if not found.
+ */
 function getCanonicalEntry(id: EntryId): {
   canonicalIndex: number;
   meta: EntryMeta;
@@ -98,6 +101,9 @@ function getCanonicalEntry(id: EntryId): {
   return { canonicalIndex, meta };
 }
 
+/**
+ * @throws Error if not found.
+ */
 export function getEntryInfo(id: EntryId): EntryInfo {
   // Load from the canonical
 
@@ -255,6 +261,13 @@ if (import.meta.vitest) {
     expect(info.results.length).toMatchInlineSnapshot(`42`);
     expect(info.results[0][1]).toMatchInlineSnapshot(
       `"[187] 陈登原. 国史旧闻：卷1[M]. 北京：中华书局，2000."`,
+    );
+  });
+
+  test("getEntryInfo error if not found", () => {
+    const id = "gbt7714.0.0" as EntryId;
+    expect(() => getEntryInfo(id)).toThrowErrorMatchingInlineSnapshot(
+      `[Error: Entry gbt7714.0.0 not found.]`,
     );
   });
 
