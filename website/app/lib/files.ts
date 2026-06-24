@@ -6,7 +6,7 @@ import type {
   Source,
 } from "../../plugin/load_files";
 
-import { compareKey, range } from "./util";
+import { compareKey } from "./order";
 
 const sourceCanonical = SOURCE[
   "GB-T_7714—2025.builtin.json"
@@ -179,6 +179,10 @@ type SectionInfo = {
   entries: { id: EntryId; canonicalIndex: number; meta: EntryMeta }[];
 };
 
+function range(n: number): number[] {
+  return Array.from({ length: n }, (_, i) => i);
+}
+
 export function getSections(): SectionInfo[] {
   return sourceOriginalToml.sections.map(
     ({ examples, headings, idPrefix, notes }) => {
@@ -199,6 +203,10 @@ export function getSections(): SectionInfo[] {
 
 if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
+
+  test("range", () => {
+    expect(range(3)).toStrictEqual([0, 1, 2]);
+  });
 
   test("getEntryInfo", () => {
     const id = "gbt7714.9.2.1.3:4";

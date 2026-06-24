@@ -66,7 +66,7 @@ if (import.meta.vitest) {
 
   test("humanizeSourceKey", async () => {
     const { SOURCE } = await import("virtual:gb7714-bench-files");
-    const { compareKey } = await import("./util");
+    const { compareKey } = await import("./order");
 
     const keys = Object.keys(SOURCE) as Source.Key[];
     keys.sort(compareKey);
