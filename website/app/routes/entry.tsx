@@ -86,7 +86,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
             </code>
           ))}
         </p>
-        <h1 className="mb-2 text-3xl">{entry.meta.name}</h1>
+        <h1 className="mb-2 text-4xl">{entry.meta.name}</h1>
         <div className="flex flex-wrap gap-2">
           {[
             {
@@ -118,15 +118,15 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
         </div>
       </header>
 
-      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <article className="overflow-clip rounded-xl border border-stroke bg-card shadow">
+      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-3">
+        <article className="overflow-clip rounded-2xl border border-stroke bg-card shadow lg:rounded-br-none">
           <div className="flex items-baseline justify-between border-stroke border-b bg-bg-dark px-4 py-3">
             <h2>数据源</h2>
             <p className="text-ink-soft text-sm">
               国标原文 + {entry.sources.length} 种格式
             </p>
           </div>
-          <div className="grid">
+          <div className="lg:scrollbar-thin grid lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
             <section className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0">
               <h3 className="my-1">国标原文</h3>
               <p className="my-1 text-ink-soft text-xs">
@@ -146,7 +146,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                   </p>
                 ))}
               </div>
-              <pre className="rounded-2xl bg-white px-5 py-6 text-sm">
+              <pre className="rounded-xl bg-white px-5 py-6 text-sm">
                 {entry.original.example}
               </pre>
             </section>
@@ -164,7 +164,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           </div>
         </article>
 
-        <article className="overflow-clip rounded-xl border border-stroke bg-card shadow">
+        <article className="overflow-clip rounded-2xl border border-stroke bg-card shadow lg:rounded-bl-none">
           <div className="flex items-baseline justify-between border-stroke border-b bg-bg-dark px-4 py-3">
             <h2>处理结果</h2>
             <p className="text-ink-soft text-sm">
@@ -196,7 +196,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                 <p className="grid grid-cols-[auto_1fr]">
                   <span>对比策略：</span>
                   <span className="-ml-2">
-                    <label className="mx-2 inline-block">
+                    <label className="mx-2 mb-1 inline-block lg:mb-0">
                       <input
                         type="checkbox"
                         checked={shouldNormalizeResult}

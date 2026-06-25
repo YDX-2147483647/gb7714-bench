@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
   --font-mono:
     "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
-    monospace;
+    monospace, var(--font-serif);
 
   /* Browns, light → dark. */
   --color-card: #fffdf8;
@@ -27,7 +27,7 @@
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
 
   @apply m-0 min-h-screen bg-bg text-ink;
 
@@ -65,5 +65,5 @@ pre {
 
 .syntax-highlighter pre {
   /* Ref: https://www.npmjs.com/package/react-shiki */
-  @apply rounded-2xl px-5 py-6;
+  @apply rounded-xl px-5 py-6;
 }
