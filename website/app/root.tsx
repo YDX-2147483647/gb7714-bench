@@ -1,3 +1,4 @@
+import { mdiBookshelf, mdiFileDocumentOutline, mdiGit } from "@mdi/js";
 import { StrictMode } from "react";
 import {
   isRouteErrorResponse,
@@ -9,6 +10,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import Icon from "./components/Icon";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -34,6 +36,41 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <header className="mx-8 mt-4 text-right lg:mx-10">
+          <nav>
+            {[
+              {
+                title: "GitHub 仓库",
+                href: "https://github.com/YDX-2147483647/gb7714-bench",
+                icon: mdiGit,
+              },
+              {
+                title: "Zotero 群组文库",
+                href: "https://www.zotero.org/groups/4677213/chinese_csl_development/collections/ZLAYMIUR/collection",
+                icon: mdiBookshelf,
+              },
+              {
+                title: "国标影印 PDF",
+                href: "https://publishmedia.cbpt.cnki.net/portal/minio/webs/hbxy/media/web/2026/01/20/GBT 7714—2025 信息与文献 参考文献著录规则.pdf",
+                icon: mdiFileDocumentOutline,
+              },
+            ].map(({ title, href, icon }) => {
+              return (
+                <a
+                  title={title}
+                  href={href}
+                  key={href}
+                  target="_blank"
+                  rel="noopener"
+                  className="m-0.5 rounded p-0.5 hover:bg-[#e8d8c1] focus:bg-[#e8d8c1]"
+                >
+                  <span className="sr-only">{title}</span>
+                  <Icon path={icon} />
+                </a>
+              );
+            })}
+          </nav>
+        </header>
         {children}
         <ScrollRestoration />
         <Scripts />

@@ -11,6 +11,7 @@
     "fmt": "biome check --write"
   },
   "dependencies": {
+    "@mdi/js": "^7.4.47",
     "@react-router/node": "8.0.0",
     "@react-router/serve": "8.0.0",
     "@shikijs/langs": "^4.2.0",

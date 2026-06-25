@@ -57,7 +57,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                   id={encodeEntryId(entry.id)}
                 >
                   <Link
-                    className="grid grid-cols-[auto_1fr] gap-4 border-[#eedfca] border-t border-dashed p-4 transition-colors duration-150 hover:bg-[#fff8e8]"
+                    className="grid grid-cols-[auto_1fr] gap-4 border-[#eedfca] border-t border-dashed p-4 transition-colors duration-150 hover:bg-[#fff8e8] focus:bg-[#fff8e8]"
                     to={`/entry/${encodeEntryId(entry.id)}/`}
                   >
                     <code className="font-semibold text-accent">
