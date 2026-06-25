@@ -1,3 +1,4 @@
+import { commitDate, revisionUrl } from "virtual:gb7714-bench-git-info";
 import { mdiBookshelf, mdiFileDocumentOutline, mdiGit } from "@mdi/js";
 import { StrictMode } from "react";
 import {
@@ -8,7 +9,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
 import type { Route } from "./+types/root";
 import Icon from "./components/Icon";
 import "./app.css";
@@ -36,8 +36,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <header className="mx-8 mt-4 text-right lg:mx-10">
-          <nav>
+        <header className="mx-8 mt-4 grid grid-cols-[1fr_auto] text-ink-soft lg:mx-10">
+          <p className="content-end text-sm">
+            最后更新于
+            <a
+              href={revisionUrl}
+              target="_blank"
+              rel="noopener"
+              className="hover:underline focus:underline"
+            >
+              <time dateTime={commitDate}>
+                {new Intl.DateTimeFormat("zh-CN", {
+                  dateStyle: "medium",
+                }).format(new Date(commitDate))}
+              </time>
+            </a>
+          </p>
+          <nav className="content-end text-4xl lg:text-3xl">
             {[
               {
                 title: "GitHub 仓库",
@@ -62,7 +77,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   key={href}
                   target="_blank"
                   rel="noopener"
-                  className="m-0.5 rounded p-0.5 text-4xl hover:bg-bg-dark hover:shadow-inner focus:bg-bg-dark focus:shadow-inner lg:text-3xl"
+                  className="m-0.5 rounded p-0.5 hover:bg-bg-dark hover:shadow-inner focus:bg-bg-dark focus:shadow-inner"
                 >
                   <span className="sr-only">{title}</span>
                   <Icon path={icon} />

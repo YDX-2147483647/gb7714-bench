@@ -22,13 +22,13 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
   return (
     <main className="mx-auto mb-16 p-4 lg:px-8">
-      <section className="rounded-2xl border border-stroke bg-card p-5 shadow">
-        <p className="text-accent text-sm">GB/T 7714 Benchmark</p>
-        <h1 className="my-2 text-3xl">逐条目浏览</h1>
+      <header className="rounded-2xl border border-stroke bg-card p-5 shadow">
+        <p className="font-bold text-accent text-sm">GB/T 7714 Benchmark</p>
+        <h1 className="my-2 font-bold text-3xl">逐条目浏览</h1>
         <p className="text-ink-soft">
           按 GB/T 7714—2025 章节示例顺序，逐条目浏览数据源与处理结果。
         </p>
-      </section>
+      </header>
 
       <div className="my-4 grid overflow-clip rounded-2xl border border-stroke bg-card shadow">
         {sections.map((section) => (
