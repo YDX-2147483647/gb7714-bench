@@ -11,6 +11,7 @@ import {
   humanizeResultKey,
   humanizeSourceKey,
 } from "~/lib/naming";
+import { normalizeResult } from "~/lib/result_normalize";
 import type { Result, Source } from "../../plugin/load_files";
 import type { Route } from "./+types/entry";
 
@@ -38,6 +39,18 @@ export async function clientLoader({ params: { entryId } }: Route.LoaderArgs) {
   return { entry, nav };
 }
 
+function applyFn<T extends string | null>(
+  shouldApply: boolean,
+  fn: (x: string) => string,
+  x: T,
+): T {
+  if (shouldApply && x !== null) {
+    return fn(x) as T;
+  } else {
+    return x;
+  }
+}
+
 export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   const { entry, nav } = loaderData;
 
@@ -53,6 +66,11 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
         : null,
     [resultRefKey, entry.results],
   );
+
+  // Diff options
+  const [shouldNormalizeResult, setShouldNormalizeResult] =
+    useState<boolean>(false);
+  const [ignoreCase, setIgnoreCase] = useState<boolean>(false);
 
   return (
     <main className="mx-auto grid gap-4 p-4 lg:px-8">
@@ -158,15 +176,9 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           <div className="sticky top-0 border-[#ead8bd] border-b border-dashed bg-[#fff9ee] p-4 text-[#694b36] text-sm">
             {resultRefKey ? (
               <>
-                <p className="mb-2">
-                  参考：
-                  <span className="font-semibold">
-                    {humanizeResultKey(resultRefKey)}
-                  </span>
-                </p>
-                <p className="flex items-center justify-between">
+                <p className="mb-2 flex items-center justify-between">
                   <span>
-                    图例：
+                    对比结果图例：
                     <DiffTextLegend />
                   </span>
                   <button
@@ -176,6 +188,35 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                   >
                     退出对比
                   </button>
+                </p>
+                <p className="mb-2">
+                  参考：
+                  <span className="font-semibold">
+                    {humanizeResultKey(resultRefKey)}
+                  </span>
+                </p>
+                <p className="grid grid-cols-[auto_1fr]">
+                  <span>对比策略：</span>
+                  <span className="-ml-2">
+                    <label className="mx-2 inline-block">
+                      <input
+                        type="checkbox"
+                        checked={shouldNormalizeResult}
+                        onChange={(e) =>
+                          setShouldNormalizeResult(e.target.checked)
+                        }
+                      />{" "}
+                      对比前统一标点符号编码方式
+                    </label>
+                    <label className="mx-2 inline-block">
+                      <input
+                        type="checkbox"
+                        checked={ignoreCase}
+                        onChange={(e) => setIgnoreCase(e.target.checked)}
+                      />{" "}
+                      忽略大小写
+                    </label>
+                  </span>
                 </p>
               </>
             ) : (
@@ -209,7 +250,21 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                   )}
                 </h3>
                 <p className="my-1 text-ink-soft text-xs">{key}</p>
-                {renderResultItem(key, value, resultRefKey, resultRefValue)}
+                {renderResultItem(
+                  key,
+                  applyFn(
+                    resultRefKey !== null && shouldNormalizeResult,
+                    normalizeResult,
+                    value,
+                  ),
+                  resultRefKey,
+                  applyFn(
+                    resultRefKey !== null && shouldNormalizeResult,
+                    normalizeResult,
+                    resultRefValue,
+                  ),
+                  ignoreCase,
+                )}
               </section>
             ))}
           </div>
@@ -237,13 +292,14 @@ function renderResultItem(
   value: string,
   refKey: Result.Key | null,
   refValue: string | null,
+  ignoreCase?: boolean | undefined,
 ): JSX.Element {
   return (
     <div className="mt-2 rounded-xl border border-[#efdfca] bg-[#fffbf5] p-2 text-sm">
       {refValue === null || refKey === key ? (
         <pre>{value}</pre>
       ) : (
-        <DiffText actual={value} ref={refValue} />
+        <DiffText actual={value} ref={refValue} ignoreCase={ignoreCase} />
       )}
     </div>
   );

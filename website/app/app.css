@@ -29,7 +29,10 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--color-ink);
+
+  /* Basic styles for Chinese. */
   line-height: 1.5;
+  text-autospace: normal;
 }
 
 a {
@@ -44,6 +47,9 @@ pre {
 pre {
   /* .wrap-break-word is necessary for long URL, DOI, etc. */
   @apply wrap-break-word whitespace-pre-wrap;
+
+  /* Basic styles for Chinese. */
+  text-autospace: normal;
 }
 
 .diff-text {

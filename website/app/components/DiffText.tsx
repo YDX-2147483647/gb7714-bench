@@ -4,11 +4,13 @@ import type { JSX } from "react";
 export function DiffText({
   ref,
   actual,
+  ignoreCase,
 }: {
   ref: string;
   actual: string;
+  ignoreCase?: boolean | undefined;
 }): JSX.Element {
-  const diff = diffWordsWithSpace(ref, actual);
+  const diff = diffWordsWithSpace(ref, actual, { ignoreCase });
 
   return (
     <pre className="diff-text">
