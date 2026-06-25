@@ -62,7 +62,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   key={href}
                   target="_blank"
                   rel="noopener"
-                  className="m-0.5 rounded p-0.5 hover:bg-[#e8d8c1] focus:bg-[#e8d8c1]"
+                  className="m-0.5 rounded p-0.5 hover:bg-bg-dark hover:shadow-inner focus:bg-bg-dark focus:shadow-inner"
                 >
                   <span className="sr-only">{title}</span>
                   <Icon path={icon} />

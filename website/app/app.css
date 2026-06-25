@@ -5,30 +5,31 @@
   --font-mono:
     "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
     monospace;
-  --color-bg: #fff9ef;
-  --color-bg-soft: #fff4dc;
+
+  /* Browns, light → dark. */
   --color-card: #fffdf8;
+  --color-bg-soft: #fffbf5;
+  --color-bg: #fff9ef;
+  --color-bg-dark: #fff4dc;
+  --color-bg-dark-hover: #ffeccc;
+  --color-stroke: #e5d3b8;
+
+  /* Blacks. */
   --color-ink: #1f2937;
   --color-ink-soft: #4b5563;
-  --color-stroke: #e5d3b8;
-  --color-accent: #a85d24;
-  --color-accent-2: #2a7f73;
+
+  /* Green. */
+  --color-accent: #257569;
 }
 
 * {
   box-sizing: border-box;
 }
 
-html {
-  font-family: var(--font-sans);
-  background: linear-gradient(180deg, #fff9ef 0%, #fff5e6 60%, #ffefdb 100%);
-  color: var(--color-ink);
-}
-
 body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--color-ink);
+  font-family: var(--font-sans);
+
+  @apply m-0 min-h-screen bg-bg text-ink;
 
   /* Basic styles for Chinese. */
   line-height: 1.5;
@@ -64,5 +65,5 @@ pre {
 
 .syntax-highlighter pre {
   /* Ref: https://www.npmjs.com/package/react-shiki */
-  @apply px-5 py-6 rounded-2xl;
+  @apply rounded-2xl px-5 py-6;
 }

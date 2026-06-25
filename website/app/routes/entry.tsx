@@ -73,16 +73,14 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   const [ignoreCase, setIgnoreCase] = useState<boolean>(false);
 
   return (
-    <main className="mx-auto grid gap-4 p-4 lg:px-8">
-      <header className="grid gap-2 rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow">
+    <main className="mx-auto mb-16 grid gap-4 p-4 lg:px-8">
+      <header className="grid gap-2 rounded-2xl border border-stroke bg-card p-5 shadow">
         <p className="flex flex-wrap items-baseline gap-2 text-sm">
-          <span className="text-accent-2">
-            条目 [{entry.canonicalIndex + 1}]
-          </span>
+          <span className="text-accent">条目 [{entry.canonicalIndex + 1}]</span>
           {[entry.id, entry.meta.entryType].map((tag) => (
             <code
               key={tag}
-              className="rounded-full border border-[#e8d8c1] px-2 py-0.5 text-ink-soft"
+              className="rounded-full border border-stroke px-2 py-0.5 text-ink-soft"
             >
               {tag}
             </code>
@@ -110,7 +108,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
             return (
               <Link
                 key={to}
-                className="rounded border border-stroke bg-[#fff5df] px-2 py-1 text-[#5e3f2d] text-xs hover:bg-[#ffeccc]"
+                className="rounded border border-stroke bg-bg-dark px-2 py-1 text-xs hover:bg-bg-dark-hover focus:bg-bg-dark-hover"
                 to={to}
               >
                 {body}
@@ -122,14 +120,14 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
 
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <article className="overflow-clip rounded-xl border border-stroke bg-card shadow">
-          <div className="flex items-baseline justify-between border-stroke border-b bg-bg-soft px-4 py-[0.8rem]">
+          <div className="flex items-baseline justify-between border-stroke border-b bg-bg-dark px-4 py-3">
             <h2>数据源</h2>
             <p className="text-ink-soft text-sm">
               国标原文 + {entry.sources.length} 种格式
             </p>
           </div>
           <div className="grid">
-            <section className="border-[#eedfca] border-t border-dashed px-4 py-2 first:border-t-0">
+            <section className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0">
               <h3 className="my-1">国标原文</h3>
               <p className="my-1 text-ink-soft text-xs">
                 GB-T_7714—2025.original.toml
@@ -155,7 +153,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
 
             {entry.sources.map(([key, value]) => (
               <section
-                className="border-[#eedfca] border-t border-dashed px-4 py-2 first:border-t-0"
+                className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0"
                 key={key}
               >
                 <h3 className="my-1">{humanizeSourceKey(key)}</h3>
@@ -167,13 +165,13 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
         </article>
 
         <article className="overflow-clip rounded-xl border border-stroke bg-card shadow">
-          <div className="flex items-baseline justify-between border-stroke border-b bg-bg-soft px-4 py-[0.8rem]">
+          <div className="flex items-baseline justify-between border-stroke border-b bg-bg-dark px-4 py-3">
             <h2>处理结果</h2>
             <p className="text-ink-soft text-sm">
               {entry.results.length} 种「数据源 · 引擎 · 样式」组合
             </p>
           </div>
-          <div className="sticky top-0 border-[#ead8bd] border-b border-dashed bg-[#fff9ee] p-4 text-[#694b36] text-sm">
+          <div className="sticky top-0 border-stroke border-b border-dashed bg-bg p-4 text-ink text-sm">
             {resultRefKey ? (
               <>
                 <p className="mb-2 flex items-center justify-between">
@@ -183,7 +181,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                   </span>
                   <button
                     type="button"
-                    className="mx-2 -my-2 rounded border border-stroke bg-[#fff5df] px-2 py-1 text-[#5e3f2d] text-xs hover:bg-[#ffeccc]"
+                    className="mx-2 -my-2 rounded border border-stroke bg-bg-dark px-2 py-1 text-xs hover:bg-bg-dark-hover focus:bg-bg-dark-hover"
                     onClick={() => setResultRefKey(null)}
                   >
                     退出对比
@@ -231,7 +229,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           <div className="grid">
             {entry.results.map(([key, value]) => (
               <section
-                className="border-[#eedfca] border-t border-dashed px-4 py-2 first:border-t-0"
+                className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0"
                 key={key}
               >
                 <h3 className="my-1">
@@ -295,7 +293,7 @@ function renderResultItem(
   ignoreCase?: boolean | undefined,
 ): JSX.Element {
   return (
-    <div className="mt-2 rounded-xl border border-[#efdfca] bg-[#fffbf5] p-2 text-sm">
+    <div className="mt-2 rounded-xl border border-stroke bg-bg-soft p-2 text-sm">
       {refValue === null || refKey === key ? (
         <pre>{value}</pre>
       ) : (
@@ -312,8 +310,8 @@ export function ErrorBoundary({
   if (isRouteErrorResponse(error) && error.status === 404) {
     return (
       <main className="mx-auto max-w-max p-8">
-        <section className="grid gap-4 overflow-clip rounded-2xl border border-stroke bg-[radial-gradient(circle_at_85%_15%,#ffe9c7_0%,transparent_45%),var(--color-card)] p-5 shadow">
-          <p className="text-accent-2">
+        <section className="grid gap-4 overflow-clip rounded-2xl border border-stroke bg-card p-5 shadow">
+          <p className="text-accent">
             {error.status} {error.statusText}
           </p>
           <h1 className="text-3xl">
@@ -323,7 +321,7 @@ export function ErrorBoundary({
           <p>
             正常不应该有此问题，请通过{" "}
             <a
-              className="decoration-accent-2 hover:underline"
+              className="hover:underline focus:underline"
               href="https://github.com/YDX-2147483647/gb7714-bench/issues/new/choose"
               target="_blank"
               rel="noopener"
@@ -335,7 +333,7 @@ export function ErrorBoundary({
 
           <p>
             <Link
-              className="rounded border border-stroke bg-[#fff5df] px-2 py-1 text-[#5e3f2d] text-xs hover:bg-[#ffeccc]"
+              className="rounded border border-stroke bg-bg-dark px-2 py-1 text-xs hover:bg-bg-dark-hover focus:bg-bg-dark-hover"
               to="/"
             >
               返回条目索引
