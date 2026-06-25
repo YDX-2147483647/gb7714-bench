@@ -120,7 +120,7 @@ jobs:
             --debug | tee netlify-deploy.log
           cat netlify-deploy.log
 
-          deploy_url=$(cat netlify-deploy.log | grep --invert-match '^\[project.\ts\]: detect' | jq .deploy_url --raw-output)
+          deploy_url=$(cat netlify-deploy.log | grep --invert-match '^\[project\.ts\]: detect' | jq .deploy_url --raw-output)
           echo "deploy_url=$deploy_url" >> "$GITHUB_OUTPUT"
         env:
           NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
