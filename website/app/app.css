@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  --font-mono:
+    "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+    monospace, var(--font-serif);
+
+  /* Browns, light → dark. */
+  --color-card: #fffdf8;
+  --color-bg-soft: #fffbf5;
+  --color-bg: #fff9ef;
+  --color-bg-dark: #fff4dc;
+  --color-bg-dark-hover: #ffeccc;
+  --color-stroke: #e5d3b8;
+
+  /* Blacks. */
+  --color-ink: #1f2937;
+  --color-ink-soft: #4b5563;
+
+  /* Green. */
+  --color-accent: #257569;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-serif);
+
+  @apply m-0 min-h-screen bg-bg text-ink;
+
+  /* Basic styles for Chinese. */
+  line-height: 1.5;
+  text-autospace: normal;
+}
+
+a {
+  text-underline-offset: 0.2em;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+pre {
+  /* .wrap-break-word is necessary for long URL, DOI, etc. */
+  @apply wrap-break-word whitespace-pre-wrap;
+
+  /* Basic styles for Chinese. */
+  text-autospace: normal;
+}
+
+.diff-text {
+  /* The colors are reversed, because good = ref = old = del and bad = actual = new = ins. */
+  del {
+    @apply bg-green-200;
+  }
+  ins {
+    @apply bg-red-200;
+  }
+}
+
+.syntax-highlighter pre {
+  /* Ref: https://www.npmjs.com/package/react-shiki */
+  @apply rounded-xl px-5 py-6;
+}
