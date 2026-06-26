@@ -45,48 +45,6 @@ index 0000000..5417ac0
 ',
       },
       {
-        # We rely on the unreleased feature `nocite` and a fix by citegeist 0.2.2.
-        name: "citrus",
-        version: "0.2.999",
-        git: "https://github.com/pku-typst/citeproc-typst",
-        revision: "1a74b82de6680dcb3b3629b6db2467c4c9b22808",
-        patch: '
-diff --git a/src/init/bibtex.typ b/src/init/bibtex.typ
-index a81a95d..0845dae 100644
---- a/src/init/bibtex.typ
-+++ b/src/init/bibtex.typ
-@@ -25,7 +25,15 @@
-   auto-links: true,
-   doc,
- ) = {
--  import "@preview/citegeist:0.2.1": load-bibliography
-+  import "@preview/citegeist:0.2.2": load-bibliography as _load-bibliography
-+  let load-bibliography(bib-str, ..args) = {
-+    // 临时处理 HashMap 乱序问题 https://github.com/alexanderkoller/typst-citegeist/issues/7
-+    let data = _load-bibliography(bib-str, ..args)
-+    let key-order = bib-str.matches(regex("@\\w+\\{([^,\\s]+)")).map(m => m.captures.first())
-+    for key in key-order {
-+      ((key): data.at(key))
-+    }
-+  }
-
-   // Load bibliography data
-   let bib-data = load-bibliography(bib)
-diff --git a/typst.toml b/typst.toml
-index 8a78804..626d339 100644
---- a/typst.toml
-+++ b/typst.toml
-@@ -1,6 +1,6 @@
- [package]
- name = "citrus"
--version = "0.2.1"
-+version = "0.2.999"
- entrypoint = "lib.typ"
- authors = ["lucifer1004"]
- license = "MIT"
-',
-      },
-      {
         name: 'gb7714-bilingual',
         version: '0.2.399',
         git: 'https://github.com/pku-typst/gb7714-bilingual',
@@ -189,6 +147,46 @@ index b081d40..1582e63 100644
      // 后续的操作是对 string 进行的。
      let ittext = to-string(it)
      // 判断是否为中文文献：去除特定词组后，仍有至少两个连续汉字。
+',
+        },
+        {
+            name: 'citrus',
+            version: '0.2.199',
+            published_version: '0.2.1',
+            patch: '
+diff --git a/src/init/bibtex.typ b/src/init/bibtex.typ
+index a81a95d..0845dae 100644
+--- a/src/init/bibtex.typ
++++ b/src/init/bibtex.typ
+@@ -25,7 +25,15 @@
+   auto-links: true,
+   doc,
+ ) = {
+-  import "@preview/citegeist:0.2.1": load-bibliography
++  import "@preview/citegeist:0.2.2": load-bibliography as _load-bibliography
++  let load-bibliography(bib-str, ..args) = {
++    // 临时处理 HashMap 乱序问题 https://github.com/alexanderkoller/typst-citegeist/issues/7
++    let data = _load-bibliography(bib-str, ..args)
++    let key-order = bib-str.matches(regex("@\\w+\\{([^,\\s]+)")).map(m => m.captures.first())
++    for key in key-order {
++      ((key): data.at(key))
++    }
++  }
+
+   // Load bibliography data
+   let bib-data = load-bibliography(bib)
+diff --git a/typst.toml b/typst.toml
+index 8a78804..626d339 100644
+--- a/typst.toml
++++ b/typst.toml
+@@ -1,6 +1,6 @@
+ [package]
+ name = "citrus"
+-version = "0.2.1"
++version = "0.2.199"
+ entrypoint = "lib.typ"
+ authors = ["lucifer1004"]
+ license = "MIT"
 ',
         }
     ]
