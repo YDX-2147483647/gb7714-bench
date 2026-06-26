@@ -48,6 +48,9 @@ export namespace Source {
     title?: string | undefined;
     "container-title"?: string | undefined;
     author?: Record<string, string>[] | undefined;
+    publisher?: string | undefined;
+    "publisher-place"?: string | undefined;
+    archive?: string | undefined;
     issued?:
       | { "date-parts": (string | number)[][] }
       | { literal: string }

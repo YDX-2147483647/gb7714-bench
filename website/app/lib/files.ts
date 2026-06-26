@@ -46,15 +46,19 @@ type EntryMeta = {
 
 /** Build the display name for an entry */
 function buildName(entry: Source.AnyJson): string | null {
-  if (entry.title) {
-    return entry.title;
-  }
-  if (entry["container-title"]) {
-    return entry["container-title"];
+  const title = entry.title ?? entry["container-title"];
+  if (title) {
+    return title;
   }
 
   if (entry.author?.at(0)) {
     return Object.values(entry.author[0]).join(" ");
+  }
+
+  const publisher =
+    entry.publisher ?? entry.archive ?? entry["publisher-place"];
+  if (publisher) {
+    return publisher;
   }
 
   if (entry.issued) {
