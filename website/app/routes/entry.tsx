@@ -126,7 +126,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               国标原文 + {entry.sources.length} 种格式
             </p>
           </div>
-          <div className="lg:scrollbar-thin grid lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+          <div className="lg:scrollbar-thin lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
             <section className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0">
               <h3 className="my-1">国标原文</h3>
               <p className="my-1 text-ink-soft text-xs">
@@ -226,7 +226,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               </>
             )}
           </div>
-          <div className="grid">
+          <div>
             {entry.results.map(([key, value]) => (
               <section
                 className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0"
