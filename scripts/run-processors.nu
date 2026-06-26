@@ -1,4 +1,4 @@
-def write_summary [message: string]: nothing -> nothing {
+def write-summary [message: string]: nothing -> nothing {
     print $message
 
     let summary = $env | get GITHUB_STEP_SUMMARY --optional | default ([$env.CURRENT_FILE, "../../target/out/report.md"] | path join)
@@ -21,7 +21,7 @@ def main [
         if $source_kind in $supports.source {
             if "style" in $supports {
                 $supports.style | each {|style|
-                    write_summary $"🟡 Run ($processor_name) with ($style)…"
+                    write-summary $"🟡 Run ($processor_name) with ($style)…"
 
                     let out = $"../target/out/($source | path split | last)/($processor_name)/($style).txt"
                     mkdir ($out | path dirname)
@@ -30,11 +30,11 @@ def main [
                         $source_content | nu --stdin $processor $style o> $out
                     }
 
-                    write_summary $"✅ ($processor_name) with ($style) completed in ($duration)."
-                    write_summary $"Output: ($out)"
+                    write-summary $"✅ ($processor_name) with ($style) completed in ($duration)."
+                    write-summary $"Output: ($out)"
                 }
             } else {
-                write_summary $"🟡 Run ($processor_name)…"
+                write-summary $"🟡 Run ($processor_name)…"
 
                 let out = $"../target/out/($source | path split | last)/($processor_name)/default.txt"
                 mkdir ($out | path dirname)
@@ -43,8 +43,8 @@ def main [
                     $source_content | nu --stdin $processor o> $out
                 }
 
-                write_summary $"✅ ($processor_name) completed in ($duration)."
-                write_summary $"Output: ($out)"
+                write-summary $"✅ ($processor_name) completed in ($duration)."
+                write-summary $"Output: ($out)"
             }
         }
     }

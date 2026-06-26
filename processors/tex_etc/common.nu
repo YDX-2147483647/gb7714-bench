@@ -1,4 +1,4 @@
-def run_lualatex []: nothing -> nothing {
+export def run-lualatex []: nothing -> nothing {
     try {
         latexmk -lualatex | print --stderr
     } catch {
@@ -6,7 +6,7 @@ def run_lualatex []: nothing -> nothing {
     }
 }
 
-def pdf_to_text [pdf: path]: nothing -> string {
+export def pdf-to-text [pdf: path]: nothing -> string {
     pdftotext $pdf -
     | str trim
     | str replace --all "\r\n" "\n"
@@ -17,7 +17,7 @@ def pdf_to_text [pdf: path]: nothing -> string {
 }
 
 # 根据环境变量 $CTEX_FONTSET 设置文档类 ctexart
-def documentclass_ctexart []: nothing -> string {
+export def documentclass-ctexart []: nothing -> string {
     let fontset = $env | get CTEX_FONTSET --optional
     if fontset == null {
         '\documentclass{ctexart}'
@@ -25,3 +25,10 @@ def documentclass_ctexart []: nothing -> string {
         $'\documentclass[fontset=($fontset)]{ctexart}'
     }
 }
+
+export const INFRA_VERSION_PATTERNS = [
+  '^This is (LuaHBTeX, Version \d+\.\d+\.\d+ \(TeX Live \d{4}\)  \(format=lualatex \d{4}\.\d+\.\d+\))',
+  '^(LaTeX2e <\d{4}-\d{2}-\d{2}>)$',
+  '^(L3 programming layer <\d{4}-\d{2}-\d{2}>)$',
+  '^Document Class: (ctexart \d{4}/\d{2}/\d{2} v\d+\.\d+\.\d+) Chinese adapter for class article',
+]
