@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      release:
+        description: Whether to publish artifacts in a new release.
+        default: false
+        type: boolean
 
 jobs:
   run-processors:
@@ -24,6 +29,9 @@ jobs:
       - uses: hustcer/setup-nu@v3
         with:
           version: "0.113.1"
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: ripgrep
 
       - uses: pnpm/action-setup@v6
         with:
@@ -58,6 +66,78 @@ jobs:
         with:
           name: target-out
           path: target/out/
+
+      - name: Collect versions of LaTeX processors
+        if: ${{ always() }}
+        run: |
+          nu scripts/collect-tex-versions.nu > tex-versions.yaml
+
+          echo '```yaml' >> "$GITHUB_STEP_SUMMARY"
+          cat tex-versions.yaml >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          path: tex-versions.yaml
+          archive: false
+
+  release:
+    runs-on: ubuntu-latest
+    needs: run-processors
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.release || false }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v8
+        with:
+          name: target-out
+          path: target/out/
+      - uses: actions/download-artifact@v8
+        with:
+          name: tex-versions.yaml
+
+      - name: Prepare for the release
+        id: prepare
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd target/
+          7z a ../target-out.zip out/
+          cd -
+
+          echo "commit_date=$(git log -1 --format=%cd --date=format:%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+          echo "data_revision=$(git rev-parse HEAD:data)" >> "$GITHUB_OUTPUT"
+          {
+            echo 'tex_versions<<EOF'
+            cat tex-versions.yaml
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.prepare.outputs.commit_date }}
+          name: ${{ steps.prepare.outputs.commit_date }}
+          body: |
+            数据源版本：https://github.com/typst-doc-cn/bib-csl-dev-data/tree/${{ steps.prepare.outputs.data_revision }}
+
+            LaTeX 系列引擎的版本：
+
+            ```yaml
+            # tex-versions.yaml
+            ${{ steps.prepare.outputs.tex_versions }}
+            ```
+
+            其它引擎的版本见源代码。
+          draft: true
+          prerelease: false # can be edited in the Web UI
+          files: |
+            tex-versions.yaml
+            target-out.zip
+      - name: Report the release
+        run: |
+          echo "Please publish the [draft release](https://github.com/YDX-2147483647/gb7714-bench/releases)." >> "$GITHUB_STEP_SUMMARY"
 
   build-website:
     runs-on: ubuntu-latest
