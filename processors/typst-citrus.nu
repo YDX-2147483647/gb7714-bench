@@ -15,7 +15,7 @@ def main [
     let source = $in
     let style = open --raw ([$env.CURRENT_FILE, '../../target/style-cache', $"($style).csl"] | path join)
     $source | uv run --directory typst_etc/ common.py -- '
-#import "@local/citrus:0.2.999": csl-bibliography, init-csl, init-csl-json, nocite
+#import "@local/citrus:0.2.199": csl-bibliography, init-csl, init-csl-json, nocite
 #let init = if "@" in sys.inputs.source { init-csl } else { init-csl-json }
 #show: init.with(
   sys
