@@ -1,8 +1,9 @@
-import { type JSX, useMemo, useState } from "react";
+import { type JSX, useMemo } from "react";
 import { data, isRouteErrorResponse, Link } from "react-router";
 
 import { DiffText, DiffTextLegend } from "~/components/DiffText";
 import { SyntaxHighlighter } from "~/components/SyntaxHighlighter";
+import { buildStorageKey, useLocalStorage } from "~/composables/hooks";
 import { type EntryInfo, getAdjacentEntryIds, getEntryInfo } from "~/lib/files";
 import {
   decodeEntryId,
@@ -55,7 +56,8 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   const { entry, nav } = loaderData;
 
   // `resultRef` is the result selected for reference in diff. Empty if diff is disabled.
-  const [resultRefKey, setResultRefKey] = useState<Result.Key | null>(
+  const [resultRefKey, setResultRefKey] = useLocalStorage<Result.Key | null>(
+    buildStorageKey("result-ref-key"),
     entry.results.at(0)?.[0] ?? null,
   );
   const resultRefValue = useMemo(
@@ -69,8 +71,14 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
 
   // Diff options
   const [shouldNormalizeResult, setShouldNormalizeResult] =
-    useState<boolean>(false);
-  const [ignoreCase, setIgnoreCase] = useState<boolean>(false);
+    useLocalStorage<boolean>(
+      buildStorageKey("diff-should-normalize-result"),
+      false,
+    );
+  const [ignoreCase, setIgnoreCase] = useLocalStorage<boolean>(
+    buildStorageKey("diff-ignore-case"),
+    false,
+  );
 
   return (
     <main className="mx-auto mb-16 grid gap-4 p-4 lg:px-8">
