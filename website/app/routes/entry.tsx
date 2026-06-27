@@ -94,7 +94,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               body: "上一条目",
             },
             {
-              to: `/#${encodeEntryId(entry.id)}`,
+              to: `/entry/#${encodeEntryId(entry.id)}`,
               body: "返回条目索引",
             },
             {
@@ -334,7 +334,7 @@ export function ErrorBoundary({
           <p>
             <Link
               className="rounded border border-stroke bg-bg-dark px-2 py-1 text-xs hover:bg-bg-dark-hover focus:bg-bg-dark-hover"
-              to="/"
+              to="/entry/"
             >
               返回条目索引
             </Link>

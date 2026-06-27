@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;

@@ -1,13 +1,20 @@
 import { commitDate, revisionUrl } from "virtual:gb7714-bench-git-info";
-import { mdiBookshelf, mdiFileDocumentOutline, mdiGit } from "@mdi/js";
+import {
+  mdiBookshelf,
+  mdiFileDocumentOutline,
+  mdiGit,
+  mdiHomeOutline,
+} from "@mdi/js";
 import { StrictMode } from "react";
 import {
   isRouteErrorResponse,
+  Link,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "react-router";
 import type { Route } from "./+types/root";
 import Icon from "./components/Icon";
@@ -27,6 +34,9 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const atReadme = location.pathname === "/";
+
   return (
     <html lang="zh-CN">
       <head>
@@ -43,7 +53,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               href={revisionUrl}
               target="_blank"
               rel="noopener"
-              className="hover:underline focus:underline"
+              className="inline-block hover:underline focus:underline"
             >
               <time dateTime={commitDate}>
                 {new Intl.DateTimeFormat("zh-CN", {
@@ -53,6 +63,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </a>
           </p>
           <nav className="content-end text-4xl lg:text-3xl">
+            {!atReadme && (
+              <Link
+                to="/"
+                title="返回首页"
+                className="m-0.5 rounded p-0.5 hover:bg-bg-dark hover:shadow-inner focus:bg-bg-dark focus:shadow-inner"
+              >
+                <span className="sr-only">返回首页</span>
+                <Icon path={mdiHomeOutline} />
+              </Link>
+            )}
             {[
               {
                 title: "GitHub 仓库",
