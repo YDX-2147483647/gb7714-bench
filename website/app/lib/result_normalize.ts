@@ -34,7 +34,7 @@ export function normalizeResult(s: string): string {
       )
       .replaceAll(/\s*[（(]/gu, " (")
       .replaceAll(/[）)]\s*/gu, ") ")
-      .replaceAll(/([\p{sc=Han}\]]\.?)([\p{Number}\[])/gu, insertSpace)
+      .replaceAll(/([\p{sc=Han}\]]\.?)([\p{Number}[])/gu, insertSpace)
       .replaceAll(".[", ". [")
       // 2. Clean redundant spaces
       .replaceAll(/https?:\/\/.+$/gu, removeMatchSpaces)

@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { getSections } from "~/lib/files";
 import { encodeEntryId } from "~/lib/naming";
-import type { Route } from "./+types/home";
+import type { Route } from "./+types/entry-home";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -17,7 +17,7 @@ export async function loader() {
   return { sections: getSections() };
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
+export default function EntryHome({ loaderData }: Route.ComponentProps) {
   const { sections } = loaderData;
 
   return (
@@ -50,7 +50,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
             <ul className="m-0 list-none p-0">
               {section.entries.map((entry) => (
-                // 访问`/#id`时，需滚动到此元素，但要避让 sticky header
+                // 访问`/entry/#id`时，需滚动到此元素，但要避让 sticky header
                 <li
                   key={entry.id}
                   className="scroll-mt-30"
