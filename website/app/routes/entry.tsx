@@ -3,6 +3,7 @@ import { data, isRouteErrorResponse, Link } from "react-router";
 
 import { DiffText, DiffTextLegend } from "~/components/DiffText";
 import { SyntaxHighlighter } from "~/components/SyntaxHighlighter";
+import { calcAddedRanges } from "~/composables/diff";
 import { buildStorageKey, useLocalStorage } from "~/composables/hooks";
 import { type EntryInfo, getAdjacentEntryIds, getEntryInfo } from "~/lib/files";
 import {
@@ -159,14 +160,21 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               </pre>
             </section>
 
-            {entry.sources.map(([key, value]) => (
+            {entry.sources.map(([key, value], index) => (
               <section
                 className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0"
                 key={key}
               >
                 <h3 className="my-1">{humanizeSourceKey(key)}</h3>
                 <p className="my-1 text-ink-soft text-xs">{key}</p>
-                {renderSourceItem(key, value)}
+                {renderSourceItem(
+                  key,
+                  value,
+                  entry.sources[
+                    // *.builtin.* comes before *.better.*
+                    index + (key.includes(".builtin.") ? 1 : -1)
+                  ][1],
+                )}
               </section>
             ))}
           </div>
@@ -280,14 +288,25 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   );
 }
 
-function renderSourceItem(key: Source.Key, value: string): JSX.Element {
+function renderSourceItem(
+  key: Source.Key,
+  value: string,
+  refValue: string,
+): JSX.Element {
   const language = key.endsWith(".json")
     ? "json"
     : key.endsWith(".bib")
       ? "bibtex"
       : "text";
+
+  const highlightRanges = calcAddedRanges(refValue, value);
+
   return (
-    <SyntaxHighlighter language={language} className="text-sm">
+    <SyntaxHighlighter
+      className="text-sm"
+      language={language}
+      highlightRanges={highlightRanges}
+    >
       {value}
     </SyntaxHighlighter>
   );

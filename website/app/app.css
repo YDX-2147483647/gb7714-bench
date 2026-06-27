@@ -67,4 +67,8 @@ pre {
 .syntax-highlighter pre {
   /* Ref: https://www.npmjs.com/package/react-shiki */
   @apply rounded-xl px-5 py-6;
+
+  &.shiki .highlighted-word {
+    @apply rounded border border-stroke bg-bg shadow;
+  }
 }
