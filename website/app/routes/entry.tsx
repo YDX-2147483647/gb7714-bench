@@ -1,8 +1,10 @@
-import { type JSX, useMemo, useState } from "react";
+import { type JSX, useMemo } from "react";
 import { data, isRouteErrorResponse, Link } from "react-router";
 
 import { DiffText, DiffTextLegend } from "~/components/DiffText";
 import { SyntaxHighlighter } from "~/components/SyntaxHighlighter";
+import { calcAddedRanges } from "~/composables/diff";
+import { buildStorageKey, useLocalStorage } from "~/composables/hooks";
 import { type EntryInfo, getAdjacentEntryIds, getEntryInfo } from "~/lib/files";
 import {
   decodeEntryId,
@@ -55,7 +57,8 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   const { entry, nav } = loaderData;
 
   // `resultRef` is the result selected for reference in diff. Empty if diff is disabled.
-  const [resultRefKey, setResultRefKey] = useState<Result.Key | null>(
+  const [resultRefKey, setResultRefKey] = useLocalStorage<Result.Key | null>(
+    buildStorageKey("result-ref-key"),
     entry.results.at(0)?.[0] ?? null,
   );
   const resultRefValue = useMemo(
@@ -69,8 +72,14 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
 
   // Diff options
   const [shouldNormalizeResult, setShouldNormalizeResult] =
-    useState<boolean>(false);
-  const [ignoreCase, setIgnoreCase] = useState<boolean>(false);
+    useLocalStorage<boolean>(
+      buildStorageKey("diff-should-normalize-result"),
+      false,
+    );
+  const [ignoreCase, setIgnoreCase] = useLocalStorage<boolean>(
+    buildStorageKey("diff-ignore-case"),
+    false,
+  );
 
   return (
     <main className="mx-auto mb-16 grid gap-4 p-4 lg:px-8">
@@ -94,7 +103,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               body: "上一条目",
             },
             {
-              to: `/#${encodeEntryId(entry.id)}`,
+              to: `/entry/#${encodeEntryId(entry.id)}`,
               body: "返回条目索引",
             },
             {
@@ -151,14 +160,21 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               </pre>
             </section>
 
-            {entry.sources.map(([key, value]) => (
+            {entry.sources.map(([key, value], index) => (
               <section
                 className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0"
                 key={key}
               >
                 <h3 className="my-1">{humanizeSourceKey(key)}</h3>
                 <p className="my-1 text-ink-soft text-xs">{key}</p>
-                {renderSourceItem(key, value)}
+                {renderSourceItem(
+                  key,
+                  value,
+                  entry.sources[
+                    // *.builtin.* comes before *.better.*
+                    index + (key.includes(".builtin.") ? 1 : -1)
+                  ][1],
+                )}
               </section>
             ))}
           </div>
@@ -272,14 +288,25 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   );
 }
 
-function renderSourceItem(key: Source.Key, value: string): JSX.Element {
+function renderSourceItem(
+  key: Source.Key,
+  value: string,
+  refValue: string,
+): JSX.Element {
   const language = key.endsWith(".json")
     ? "json"
     : key.endsWith(".bib")
       ? "bibtex"
       : "text";
+
+  const highlightRanges = calcAddedRanges(refValue, value);
+
   return (
-    <SyntaxHighlighter language={language} className="text-sm">
+    <SyntaxHighlighter
+      className="text-sm"
+      language={language}
+      highlightRanges={highlightRanges}
+    >
       {value}
     </SyntaxHighlighter>
   );
@@ -334,7 +361,7 @@ export function ErrorBoundary({
           <p>
             <Link
               className="rounded border border-stroke bg-bg-dark px-2 py-1 text-xs hover:bg-bg-dark-hover focus:bg-bg-dark-hover"
-              to="/"
+              to="/entry/"
             >
               返回条目索引
             </Link>

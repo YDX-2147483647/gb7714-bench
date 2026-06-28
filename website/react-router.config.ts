@@ -6,5 +6,5 @@ export default {
   // Note that enabling pre-rendering for `/` causes the SPA fallback to change from `/index.html` to `/__spa-fallback.html`.
   // Therefore, `_redirects` should be different from the usual setup.
   ssr: false,
-  prerender: ["/"],
+  prerender: ["/", "/entry/"],
 } satisfies Config;
