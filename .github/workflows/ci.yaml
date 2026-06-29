@@ -37,6 +37,16 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: ripgrep
+      - name: Setup pandoc
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -LO https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-linux-amd64.tar.gz
+          tar xvf pandoc-3.10-linux-amd64.tar.gz
+          mkdir -p ~/.local/bin/
+          mv pandoc-3.10/bin/pandoc ~/.local/bin/
+          rm -rf pandoc-3.10-linux-amd64.tar.gz pandoc-3.10/
+          pandoc --version
 
       - uses: pnpm/action-setup@v6
         with:

@@ -271,7 +271,7 @@ if (import.meta.vitest) {
         "GB-T_7714—2025.builtin.bib/citeproc-lua/gb-7714-2025-numeric.extended.txt",
       ]
     `);
-    expect(info.results.length).toMatchInlineSnapshot(`43`);
+    expect(info.results.length).toMatchInlineSnapshot(`47`);
     expect(info.results[1][1]).toMatchInlineSnapshot(
       `"[187] 陈登原. 国史旧闻：卷1[M]. 北京：中华书局，2000."`,
     );
