@@ -1,11 +1,4 @@
 {
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.5.1",
-      "onFail": "download"
-    }
-  },
   "type": "module",
   "dependencies": {
     "@citation-js/core": "^0.7.21",
