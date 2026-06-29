@@ -28,7 +28,9 @@ jobs:
           submodules: true
       - uses: typst-community/setup-typst@v5
         with:
-          typst-version: v0.14
+          # Required by setup-typst-local-pkg.nu.
+          # NOTE: Sync the typst version with typst_etc/pyproject.toml.
+          typst-version: v0.15
       - uses: hustcer/setup-nu@v3
         with:
           version: "0.113.1"

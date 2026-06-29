@@ -6,3 +6,4 @@ dependencies = [
     "lxml>=6.1.1",
     "typst~=0.15.0",
 ]
+# NOTE: Sync the typst version with ci.yaml.
