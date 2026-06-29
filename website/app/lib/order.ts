@@ -50,7 +50,7 @@ export function compareKey(
         "gb-7714-2015",
         "typst-omni-gb7714",
       ],
-      ["lua", "typst/", "typst-"],
+      ["lua", "pandoc", "typst/", "typst-"],
       ["compliant", "extended"],
     ])(aRest.join("/"), bRest.join("/"));
   }
@@ -127,6 +127,7 @@ if (import.meta.vitest) {
         "GB-T_7714—2025.better.bib/citeproc-lua/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.better.bib/citeproc-lua/gb-7714-2025-numeric.extended.txt",
         "GB-T_7714—2025.better.bib/gbt7714-bibtex-style/default.txt",
+        "GB-T_7714—2025.better.bib/pandoc/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.better.bib/typst-citrus/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.better.bib/typst-citrus/gb-7714-2025-numeric.extended.txt",
         "GB-T_7714—2025.better.bib/typst-gb7714-bilingual/default.txt",
@@ -151,6 +152,7 @@ if (import.meta.vitest) {
         "GB-T_7714—2025.better.bib/biblatex-gb7714-2025/default.txt",
         "GB-T_7714—2025.better.bib/citeproc-lua/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.better.bib/citeproc-lua/gb-7714-2025-numeric.extended.txt",
+        "GB-T_7714—2025.better.bib/pandoc/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.better.bib/typst/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.better.bib/typst-citrus/gb-7714-2025-numeric.compliant.txt",
         "GB-T_7714—2025.better.bib/typst-citrus/gb-7714-2025-numeric.extended.txt",

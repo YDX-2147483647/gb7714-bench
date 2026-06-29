@@ -28,13 +28,25 @@ jobs:
           submodules: true
       - uses: typst-community/setup-typst@v5
         with:
-          typst-version: v0.14
+          # Required by setup-typst-local-pkg.nu.
+          # NOTE: Sync the typst version with typst_etc/pyproject.toml.
+          typst-version: v0.15
       - uses: hustcer/setup-nu@v3
         with:
           version: "0.113.1"
       - uses: taiki-e/install-action@v2
         with:
           tool: ripgrep
+      - name: Setup pandoc
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -LO https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-linux-amd64.tar.gz
+          tar xvf pandoc-3.10-linux-amd64.tar.gz
+          mkdir -p ~/.local/bin/
+          mv pandoc-3.10/bin/pandoc ~/.local/bin/
+          rm -rf pandoc-3.10-linux-amd64.tar.gz pandoc-3.10/
+          pandoc --version
 
       - uses: pnpm/action-setup@v6
         with:
