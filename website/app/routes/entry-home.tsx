@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { getSections } from "~/lib/files";
 import { encodeEntryId } from "~/lib/naming";
+import type { EntryId } from "../../plugin/load_files";
 import type { Route } from "./+types/entry-home";
 
 export function meta(_: Route.MetaArgs) {
@@ -14,11 +15,35 @@ export function meta(_: Route.MetaArgs) {
 }
 
 export async function loader() {
-  return { sections: getSections() };
+  const sections = getSections();
+
+  const outline: {
+    chapter: string;
+    children: { heading: string; firstId: EntryId }[];
+  }[] = [];
+  for (const sec of sections) {
+    if (sec.headings[0] !== outline.at(-1)?.chapter) {
+      outline.push({
+        chapter: sec.headings[0],
+        children: [],
+      });
+    }
+    if (
+      sec.headings.length >= 2 &&
+      sec.headings[1] !== outline.at(-1)?.children.at(-1)?.heading
+    ) {
+      outline.at(-1)?.children.push({
+        heading: sec.headings[1],
+        firstId: sec.entries[0].id,
+      });
+    }
+  }
+
+  return { sections, outline };
 }
 
 export default function EntryHome({ loaderData }: Route.ComponentProps) {
-  const { sections } = loaderData;
+  const { sections, outline } = loaderData;
 
   return (
     <main className="mx-auto mb-16 p-4 lg:px-8">
@@ -29,6 +54,34 @@ export default function EntryHome({ loaderData }: Route.ComponentProps) {
           按 GB/T 7714—2025 章节示例顺序，逐条目浏览数据源与处理结果。
         </p>
       </header>
+
+      <nav className="my-4 overflow-clip rounded-2xl border border-stroke bg-card shadow">
+        <h2 className="border-stroke border-b border-dashed bg-bg p-4 font-bold text-xl">
+          目录
+        </h2>
+        <ol className="mb-2">
+          {outline.map(({ chapter, children }) => (
+            <li
+              key={chapter}
+              className="block border-stroke border-t border-dashed px-6 py-2"
+            >
+              <p>{chapter}</p>
+              <ol className="my-2 flex flex-wrap gap-2 pl-3">
+                {children.map(({ heading, firstId }) => (
+                  <li key={heading}>
+                    <Link
+                      to={`#${encodeEntryId(firstId)}`}
+                      className="rounded border border-stroke bg-bg-dark px-2 py-1 text-xs hover:bg-bg-dark-hover focus:bg-bg-dark-hover"
+                    >
+                      {heading}
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </li>
+          ))}
+        </ol>
+      </nav>
 
       <div className="my-4 grid overflow-clip rounded-2xl border border-stroke bg-card shadow">
         {sections.map((section) => (
