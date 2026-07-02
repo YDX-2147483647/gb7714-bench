@@ -1,0 +1,5 @@
+patchedDependencies:
+  # Remove the logic of downgrading CSL-JSON items from 1.0.2 to 1.0.1
+  # This reverts https://github.com/citation-js/citation-js/commit/40901640a12961b32e4cf373b7fa70361be5e064
+  # See https://github.com/citation-js/citation-js/issues/276
+  '@citation-js/plugin-csl': patches/@citation-js__plugin-csl.patch
