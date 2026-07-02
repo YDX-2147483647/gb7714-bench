@@ -10,6 +10,7 @@ def main []: nothing -> nothing {
 
     {
         "locales-zh-CN.xml": "https://github.com/citation-style-language/locales/raw/af8725651dbca236639e4d539659b29457b47b50/locales-zh-CN.xml",
+        "locales-en-US.xml": "https://github.com/citation-style-language/locales/raw/af8725651dbca236639e4d539659b29457b47b50/locales-en-US.xml",
         "gb-7714-2015-numeric.compliant.csl": "https://github.com/citation-style-language/styles/raw/995f064bd45846c000080286186d81d0b97c96cc/china-national-standard-gb-t-7714-2015-numeric.csl",
         "gb-7714-2025-numeric.compliant.csl": "https://github.com/citation-style-language/styles/raw/995f064bd45846c000080286186d81d0b97c96cc/china-national-standard-gb-t-7714-2025-numeric.csl",
         "gb-7714-2025-numeric.extended.csl": "https://github.com/zotero-chinese/styles/raw/8cde8f171c8aaf81a4fc09251dc231c498a04123/src/GB-T-7714—2025（顺序编码，双语）/GB-T-7714—2025（顺序编码，双语）.csl"

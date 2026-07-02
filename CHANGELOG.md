@@ -23,6 +23,7 @@ Processors:
 - zotero: Eliminate the inconsistencies with the Zotero Chinese Community. ([#11](https://github.com/YDX-2147483647/gb7714-bench/pull/11))
 
   - Remove the logic in `@citation-js/plugin-csl` that downgrades CSL-JSON items from 1.0.2 to 1.0.1. ([citation-js#276](https://github.com/citation-js/citation-js/issues/276))
+  - Replace the builtin en-US locale with the latest upstream version to leverage [citation-style-language/locales#357](https://github.com/citation-style-language/locales/pull/357).
 
 - typst_etc: Update the Typst compiler [from v0.14 to v0.15](https://typst.app/docs/changelog/0.15.0/). (02d4c11, 819d2c9)
 
