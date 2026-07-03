@@ -36,9 +36,11 @@
 
 各引擎的测试脚本位于[`processors/`](./processors/)。
 
-- **[Zotero](./processors/zotero/main.ts)** 🔮 ([Citation.js](https://citation.js.org) + [citeproc-js](https://citeproc-js.readthedocs.io))
+- **[Zotero](./processors/zotero/main.ts)** 🔮
 
-  Zotero 技术栈有稳定编程接口，调用即可获得文献处理结果。
+  Zotero 采用 [citeproc-js](https://citeproc-js.readthedocs.io) 处理文献。通过 [Citation.js](https://citation.js.org) 调用 citeproc-js 的编程接口即可获得处理结果。
+
+  由于并非真正操作 Zotero 软件界面，这与 Zotero 导出结果会有一处微妙差异，是 citeproc-js 缺陷所致。详见 [zotero-chinese/styles#696](https://github.com/zotero-chinese/styles/issues/696) 与 [citeproc-js#280](https://github.com/Juris-M/citeproc-js/issues/280)。
 
 - **[LaTeX 系列](./processors/tex_etc/common.nu)**
 
