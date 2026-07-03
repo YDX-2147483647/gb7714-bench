@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file, with the fo
 
 All dates in this file are in UTC+8.
 
-## [Unreleased]
+## [2026-07-03](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-03)
 
 ### Added
 
