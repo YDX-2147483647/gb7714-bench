@@ -4,7 +4,7 @@ def main []: nothing -> string {
     cd processors/
 
     ['gbt7714-bibtex-style', 'biblatex-gb7714-2025', 'citeproc-lua']
-    | par-each { {
+    | par-each --keep-order { {
         processor: $in,
         versions: (nu $"($in).nu" collect-versions | from json),
     } }
