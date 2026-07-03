@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@citation-js/plugin-csl': 9e95f9c83078a29d0e6bb061dd6b49d253859e7ee3c04d31d2c137899d19b499
+
 importers:
 
   .:
@@ -16,7 +19,7 @@ importers:
         version: 0.7.21(@citation-js/core@0.7.21)
       '@citation-js/plugin-csl':
         specifier: ^0.7.22
-        version: 0.7.22(@citation-js/core@0.7.21)
+        version: 0.7.22(patch_hash=9e95f9c83078a29d0e6bb061dd6b49d253859e7ee3c04d31d2c137899d19b499)(@citation-js/core@0.7.21)
     devDependencies:
       '@types/node':
         specifier: ^25.9.2
@@ -125,7 +128,7 @@ snapshots:
       '@citation-js/name': 0.4.2
       moo: 0.5.3
 
-  '@citation-js/plugin-csl@0.7.22(@citation-js/core@0.7.21)':
+  '@citation-js/plugin-csl@0.7.22(patch_hash=9e95f9c83078a29d0e6bb061dd6b49d253859e7ee3c04d31d2c137899d19b499)(@citation-js/core@0.7.21)':
     dependencies:
       '@citation-js/core': 0.7.21
       '@citation-js/date': 0.5.1

@@ -13,7 +13,12 @@ const styleCache = (filename: string): string =>
   readFileSync(path.join(ROOT_DIR, "target/style-cache", filename), "utf-8");
 
 const config = plugins.config.get("@csl");
+
 config.locales.add("zh-CN", styleCache("locales-zh-CN.xml"));
+// citation.js 内置了 en-US locale，但 2022-05-22 后未再更新，需替换成 CSL 官方新版
+// https://github.com/citation-js/citation-js/blob/main/packages/plugin-csl/src/locales.json
+config.locales.add("en-US", styleCache("locales-en-US.xml"));
+
 for (
   const template of [
     "gb-7714-2015-numeric.compliant",
