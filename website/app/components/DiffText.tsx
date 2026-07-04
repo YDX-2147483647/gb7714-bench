@@ -14,13 +14,15 @@ export function DiffText({
 
   return (
     <pre className="diff-text">
-      {diff.map((part) => {
+      {diff.map((part, index) => {
+        const key = `${index}-${part.value.slice(0, 8)}`;
+
         if (part.added) {
-          return <ins>{part.value}</ins>;
+          return <ins key={key}>{part.value}</ins>;
         } else if (part.removed) {
-          return <del>{part.value}</del>;
+          return <del key={key}>{part.value}</del>;
         } else {
-          return <span>{part.value}</span>;
+          return <span key={key}>{part.value}</span>;
         }
       })}
     </pre>
