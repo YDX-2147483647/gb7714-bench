@@ -14,7 +14,10 @@ All dates in this file are in UTC+8.
 
 Processors:
 
-- tex_etc: Set `pdftotext -raw` to avoid mixing the lines of different entries. ([#14](https://github.com/YDX-2147483647/gb7714-bench/pull/14))
+- tex_etc: Improve the process of extracting text from PDF. ([#14](https://github.com/YDX-2147483647/gb7714-bench/pull/14))
+
+  - Set `pdftotext -raw` to avoid mixing the lines of different entries.
+  - Increase the page width from `200em` to `400em` to keep entries with long URLs (e.g., [gbt7714.b.4:10](https://gb7714.zhtyp.art/entry/gbt7714.b.4-10/)) in a single line.
 
 ## [2026-07-03](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-03)
 
