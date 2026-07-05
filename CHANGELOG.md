@@ -8,6 +8,17 @@ All notable changes to this project will be documented in this file, with the fo
 
 All dates in this file are in UTC+8.
 
+## [Unreleased]
+
+### Fixed
+
+Processors:
+
+- tex_etc: Improve the process of extracting text from PDF. ([#14](https://github.com/YDX-2147483647/gb7714-bench/pull/14))
+
+  - Set `pdftotext -raw` to avoid mixing the lines of different entries.
+  - Increase the page width from `200em` to `400em` to keep entries with long URLs (e.g., [gbt7714.b.4:10](https://gb7714.zhtyp.art/entry/gbt7714.b.4-10/)) in a single line.
+
 ## [2026-07-03](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-03)
 
 ### Added
@@ -42,6 +53,14 @@ Processors:
   This makes it possible to use any package manager, not just pnpm. The package manager does not affect the result.
 
   This also makes maintenance simpler, as dealing with pnpm security issues is no longer within the scope of this project.
+
+### Fixed
+
+Other:
+
+- Keep the order of entries in `tex-versions.yaml`. (c800c91)
+
+  Starting from this release, it will be gbt7714-bibtex-style, biblatex-gb7714-2025, citeproc-lua.
 
 ## [2026-06-26](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-06-26)
 

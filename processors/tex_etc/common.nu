@@ -7,23 +7,35 @@ export def run-lualatex []: nothing -> nothing {
 }
 
 export def pdf-to-text [pdf: path]: nothing -> string {
-    pdftotext $pdf -
+    # -raw: keep strings in content stream order
+    # -nopgbrk: don't insert page breaks ("\f") between pages
+    pdftotext $pdf -raw -nopgbrk -
     | str trim
     | str replace --all "\r\n" "\n"
-    | str replace --all "\f" ""
-    | str replace --all --regex '\n+(\[\d+\])' "\n$1"
-    | str replace --all --regex '\n{2,}' " "
-    | str replace --all --regex '\n(?!\[)' ""
+    | str replace --all --regex '\n(?!\[\d+\])' ""
 }
 
 # 根据环境变量 $CTEX_FONTSET 设置文档类 ctexart
-export def documentclass-ctexart []: nothing -> string {
+def documentclass-ctexart []: nothing -> string {
     let fontset = $env | get CTEX_FONTSET --optional
     if fontset == null {
         '\documentclass{ctexart}'
     } else {
         $'\documentclass[fontset=($fontset)]{ctexart}'
     }
+}
+
+export def document-prelude []: nothing -> string {
+    $'
+(documentclass-ctexart)
+
+% 让每项文献只占一行，并且无页码等文字干扰
+\usepackage[paperwidth=400em]{geometry}
+\pagestyle{empty}
+
+% 让字体支持俄文
+\setmainfont{cmunrm.otf}
+    '
 }
 
 export const INFRA_VERSION_PATTERNS = [

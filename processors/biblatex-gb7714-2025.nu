@@ -1,6 +1,6 @@
 #!/usr/bin/env -S nu --stdin
 
-use tex_etc/common.nu [documentclass-ctexart, run-lualatex, pdf-to-text, INFRA_VERSION_PATTERNS]
+use tex_etc/common.nu [document-prelude, run-lualatex, pdf-to-text, INFRA_VERSION_PATTERNS]
 
 # List supported source formats and styles.
 def "main supports" [] {
@@ -19,14 +19,7 @@ def main []: string -> string {
     $source o> ref.bib
 
     $'
-(documentclass-ctexart)
-
-% 让每项文献只占一行，并且无页码等文字干扰
-\usepackage[paperwidth=200em]{geometry}
-\pagestyle{empty}
-
-% 让字体支持俄文
-\setmainfont{cmunrm.otf}
+(document-prelude)
 
 \usepackage[backend=biber,style=gb7714-2025]{biblatex}
 \addbibresource[location=local]{ref.bib}
