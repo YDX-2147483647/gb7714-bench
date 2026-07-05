@@ -48,7 +48,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <header className="mx-8 mt-4 grid grid-cols-[1fr_auto] text-ink-soft lg:mx-10">
           <p className="content-end text-sm">
-            最后更新于
+            最后更新于{" "}
             <a
               href={revisionUrl}
               target="_blank"
