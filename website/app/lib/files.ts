@@ -84,6 +84,14 @@ function buildName(entry: Source.AnyJson): string | null {
   return null;
 }
 
+/** A sorted array of all existing `Result.Key`s. */
+export const RESULT_KEYS_SORTED = (Object.keys(RESULT) as Result.Key[]).sort(
+  compareKey,
+);
+
+/** An array of `EntryId`s by their canonical indices. */
+export const ENTRY_IDS = sourceCanonical.map((entry) => entry.id);
+
 /**
  * @throws Error if not found.
  */
@@ -91,7 +99,7 @@ function getCanonicalEntry(id: EntryId): {
   canonicalIndex: number;
   meta: EntryMeta;
 } {
-  const canonicalIndex = sourceCanonical.findIndex((entry) => entry.id === id);
+  const canonicalIndex = ENTRY_IDS.indexOf(id);
   if (canonicalIndex === -1) {
     throw new Error(`Entry ${id} not found.`);
   }
@@ -148,9 +156,9 @@ export function getEntryInfo(id: EntryId): EntryInfo {
     })
     .sort((a, b) => compareKey(a[0], b[0]));
 
-  const results = Object.entries(RESULT)
-    .map(([k, v]) => [k, v[canonicalIndex]] as [Result.Key, string])
-    .sort((a, b) => compareKey(a[0], b[0]));
+  const results = RESULT_KEYS_SORTED.map(
+    (key) => [key, RESULT[key][canonicalIndex]] as [Result.Key, string],
+  );
 
   return {
     id,
@@ -171,8 +179,8 @@ export function getAdjacentEntryIds(canonicalIndex: number): {
   next: EntryId | null;
 } {
   return {
-    prev: canonicalIndex >= 1 ? sourceCanonical[canonicalIndex - 1].id : null,
-    next: sourceCanonical.at(canonicalIndex + 1)?.id ?? null,
+    prev: canonicalIndex >= 1 ? ENTRY_IDS[canonicalIndex - 1] : null,
+    next: ENTRY_IDS.at(canonicalIndex + 1) ?? null,
   };
 }
 

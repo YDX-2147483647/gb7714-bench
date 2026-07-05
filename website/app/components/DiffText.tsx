@@ -29,10 +29,14 @@ export function DiffText({
   );
 }
 
-export function DiffTextLegend(): JSX.Element {
+export function DiffTextLegend({
+  actualTextLegend = "实际",
+}: {
+  actualTextLegend?: string;
+}): JSX.Element {
   return (
     <code className="diff-text">
-      <del>参考</del> <ins>实际</ins>
+      <del>参考</del> <ins>{actualTextLegend}</ins>
     </code>
   );
 }

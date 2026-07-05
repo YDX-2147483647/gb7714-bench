@@ -5,4 +5,5 @@ export default [
   route("changelog/", "routes/changelog.tsx"),
   route("entry/", "routes/entry-home.tsx"),
   route("entry/:entryId/", "routes/entry.tsx"),
+  route("compare/", "routes/compare.tsx"),
 ] satisfies RouteConfig;
