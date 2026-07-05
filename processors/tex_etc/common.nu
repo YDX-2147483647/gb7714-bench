@@ -7,13 +7,12 @@ export def run-lualatex []: nothing -> nothing {
 }
 
 export def pdf-to-text [pdf: path]: nothing -> string {
-    pdftotext $pdf -
+    # -raw: keep strings in content stream order
+    # -nopgbrk: don't insert page breaks ("\f") between pages
+    pdftotext $pdf -raw -nopgbrk -
     | str trim
     | str replace --all "\r\n" "\n"
-    | str replace --all "\f" ""
-    | str replace --all --regex '\n+(\[\d+\])' "\n$1"
-    | str replace --all --regex '\n{2,}' " "
-    | str replace --all --regex '\n(?!\[)' ""
+    | str replace --all --regex '\n(?!\[\d+\])' ""
 }
 
 # 根据环境变量 $CTEX_FONTSET 设置文档类 ctexart
