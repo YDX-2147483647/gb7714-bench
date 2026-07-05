@@ -10,6 +10,8 @@
 
 此项目利用 [Zotero 中文 CSL 开发组的测试文献数据](https://github.com/typst-doc-cn/bib-csl-dev-data)，测试了十种支持 GB/T 7714 的参考文献引擎。测试初步结果可在[网站`/entry/`页](https://gb7714.zhtyp.art/entry/)查看（加载可能比较慢）。
 
+历史结果可从 [GitHub Releases](https://github.com/YDX-2147483647/gb7714-bench/releases) 下载。更新记录见 [CHANGELOG](./CHANGELOG.md)。
+
 对于广大文章作者，希望此项目能帮助评估各引擎成熟程度与文献数据兼容性，选择省心组合舒服地写作；对于参考文献引擎与样式开发者，希望此项目能帮助查找各家程序缺陷，并提升跨引擎、跨文献数据格式的兼容性。
 
 ## 测试范围

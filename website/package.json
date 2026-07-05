@@ -25,6 +25,7 @@
     "react-router": "^8.1.0",
     "rehype-external-links": "^3.0.0",
     "remark-gfm": "^4.0.1",
+    "remark-github": "^12.0.0",
     "shiki": "^4.3.1"
   },
   "devDependencies": {
