@@ -21,7 +21,7 @@ export function meta({ params: { entryId }, loaderData }: Route.MetaArgs) {
   const canonicalIndex = loaderData?.entry?.canonicalIndex;
   return [
     {
-      title: `条目 [${canonicalIndex !== undefined ? canonicalIndex + 1 : "?"}] ${entryId} | GB/T 7714 Benchmark`,
+      title: `条目 [${canonicalIndex !== undefined ? canonicalIndex + 1 : "?"}] ${decodeEntryId(entryId as EntryIdUrlSafe)} | GB/T 7714 Benchmark`,
     },
   ];
 }
