@@ -37,7 +37,8 @@ body {
   text-autospace: normal;
 }
 
-a {
+a,
+.prose {
   text-underline-offset: 0.2em;
 }
 
