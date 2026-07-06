@@ -15,23 +15,23 @@ const styleCache = (filename: string): string =>
 const config = plugins.config.get("@csl");
 
 config.locales.add("zh-CN", styleCache("locales-zh-CN.xml"));
-// citation.js 内置了 en-US locale，但 2022-05-22 后未再更新，需替换成 CSL 官方新版
+// citation.js 内置了 en-US locale，但更新频率较低，需替换成 CSL 官方新版以与 zh-CN 匹配
 // https://github.com/citation-js/citation-js/blob/main/packages/plugin-csl/src/locales.json
 config.locales.add("en-US", styleCache("locales-en-US.xml"));
 
 for (
-  const template of [
+  const style of [
     "gb-7714-2015-numeric.compliant",
     "gb-7714-2025-numeric.compliant",
     "gb-7714-2025-numeric.extended",
   ]
 ) {
-  config.templates.add(template, styleCache(`${template}.csl`));
+  config.styles.add(style, styleCache(`${style}.csl`));
 }
 
 const source = Buffer.concat(await Array.fromAsync(stdin)).toString("utf-8");
-const template = argv[2] as string;
+const style = argv[2] as string;
 
 const data = new Cite(source);
-const bibliography = data.format("bibliography", { template, format: "text" });
+const bibliography = data.format("bibliography", { style, format: "text" });
 console.log(bibliography);
