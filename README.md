@@ -6,7 +6,7 @@
 
 <!-- NOTE: The following will be included in the website. -->
 
-推荐性国家标准 [GB/T 7714—2025《信息与文献　参考文献著录规则》](https://std.samr.gov.cn/gb/search/gbDetailed?id=4507EFE13D37CB6AE06397BE0A0A601F)（PDF：[知网影印版](https://publishmedia.cbpt.cnki.net/portal/minio/webs/hbxy/media/web/2026/01/20/GBT%207714—2025%20信息与文献%20参考文献著录规则.pdf)／[标网数字正版](https://www.spc.org.cn/online/c6ce52e55ac09b9c79a20aea77cedd14.html)）计划自2026年7月1日起实施。
+推荐性国家标准 [GB/T 7714—2025《信息与文献　参考文献著录规则》](https://std.samr.gov.cn/gb/search/gbDetailed?id=4507EFE13D37CB6AE06397BE0A0A601F)（PDF：[知网影印版](https://publishmedia.cbpt.cnki.net/portal/minio/webs/hbxy/media/web/2026/01/20/GBT%207714—2025%20信息与文献%20参考文献著录规则.pdf)／[标网数字正版](https://www.spc.org.cn/online/c6ce52e55ac09b9c79a20aea77cedd14.html)）已于2026年7月1日实施。
 
 此项目利用 [Zotero 中文 CSL 开发组的测试文献数据](https://github.com/typst-doc-cn/bib-csl-dev-data)，测试了十种支持 GB/T 7714 的参考文献引擎。测试初步结果可在[网站 gb7714.zhtyp.art](https://gb7714.zhtyp.art) 查看（加载可能比较慢）：
 
