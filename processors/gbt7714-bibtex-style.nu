@@ -15,7 +15,15 @@ def main []: string -> string {
     mkdir target/tex-cache/run-bibtex/
     cd target/tex-cache/run-bibtex/
 
-    let source = $in
+    # 处理 BibTeX 不支持的 BibLaTeX 语法
+    let source = (
+        $in
+        # Too many commas in name … of "…" for entry …
+        | str replace --all --regex ', (juniorcomma|useprefix)=(true|false)' ''
+        # ! Undefined control sequence.
+        | str replace --all '\mkbibemph{' '\emph{'
+    )
+
     $source o> ref.bib
 
     $'

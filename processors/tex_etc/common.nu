@@ -1,8 +1,13 @@
 export def run-lualatex []: nothing -> nothing {
+    # 以下`do --capture-errors { ^cmd | tee { print --stderr } } | ignore`写法可以保证：
+    # 1. cmd 退出代码非零时，整个命令的退出代码也非零
+    # 2. cmd 的 stdout 会被转到 stderr，整个命令不生成多余 stdout
+    # 3. cmd 的 stdout 会立即输出到 stderr，而不会阻塞到运行结束才一齐输出
     try {
-        latexmk -lualatex | print --stderr
+        do --capture-errors { latexmk -lualatex | tee { print --stderr } } | ignore
     } catch {
-        latexmk -lualatex -gg | print --stderr
+        print --stderr "😱 Failed to compile with lualatex. Clean the cache and retry."
+        do --capture-errors { latexmk -lualatex -gg | tee { print --stderr } } | ignore
     }
 }
 
