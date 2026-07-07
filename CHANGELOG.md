@@ -10,6 +10,16 @@ All dates in this file are in UTC+8.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- zotero: Update `@citation-js/*` packages from v0.7 to [v0.8.1](https://github.com/citation-js/citation-js/blob/main/CHANGELOG.md#081-2026-07-05). ([#15](https://github.com/YDX-2147483647/gb7714-bench/pull/15))
+
+  `@citation-js/plugin-csl` now defaults to CSL 1.0.2. Therefore, the patch added in the release 2026-07-03 is no longer necessary.
+
+  This change does not affect the results.
+
 ### Fixed
 
 Processors:
