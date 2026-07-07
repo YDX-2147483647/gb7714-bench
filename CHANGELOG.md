@@ -29,6 +29,12 @@ Processors:
   - Set `pdftotext -raw` to avoid mixing the lines of different entries.
   - Increase the page width from `200em` to `400em` to keep entries with long URLs (e.g., [gbt7714.b.4:10](https://gb7714.zhtyp.art/entry/gbt7714.b.4-10/)) in a single line.
 
+- tex_etc: Handle LaTeX errors correctly. ([#17](https://github.com/YDX-2147483647/gb7714-bench/pull/17))
+
+  Previously, LaTeX errors were ignored, and the cache from previous runs would be taken as the result. This affected `GB-T_7714—2025.better.bib/gbt7714-bibtex-style/default.txt`. They were actually exact copies of `GB-T_7714—2025.builtin.bib/gbt7714-bibtex-style/default.txt`.
+
+  Other results were not affected.
+
 ## [2026-07-03](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-03)
 
 ### Added
