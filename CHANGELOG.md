@@ -35,6 +35,10 @@ Processors:
 
   Other results were not affected.
 
+- gbt7714-bibtex-style: Strip unsupported BibLaTeX syntaxes in `*.better.bib`. ([#17](https://github.com/YDX-2147483647/gb7714-bench/pull/17))
+
+  `data/GB-T_7714—2025.better.bib` is for BibLaTeX and contains syntaxes unsupported by BibTeX. They are now stripped before passing to BibTeX.
+
 ## [2026-07-03](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-03)
 
 ### Added
