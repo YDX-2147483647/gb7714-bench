@@ -8,7 +8,13 @@
 
 推荐性国家标准 [GB/T 7714—2025《信息与文献　参考文献著录规则》](https://std.samr.gov.cn/gb/search/gbDetailed?id=4507EFE13D37CB6AE06397BE0A0A601F)（PDF：[知网影印版](https://publishmedia.cbpt.cnki.net/portal/minio/webs/hbxy/media/web/2026/01/20/GBT%207714—2025%20信息与文献%20参考文献著录规则.pdf)／[标网数字正版](https://www.spc.org.cn/online/c6ce52e55ac09b9c79a20aea77cedd14.html)）计划自2026年7月1日起实施。
 
-此项目利用 [Zotero 中文 CSL 开发组的测试文献数据](https://github.com/typst-doc-cn/bib-csl-dev-data)，测试了十种支持 GB/T 7714 的参考文献引擎。测试初步结果可在[网站`/entry/`页](https://gb7714.zhtyp.art/entry/)查看（加载可能比较慢）。
+此项目利用 [Zotero 中文 CSL 开发组的测试文献数据](https://github.com/typst-doc-cn/bib-csl-dev-data)，测试了十种支持 GB/T 7714 的参考文献引擎。测试初步结果可在[网站 gb7714.zhtyp.art](https://gb7714.zhtyp.art) 查看（加载可能比较慢）：
+
+- [`/converge/`](https://gb7714.zhtyp.art/converge/)——评估处理结果趋同程度
+- [`/compare/`](https://gb7714.zhtyp.art/compare/)——比较「数据源 · 引擎 · 样式」组合
+- [`/entry/`](https://gb7714.zhtyp.art/entry/)——逐条目浏览
+
+历史结果可从 [GitHub Releases](https://github.com/YDX-2147483647/gb7714-bench/releases) 下载。更新记录见 [CHANGELOG](./CHANGELOG.md)。
 
 对于广大文章作者，希望此项目能帮助评估各引擎成熟程度与文献数据兼容性，选择省心组合舒服地写作；对于参考文献引擎与样式开发者，希望此项目能帮助查找各家程序缺陷，并提升跨引擎、跨文献数据格式的兼容性。
 

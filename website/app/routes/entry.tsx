@@ -1,7 +1,8 @@
 import { type JSX, useMemo } from "react";
 import { data, isRouteErrorResponse, Link } from "react-router";
 
-import { DiffText, DiffTextLegend } from "~/components/DiffText";
+import { DiffControl, type DiffOption } from "~/components/DiffControl";
+import { ResultItem } from "~/components/ResultItem";
 import { SyntaxHighlighter } from "~/components/SyntaxHighlighter";
 import { calcAddedRanges } from "~/composables/diff";
 import { buildStorageKey, useLocalStorage } from "~/composables/hooks";
@@ -13,7 +14,6 @@ import {
   humanizeResultKey,
   humanizeSourceKey,
 } from "~/lib/naming";
-import { normalizeResult } from "~/lib/result_normalize";
 import type { Result, Source } from "../../plugin/load_files";
 import type { Route } from "./+types/entry";
 
@@ -21,7 +21,7 @@ export function meta({ params: { entryId }, loaderData }: Route.MetaArgs) {
   const canonicalIndex = loaderData?.entry?.canonicalIndex;
   return [
     {
-      title: `条目 [${canonicalIndex !== undefined ? canonicalIndex + 1 : "?"}] ${entryId} | GB/T 7714 Benchmark`,
+      title: `条目 [${canonicalIndex !== undefined ? canonicalIndex + 1 : "?"}] ${decodeEntryId(entryId as EntryIdUrlSafe)} | GB/T 7714 Benchmark`,
     },
   ];
 }
@@ -41,26 +41,22 @@ export async function clientLoader({ params: { entryId } }: Route.LoaderArgs) {
   return { entry, nav };
 }
 
-function applyFn<T extends string | null>(
-  shouldApply: boolean,
-  fn: (x: string) => string,
-  x: T,
-): T {
-  if (shouldApply && x !== null) {
-    return fn(x) as T;
-  } else {
-    return x;
-  }
-}
-
 export default function EntryDetail({ loaderData }: Route.ComponentProps) {
   const { entry, nav } = loaderData;
 
-  // `resultRef` is the result selected for reference in diff. Empty if diff is disabled.
-  const [resultRefKey, setResultRefKey] = useLocalStorage<Result.Key | null>(
-    buildStorageKey("result-ref-key"),
-    entry.results.at(0)?.[0] ?? null,
+  const [diffOption, setDiffOption] = useLocalStorage<DiffOption>(
+    buildStorageKey("diff-option"),
+    {
+      refKey: entry.results.at(0)?.[0] ?? null,
+      shouldNormalize: false,
+      ignoreCase: false,
+    },
   );
+
+  const resultRefKey = diffOption.refKey;
+  const setResultRefKey = (refKey: Result.Key | null) =>
+    setDiffOption((old) => ({ ...old, refKey }));
+
   const resultRefValue = useMemo(
     () =>
       resultRefKey
@@ -68,17 +64,6 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
           null)
         : null,
     [resultRefKey, entry.results],
-  );
-
-  // Diff options
-  const [shouldNormalizeResult, setShouldNormalizeResult] =
-    useLocalStorage<boolean>(
-      buildStorageKey("diff-should-normalize-result"),
-      false,
-    );
-  const [ignoreCase, setIgnoreCase] = useLocalStorage<boolean>(
-    buildStorageKey("diff-ignore-case"),
-    false,
   );
 
   return (
@@ -136,7 +121,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
             </p>
           </div>
           <div className="lg:scrollbar-thin lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
-            <section className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0">
+            <section className="px-4 py-2">
               <h3 className="my-1">国标原文</h3>
               <p className="my-1 text-ink-soft text-xs">
                 GB-T_7714—2025.original.toml
@@ -162,7 +147,7 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
 
             {entry.sources.map(([key, value], index) => (
               <section
-                className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0"
+                className="border-stroke border-t border-dashed px-4 py-2"
                 key={key}
               >
                 <h3 className="my-1">{humanizeSourceKey(key)}</h3>
@@ -187,65 +172,15 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
               {entry.results.length} 种「数据源 · 引擎 · 样式」组合
             </p>
           </div>
-          <div className="sticky top-0 border-stroke border-b border-dashed bg-bg p-4 text-ink text-sm">
-            {resultRefKey ? (
-              <>
-                <p className="mb-2 flex items-center justify-between">
-                  <span>
-                    对比结果图例：
-                    <DiffTextLegend />
-                  </span>
-                  <button
-                    type="button"
-                    className="mx-2 -my-2 rounded border border-stroke bg-bg-dark px-2 py-1 text-xs hover:bg-bg-dark-hover focus:bg-bg-dark-hover"
-                    onClick={() => setResultRefKey(null)}
-                  >
-                    退出对比
-                  </button>
-                </p>
-                <p className="mb-2">
-                  参考：
-                  <span className="font-semibold">
-                    {humanizeResultKey(resultRefKey)}
-                  </span>
-                </p>
-                <p className="grid grid-cols-[auto_1fr]">
-                  <span>对比策略：</span>
-                  <span className="-ml-2">
-                    <label className="mx-2 mb-1 inline-block lg:mb-0">
-                      <input
-                        type="checkbox"
-                        checked={shouldNormalizeResult}
-                        onChange={(e) =>
-                          setShouldNormalizeResult(e.target.checked)
-                        }
-                      />{" "}
-                      对比前统一标点符号编码方式
-                    </label>
-                    <label className="mx-2 inline-block">
-                      <input
-                        type="checkbox"
-                        checked={ignoreCase}
-                        onChange={(e) => setIgnoreCase(e.target.checked)}
-                      />{" "}
-                      忽略大小写
-                    </label>
-                  </span>
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="mb-2">参考：未选择</p>
-                <p>
-                  可通过单击标题选择某一结果作为参考对象，让其它结果与之比较
-                </p>
-              </>
-            )}
-          </div>
+          <DiffControl
+            option={diffOption}
+            canDisable={true}
+            onChange={setDiffOption}
+          />
           <div>
             {entry.results.map(([key, value]) => (
               <section
-                className="border-stroke border-t border-dashed px-4 py-2 first:border-t-0"
+                className="border-stroke border-t border-dashed px-4 py-2"
                 key={key}
               >
                 <h3 className="my-1">
@@ -263,22 +198,13 @@ export default function EntryDetail({ loaderData }: Route.ComponentProps) {
                     </button>
                   )}
                 </h3>
-                <p className="my-1 text-ink-soft text-xs">{key}</p>
-                {renderResultItem(
-                  key,
-                  applyFn(
-                    resultRefKey !== null && shouldNormalizeResult,
-                    normalizeResult,
-                    value,
-                  ),
-                  resultRefKey,
-                  applyFn(
-                    resultRefKey !== null && shouldNormalizeResult,
-                    normalizeResult,
-                    resultRefValue,
-                  ),
-                  ignoreCase,
-                )}
+                <p className="mt-1 mb-2 text-ink-soft text-xs">{key}</p>
+                <ResultItem
+                  actualKey={key}
+                  actualValue={value}
+                  diffOption={diffOption}
+                  refValue={resultRefValue}
+                />
               </section>
             ))}
           </div>
@@ -309,24 +235,6 @@ function renderSourceItem(
     >
       {value}
     </SyntaxHighlighter>
-  );
-}
-
-function renderResultItem(
-  key: Result.Key,
-  value: string,
-  refKey: Result.Key | null,
-  refValue: string | null,
-  ignoreCase?: boolean | undefined,
-): JSX.Element {
-  return (
-    <div className="mt-2 rounded-xl border border-stroke bg-bg-soft p-2 text-sm">
-      {refValue === null || refKey === key ? (
-        <pre>{value}</pre>
-      ) : (
-        <DiffText actual={value} ref={refValue} ignoreCase={ignoreCase} />
-      )}
-    </div>
   );
 }
 

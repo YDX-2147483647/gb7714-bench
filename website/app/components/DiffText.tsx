@@ -14,23 +14,29 @@ export function DiffText({
 
   return (
     <pre className="diff-text">
-      {diff.map((part) => {
+      {diff.map((part, index) => {
+        const key = `${index}-${part.value.slice(0, 8)}`;
+
         if (part.added) {
-          return <ins>{part.value}</ins>;
+          return <ins key={key}>{part.value}</ins>;
         } else if (part.removed) {
-          return <del>{part.value}</del>;
+          return <del key={key}>{part.value}</del>;
         } else {
-          return <span>{part.value}</span>;
+          return <span key={key}>{part.value}</span>;
         }
       })}
     </pre>
   );
 }
 
-export function DiffTextLegend(): JSX.Element {
+export function DiffTextLegend({
+  actualTextLegend = "实际",
+}: {
+  actualTextLegend?: string;
+}): JSX.Element {
   return (
     <code className="diff-text">
-      <del>参考</del> <ins>实际</ins>
+      <del>参考</del> <ins>{actualTextLegend}</ins>
     </code>
   );
 }

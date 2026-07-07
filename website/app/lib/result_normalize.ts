@@ -18,6 +18,9 @@ export function normalizeResult(s: string): string {
   return (
     // See https://www.unicode.org/reports/tr44/tr44-24.html#GC_Values_Table
     s
+      // 0. Normalize spaces
+      .replaceAll("\u{200B}", "") // ZERO WIDTH SPACE, used by typst-omni-gb7714 for URLs
+      .replaceAll("\u{00a0}", " ") // NO-BREAK SPACE, used by citeproc-js html export
       // 1. Add spaces
       .replaceAll(
         /([\p{Other_Punctuation}\p{Close_Punctuation}\p{Final_Punctuation}])\s*(\p{Letter})/gu,
@@ -43,6 +46,8 @@ export function normalizeResult(s: string): string {
       .replaceAll(/\s*[·《》]\s*/gu, removeMatchSpaces)
       .replaceAll(") :", "):")
       .replaceAll(/%\s+/gu, "%")
+      .replaceAll(/\\\s+/gu, "\\") // LaTeX macros
+      .replaceAll(/<\/\s+/gu, "</") // HTML tags
       .replaceAll("[S. l.]", "[S.l.]")
       .replaceAll("[s. n.]", "[s.n.]")
       .replaceAll(/[\p{sc=Latin}\p{Number}]\s+\p{sc=Han}/gu, removeMatchSpaces)
@@ -83,6 +88,8 @@ if (import.meta.vitest) {
 [317] Zotero.[Zotero download][EB/OL].[2024-04-08].https://www.zotero.org/download/.
 [342] 肖玲，张雪，王永. 数据要素的统计测算方法探究 [EB/OL]. PSSXiv，2024（2024-07-02）[2024-09-30]. https://zsyyb.cn/abs/202408.01096.
 [344] Jenkins S D,Ruostekoski J.Controlled manipulation of light by cooperative response of atoms in an optical lattice[PP/OL].V2.arXiv (2012-03-18) [2020-06-24].https://doi.org/10.48550/arXiv.1112.6136.
+[344] JENKINS S D, RUOSTEKOSKI J. Controlled Manipulation of Light by Cooperative Response of Atoms in an Optical Lattice[EB/OL]. (2012-03-18)[2020-06-24]. https:​/​/​doi.​org/​10.​48550/​arXiv.​1112.​6136. DOI:10.​48550/​arXiv.​1112.​6136.
+信息技术\\quad先进音视频编码 \\mkbibemph{Eucalyptus grandis} \\textit{eucalyptus grandis} </span>
 `
       .trim()
       .split("\n");
@@ -109,6 +116,8 @@ if (import.meta.vitest) {
         "[317] Zotero. [Zotero download] [EB/OL]. [2024-04-08]. https://www.zotero.org/download/.",
         "[342] 肖玲, 张雪, 王永. 数据要素的统计测算方法探究 [EB/OL]. PSSXiv, 2024 (2024-07-02) [2024-09-30]. https://zsyyb.cn/abs/202408.01096.",
         "[344] Jenkins S D, Ruostekoski J. Controlled manipulation of light by cooperative response of atoms in an optical lattice [PP/OL]. V2. arXiv (2012-03-18) [2020-06-24]. https://doi.org/10.48550/arXiv.1112.6136.",
+        "[344] JENKINS S D, RUOSTEKOSKI J. Controlled Manipulation of Light by Cooperative Response of Atoms in an Optical Lattice [EB/OL]. (2012-03-18) [2020-06-24]. https://doi.org/10.48550/arXiv.1112.6136.DOI:10.48550/arXiv.1112.6136.",
+        "信息技术\\quad先进音视频编码 \\mkbibemph {Eucalyptus grandis} \\textit {eucalyptus grandis} </span>",
       ]
     `);
     // [344]的`V2. arXiv`不对，但十分罕见，就忽略了吧……

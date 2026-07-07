@@ -3,13 +3,19 @@ import { useState } from "react";
 /**
  * Persist state in `localStorage` with automatic synchronization across tabs, type-safe storage and retrieval, and fallback value support. Handles JSON serialization and parsing automatically.
  * https://thibault.sh/react-hooks/use-local-storage
+ *
+ * Change: Add the `sanitize` option.
  */
-export function useLocalStorage<T>(key: string, initialValue: T) {
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T,
+  sanitize: (raw: T) => T = (raw) => raw,
+) {
   const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === "undefined") return initialValue;
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      return item ? sanitize(JSON.parse(item)) : initialValue;
     } catch (error) {
       console.error(error);
       return initialValue;
