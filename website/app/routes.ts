@@ -6,4 +6,5 @@ export default [
   route("entry/", "routes/entry-home.tsx"),
   route("entry/:entryId/", "routes/entry.tsx"),
   route("compare/", "routes/compare.tsx"),
+  route("converge/", "routes/converge.tsx"),
 ] satisfies RouteConfig;
