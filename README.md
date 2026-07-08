@@ -40,7 +40,7 @@
 
 ### 引擎
 
-各引擎的测试脚本位于[`processors/`](./processors/)。
+各引擎的测试脚本位于[`processors/`](./processors/)，版本信息总结于[网站`/version/`页](https://gb7714.zhtyp.art/version/)。
 
 - **[Zotero](./processors/zotero/main.ts)** 🔮
 

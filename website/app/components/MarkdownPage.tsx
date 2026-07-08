@@ -7,9 +7,13 @@ import remarkGithub from "remark-github";
 export function MarkdownPage({
   heading,
   children,
+  epilogue = null,
+  description = null,
 }: {
   heading: ReactNode;
   children: string;
+  epilogue?: ReactNode;
+  description?: ReactNode;
 }): JSX.Element {
   return (
     <main className="mx-auto mb-16 p-4 lg:px-8">
@@ -18,6 +22,7 @@ export function MarkdownPage({
         <div className="mx-auto max-w-[65ch]">
           <p className="font-bold text-accent text-sm">GB/T 7714 Benchmark</p>
           <h1 className="my-2 font-bold text-3xl">{heading}</h1>
+          {description && <p className="my-1 text-ink-soft">{description}</p>}
         </div>
       </header>
       <div className="my-4 overflow-clip rounded-2xl border border-stroke bg-card p-4 shadow">
@@ -40,6 +45,7 @@ export function MarkdownPage({
             {children}
           </Markdown>
         </div>
+        {epilogue}
       </div>
     </main>
   );

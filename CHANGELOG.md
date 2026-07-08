@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, with the following exceptions.
 
-- The versions of LaTeX processors are not pinned due to technical limitations. Please refer to `tex-versions.yaml` in GitHub [Releases](https://github.com/YDX-2147483647/gb7714-bench/releases)/[Actions](https://github.com/YDX-2147483647/gb7714-bench/actions) for their actual versions.
+- The versions of LaTeX processors are not pinned due to technical limitations. Please refer to `tex-versions.yaml` in GitHub [Releases](https://github.com/YDX-2147483647/gb7714-bench/releases)/[Actions](https://github.com/YDX-2147483647/gb7714-bench/actions/workflows/ci.yaml) for their actual versions.
 
 - Changes to the [website](./website/) are not documented here either. At present, its changes are mainly trivial UI improvements. You can inspect the [git commit history](https://github.com/YDX-2147483647/gb7714-bench/commits/main/website/) if you are really interested.
 
