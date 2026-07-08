@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import type { JSX, ReactNode } from "react";
 import { MarkdownPage } from "~/components/MarkdownPage";
 import type { Route } from "./+types/version";
 
@@ -234,9 +234,9 @@ function VersionTable(): JSX.Element {
             <Processor name="pandoc" />
           </td>
           <td>
-            <a href="https://github.com/YDX-2147483647/gb7714-bench/blob/main/.github/workflows/ci.yaml">
+            <ExternalLink href="https://github.com/YDX-2147483647/gb7714-bench/blob/main/.github/workflows/ci.yaml">
               3.10
-            </a>
+            </ExternalLink>
           </td>
           <td>
             <Badge kind="git-hub-release" pkg="jgm/pandoc" />
@@ -252,25 +252,50 @@ function VersionTable(): JSX.Element {
 
 function Processor({ name }: { name: string }): JSX.Element {
   return (
-    <a
+    <ExternalLink
       href={`https://github.com/YDX-2147483647/gb7714-bench/blob/main/processors/${name}.nu`}
-      target="_blank"
-      rel="noopener"
     >
       {name}
-    </a>
+    </ExternalLink>
   );
 }
 
 function TypstLocalPkg({ text }: { text: string }): JSX.Element {
   return (
-    <a
-      href="https://github.com/YDX-2147483647/gb7714-bench/blob/main/scripts/setup-typst-local-pkg.nu"
-      target="_blank"
-      rel="noopener"
-    >
+    <ExternalLink href="https://github.com/YDX-2147483647/gb7714-bench/blob/main/scripts/setup-typst-local-pkg.nu">
       {text}
+    </ExternalLink>
+  );
+}
+
+function ExternalLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: ReactNode;
+}): JSX.Element {
+  return (
+    <a href={href} target="_blank" rel="noopener">
+      {children}
     </a>
+  );
+}
+
+/** A badge image linking to `href`. */
+function BadgeImg({
+  href,
+  src,
+  alt,
+}: {
+  href: string;
+  src: string;
+  alt: string;
+}): JSX.Element {
+  return (
+    <ExternalLink href={href}>
+      <img src={src} alt={alt} />
+    </ExternalLink>
   );
 }
 
@@ -316,113 +341,82 @@ function Badge({
     case "ctan-version":
       // https://shields.io/badges/ctan-version
       return (
-        <a
+        <BadgeImg
           href={`https://www.ctan.org/pkg/${pkg}`}
-          target="_blank"
-          rel="noopener"
-        >
-          <img
-            src={shieldsIo(`/ctan/v/${pkg}`, { logo: "latex", label })}
-            alt={`${pkg} – CTAN`}
-          />
-        </a>
+          src={shieldsIo(`/ctan/v/${pkg}`, { logo: "latex", label })}
+          alt={`${pkg} – CTAN`}
+        />
       );
     case "npm-version":
       // https://shields.io/badges/npm-version
       return (
-        <a
+        <BadgeImg
           href={`https://www.npmjs.com/package/${pkg}`}
-          target="_blank"
-          rel="noopener"
-        >
-          <img
-            src={shieldsIo(`/npm/v/${pkgEncoded}`, { logo: "npm", label })}
-            alt={`${pkg} – npm`}
-          />
-        </a>
+          src={shieldsIo(`/npm/v/${pkgEncoded}`, { logo: "npm", label })}
+          alt={`${pkg} – npm`}
+        />
       );
     case "npm-last-update":
       // https://shields.io/badges/npm-last-update
       return (
-        <a
+        <BadgeImg
           href={`https://www.npmjs.com/package/${pkg}`}
-          target="_blank"
-          rel="noopener"
-        >
-          <img
-            src={shieldsIo(`/npm/last-update/${pkgEncoded}`, {
-              logo: "npm",
-              label,
-            })}
-            alt={`${pkg} – npm last update`}
-          />
-        </a>
+          src={shieldsIo(`/npm/last-update/${pkgEncoded}`, {
+            logo: "npm",
+            label,
+          })}
+          alt={`${pkg} – npm last update`}
+        />
       );
     case "git-hub-release":
       // https://shields.io/badges/git-hub-release
       return (
-        <a
+        <BadgeImg
           href={`https://github.com/${pkg}/releases`}
-          target="_blank"
-          rel="noopener"
-        >
-          <img
-            src={shieldsIo(`/github/v/release/${pkg}`, {
-              include_prereleases: true,
-              logo: "github",
-              label,
-            })}
-            alt={`${pkg} – GitHub Release`}
-          />
-        </a>
+          src={shieldsIo(`/github/v/release/${pkg}`, {
+            include_prereleases: true,
+            logo: "github",
+            label,
+          })}
+          alt={`${pkg} – GitHub Release`}
+        />
       );
     case "git-hub-release-date":
       // https://shields.io/badges/git-hub-release-date
       return (
-        <a
+        <BadgeImg
           href={`https://github.com/${pkg}/releases`}
-          target="_blank"
-          rel="noopener"
-        >
-          <img
-            src={shieldsIo(`/github/release-date-pre/${pkg}`, {
-              logo: "github",
-              label,
-            })}
-            alt={`${pkg} – GitHub release date`}
-          />
-        </a>
+          src={shieldsIo(`/github/release-date-pre/${pkg}`, {
+            logo: "github",
+            label,
+          })}
+          alt={`${pkg} – GitHub release date`}
+        />
       );
     case "git-hub-last-commit":
       // https://shields.io/badges/git-hub-last-commit
       return (
-        <a href={`https://github.com/${pkg}`} target="_blank" rel="noopener">
-          <img
-            src={shieldsIo(`/github/last-commit/${pkg}`, {
-              logo: "github",
-              label,
-            })}
-            alt={`${pkg} – GitHub last commit`}
-          />
-        </a>
+        <BadgeImg
+          href={`https://github.com/${pkg}`}
+          src={shieldsIo(`/github/last-commit/${pkg}`, {
+            logo: "github",
+            label,
+          })}
+          alt={`${pkg} – GitHub last commit`}
+        />
       );
     case "py-pi-version":
       // https://shields.io/badges/py-pi-version
       return (
-        <a
+        <BadgeImg
           href={`https://pypi.org/project/${pkg}`}
-          target="_blank"
-          rel="noopener"
-        >
-          <img
-            src={shieldsIo(`/pypi/v/${pkg}`, {
-              logo: "python",
-              labelColor: "white",
-              label,
-            })}
-            alt={`${pkg} – PyPI version`}
-          />
-        </a>
+          src={shieldsIo(`/pypi/v/${pkg}`, {
+            logo: "python",
+            labelColor: "white",
+            label,
+          })}
+          alt={`${pkg} – PyPI version`}
+        />
       );
     case "typst-version": {
       // https://forum.typst.app/t/a-snippet-to-display-your-universe-package-version-in-a-badge/2386
@@ -488,11 +482,10 @@ function DynamicBadge({
 }): JSX.Element {
   // https://shields.io/badges/dynamic-xml-badge, etc.
   return (
-    <a href={urlHuman ?? url} target="_blank" rel="noopener">
-      <img
-        src={shieldsIo(`/badge/dynamic/${format}`, { url, query, ...params })}
-        alt={alt}
-      />
-    </a>
+    <BadgeImg
+      href={urlHuman ?? url}
+      src={shieldsIo(`/badge/dynamic/${format}`, { url, query, ...params })}
+      alt={alt}
+    />
   );
 }
