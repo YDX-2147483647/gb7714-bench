@@ -42,6 +42,13 @@ a,
   text-underline-offset: 0.2em;
 }
 
+.prose table {
+  td,
+  th {
+    @apply align-middle;
+  }
+}
+
 code,
 pre {
   font-family: var(--font-mono);
