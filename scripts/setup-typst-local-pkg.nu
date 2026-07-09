@@ -51,22 +51,15 @@ index 0000000..5417ac0
         revision: '3a19c8e99236b8561d3c5af8f40f17f42ebc067c',
         patch: '
 diff --git a/src/api.typ b/src/api.typ
-index ec6ae21..a4860d2 100644
+index ec6ae21..06a0629 100644
 --- a/src/api.typ
 +++ b/src/api.typ
-@@ -1,6 +1,14 @@
+@@ -1,6 +1,7 @@
  // GB/T 7714 双语参考文献系统 - 公共 API
 
 -#import "@preview/citegeist:0.2.2": load-bibliography
-+#import "@preview/citegeist:0.2.2": load-bibliography as _load-bibliography
-+#let load-bibliography(bib-str, ..args) = {
-+  // 临时处理 HashMap 乱序问题 https://github.com/alexanderkoller/typst-citegeist/issues/7
-+  let data = _load-bibliography(bib-str, ..args)
-+  let key-order = bib-str.matches(regex("@\\w+\\{([^,\\s]+)")).map(m => m.captures.first())
-+  for key in key-order {
-+    ((key): data.at(key))
-+  }
-+}
++#import "@preview/citegeist:0.3.0": load-bibliography
++// citegeist 0.3.0 才能保留条目顺序
 
  #import "@preview/auto-pinyin:0.1.0": to-pinyin
 
@@ -155,28 +148,21 @@ index b081d40..1582e63 100644
             published_version: '0.2.1',
             patch: '
 diff --git a/src/init/bibtex.typ b/src/init/bibtex.typ
-index a81a95d..0845dae 100644
+index a81a95d..3642057 100644
 --- a/src/init/bibtex.typ
 +++ b/src/init/bibtex.typ
-@@ -25,7 +25,15 @@
+@@ -25,7 +25,8 @@
    auto-links: true,
    doc,
  ) = {
 -  import "@preview/citegeist:0.2.1": load-bibliography
-+  import "@preview/citegeist:0.2.2": load-bibliography as _load-bibliography
-+  let load-bibliography(bib-str, ..args) = {
-+    // 临时处理 HashMap 乱序问题 https://github.com/alexanderkoller/typst-citegeist/issues/7
-+    let data = _load-bibliography(bib-str, ..args)
-+    let key-order = bib-str.matches(regex("@\\w+\\{([^,\\s]+)")).map(m => m.captures.first())
-+    for key in key-order {
-+      ((key): data.at(key))
-+    }
-+  }
++  import "@preview/citegeist:0.3.0": load-bibliography
++  // citegeist 0.3.0 才能保留条目顺序
 
    // Load bibliography data
    let bib-data = load-bibliography(bib)
 diff --git a/typst.toml b/typst.toml
-index 8a78804..626d339 100644
+index 5ba672f..6c126e4 100644
 --- a/typst.toml
 +++ b/typst.toml
 @@ -1,6 +1,6 @@
