@@ -20,6 +20,12 @@ Processors:
 
   This change does not affect the results.
 
+- typst-citrus, typst-gb7714-bilingual: Bump citegeist used in patches from v0.2.2 to [v0.3.0](https://typst.app/universe/package/citegeist/0.3.0). ([#21](https://github.com/YDX-2147483647/gb7714-bench/pull/21))
+
+  These two processors use citegeist to load `*.bib` and do not maintain the order of uncited entries as typst-omni-gb7714 does. As a result, they were patched with a regex hack. Citegeist v0.3.0 (submitted in [typst/packages#5302](https://github.com/typst/packages/pull/5302)) now keeps the order of entries in the original `*.bib` ([alexanderkoller/typst-citegeist#7](https://github.com/alexanderkoller/typst-citegeist/issues/7)), so the patches added for them can be simplified.
+
+  This change does not affect the results.
+
 ### Fixed
 
 Processors:
