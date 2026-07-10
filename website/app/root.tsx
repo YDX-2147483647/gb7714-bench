@@ -4,6 +4,7 @@ import {
   mdiFileDocumentOutline,
   mdiGit,
   mdiHomeOutline,
+  mdiLoading,
 } from "@mdi/js";
 import { StrictMode } from "react";
 import {
@@ -15,6 +16,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLocation,
+  useNavigation,
 } from "react-router";
 import type { Route } from "./+types/root";
 import Icon from "./components/Icon";
@@ -34,6 +36,9 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const navigation = useNavigation();
+  const isNavigating = Boolean(navigation.location);
+
   const location = useLocation();
   const atReadme = location.pathname === "/";
 
@@ -106,6 +111,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
             })}
           </nav>
         </header>
+        {isNavigating && (
+          <div className="fixed inset-0 z-50 grid size-full place-items-center bg-bg/20 text-9xl backdrop-blur-xs">
+            <Icon path={mdiLoading} spin={true} />
+          </div>
+        )}
         {children}
         <ScrollRestoration />
         <Scripts />
