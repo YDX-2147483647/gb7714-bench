@@ -1,5 +1,6 @@
 import type { JSX, ReactNode } from "react";
 import Markdown from "react-markdown";
+import { Link } from "react-router";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkGfm from "remark-gfm";
 import remarkGithub from "remark-github";
@@ -41,6 +42,16 @@ export function MarkdownPage({
                 },
               ],
             ]}
+            components={{
+              a({ node, href, ...rest }) {
+                return href?.startsWith("/") ? (
+                  // Make internal links progressively enhanced.
+                  <Link to={href} {...rest} />
+                ) : (
+                  <a href={href} {...rest} />
+                );
+              },
+            }}
           >
             {children}
           </Markdown>
