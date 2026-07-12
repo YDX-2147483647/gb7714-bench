@@ -6,7 +6,7 @@ import {
   mdiHomeOutline,
   mdiLoading,
 } from "@mdi/js";
-import { StrictMode } from "react";
+import { type JSX, StrictMode } from "react";
 import {
   isRouteErrorResponse,
   Link,
@@ -49,6 +49,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <SiteAnalytics />
       </head>
       <body>
         <header className="mx-8 mt-4 grid grid-cols-[1fr_auto] text-ink-soft lg:mx-10">
@@ -129,6 +130,24 @@ export default function App() {
     <StrictMode>
       <Outlet />
     </StrictMode>
+  );
+}
+
+function SiteAnalytics(): JSX.Element {
+  return (
+    <script>{`
+/**
+ * Site analytics
+ * https://clarity.microsoft.com
+ *
+ * Please contact https://github.com/YDX-2147483647 for data.
+ */
+(function(c,l,a,r,i,t,y){
+  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "xlc6utn8sa");
+`}</script>
   );
 }
 
