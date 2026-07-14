@@ -18,7 +18,10 @@ export type Versions = {
   };
   "typst-py": Version;
   typst: Record<TypstLocalPkgName, Version>;
-  pandoc: Version;
+  ci: {
+    pandoc: Version;
+    citum: Version;
+  };
 };
 
 export async function loadVersions(): Promise<Versions> {
@@ -26,7 +29,7 @@ export async function loadVersions(): Promise<Versions> {
     zotero: await loadZoteroVersions(),
     "typst-py": await loadTypstPyVersion(),
     typst: await loadTypstLocalPkgVersions(),
-    pandoc: await loadPandocVersion(),
+    ci: await loadCiVersions(),
   };
 }
 
@@ -87,23 +90,32 @@ async function loadTypstLocalPkgVersions(): Promise<Versions["typst"]> {
   ) as Record<TypstLocalPkgName, Version>;
 }
 
-async function loadPandocVersion(): Promise<Versions["pandoc"]> {
+async function loadCiVersions(): Promise<Versions["ci"]> {
   const ci = parseYaml(await readRepoFile(".github/workflows/ci.yaml")) as {
     jobs: {
       "run-processors": {
         steps: (
           | { uses: "pandoc/actions/setup@v1"; with: { version: string } }
+          | { name: "Setup citum"; env: { CITUM_VERSION: `v${string}` } }
           | { run: string }
           | { uses: string }
         )[];
       };
     };
   };
-  return (
-    ci.jobs["run-processors"].steps.find(
-      (step) => "uses" in step && step.uses === "pandoc/actions/setup@v1",
-    ) as { with: { version: string } }
-  ).with.version;
+  const steps = ci.jobs["run-processors"].steps;
+  return {
+    pandoc: (
+      steps.find(
+        (step) => "uses" in step && step.uses === "pandoc/actions/setup@v1",
+      ) as { with: { version: string } }
+    ).with.version,
+    citum: (
+      steps.find((step) => "name" in step && step.name === "Setup citum") as {
+        env: { CITUM_VERSION: `v${string}` };
+      }
+    ).env.CITUM_VERSION.replace(/^v/, ""),
+  };
 }
 
 /** Format a `Date` in UTC+8 without time. */
