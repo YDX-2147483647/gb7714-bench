@@ -11,22 +11,8 @@ def "main supports" [] {
 def main []: string -> string {
     let source = $in
     $source | uv run --directory typst_etc/ common.py -- '
-#import "@local/omni-gb7714:0.0.999": gb7714
-#let (init-gb7714, bibliography) = gb7714(
-  sys.inputs.source,
-  full: true,
-  title: none,
-)
-#show: init-gb7714
-
-// 让文献表能输出到 HTML
-#show grid: it => for (n, entry) in it.children.chunks(2) [
-  #n.body.body #entry.body
-]
-// 让 mitex 转换的 $\quad$ 能输出到 HTML
-#show math.equation: it => box({
-  if it.body == $quad$ { "　" } else { it }
-})
-#bibliography
-' '{}' '//body//div'
+#import "@local/omni-gb7714:0.0.717": gb7714, bibliography
+#show: gb7714.with(full: true, title: none)
+#bibliography(sys.inputs.source)
+' '{}' '//body//section[@role="doc-bibliography"]//ul//li'
 }

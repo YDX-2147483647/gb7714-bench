@@ -1,32 +1,24 @@
 [[pkg]]
 # This package has not been published to https://typst.app/universe/.
 name = 'omni-gb7714'
-version = '0.0.999'
+version = '0.0.717'
 src.git = 'https://github.com/typst-omni-gb7714/omni-gb7714'
-src.rev = 'a1e3e2f82915e438f7e567dc3b781e01cecd60ec'
-src.committer_date = 2026-04-27T02:15:58+08:00
+src.rev = 'c3b056d9e86ac24c70657ef3a372b22c643db986'
+src.committer_date = 2026-07-16 23:45:33+08:00
+src.dir = 'preview/0.1.0/'
 patch = '''
-diff --git a/.gitignore b/.gitignore
-index 84bee07..1c46833 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -1,5 +1,6 @@
- *
-
-+!typst.toml
- !.gitignore
-
- # README
-diff --git a/typst.toml b/typst.toml
-new file mode 100644
-index 0000000..5417ac0
---- /dev/null
-+++ b/typst.toml
-@@ -0,0 +1,4 @@
-+[package]
-+name = "omni-gb7714"
-+version = "0.0.999"
-+entrypoint = "gb7714.typ"'''
+diff --git a/preview/0.1.0/typst.toml b/preview/0.1.0/typst.toml
+index f022bb8..7e396db 100644
+--- a/preview/0.1.0/typst.toml
++++ b/preview/0.1.0/typst.toml
+@@ -1,6 +1,6 @@
+ [package]
+ name = "omni-gb7714"
+-version = "0.1.0"
++version = "0.0.717"
+ entrypoint = "lib.typ"
+ authors = ["吴俊豪"]
+ license = "Apache-2.0"'''
 
 [[pkg]]
 name = 'gb7714-bilingual'

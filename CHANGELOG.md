@@ -10,13 +10,19 @@ All dates in this file are in UTC+8.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- typst-omni-gb7714: Update [from 2026-04-27 `a1e3e2f` to 2026-07-17 `c3b056d`](https://github.com/typst-omni-gb7714/omni-gb7714/compare/a1e3e2f82915e438f7e567dc3b781e01cecd60ec...c3b056d9e86ac24c70657ef3a372b22c643db986). ([#26](https://github.com/YDX-2147483647/gb7714-bench/pull/26))
+
 ## [2026-07-11](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-11)
 
 ### Changed
 
 Data:
 
-- Update [from `5a47433` 2026-06-24 to `42e5c08` 2026-07-10](https://github.com/typst-doc-cn/bib-csl-dev-data/compare/5a4743312afd26c337ca4a70b53195d681d111f8...42e5c083a0fbc07aa96c15a5a5746b2804c88a9c). ([#22](https://github.com/YDX-2147483647/gb7714-bench/pull/22))
+- Update [from 2026-06-24 `5a47433` to 2026-07-10 `42e5c08`](https://github.com/typst-doc-cn/bib-csl-dev-data/compare/5a4743312afd26c337ca4a70b53195d681d111f8...42e5c083a0fbc07aa96c15a5a5746b2804c88a9c). ([#22](https://github.com/YDX-2147483647/gb7714-bench/pull/22))
 
 ## [2026-07-10](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-10)
 
@@ -104,7 +110,7 @@ Other:
 
 Data:
 
-- Check in the data as of [`5a47433` 2026-06-24](https://github.com/typst-doc-cn/bib-csl-dev-data/tree/5a4743312afd26c337ca4a70b53195d681d111f8).
+- Check in the data as of [2026-06-24 `5a47433`](https://github.com/typst-doc-cn/bib-csl-dev-data/tree/5a4743312afd26c337ca4a70b53195d681d111f8).
 
 Processors:
 
