@@ -26,6 +26,9 @@ importers:
       '@std/toml':
         specifier: jsr:^1.0.11
         version: '@jsr/std__toml@1.0.11'
+      '@std/yaml':
+        specifier: jsr:^1.1.2
+        version: '@jsr/std__yaml@1.1.2'
       diff:
         specifier: ^9.0.0
         version: 9.0.0
@@ -332,6 +335,9 @@ packages:
 
   '@jsr/std__toml@1.0.11':
     resolution: {integrity: sha512-+LZAizoPAPwMDmRZr86/xPrbO8E0Oq0BJ70mr1fNMobJ/6X6v15Jk16ZClFGukWgzBMd8ggiMWnzp24+N3VNZg==, tarball: https://npm.jsr.io/~/11/@jsr/std__toml/1.0.11.tgz}
+
+  '@jsr/std__yaml@1.1.2':
+    resolution: {integrity: sha512-R2U09+AG6VgFet8qmVhkFw1eKQKeG54RAejd64G5F0XrzMFmHp6KOMnabOdSowd7kj28wFt/x4XT2ARGZEEeVw==, tarball: https://npm.jsr.io/~/11/@jsr/std__yaml/1.1.2.tgz}
 
   '@mdi/js@7.4.47':
     resolution: {integrity: sha512-KPnNOtm5i2pMabqZxpUz7iQf+mfrYZyKCZ8QNz85czgEt7cuHcGorWfdzUMWYA0SD+a6Hn4FmJ+YhzzzjkTZrQ==}
@@ -2151,6 +2157,8 @@ snapshots:
   '@jsr/std__toml@1.0.11':
     dependencies:
       '@jsr/std__collections': 1.3.0
+
+  '@jsr/std__yaml@1.1.2': {}
 
   '@mdi/js@7.4.47': {}
 

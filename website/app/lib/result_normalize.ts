@@ -20,6 +20,7 @@ export function normalizeResult(s: string): string {
     s
       // 0. Normalize spaces
       .replaceAll("\u{200B}", "") // ZERO WIDTH SPACE, used by typst-omni-gb7714 for URLs
+      .replaceAll("\u{2060}", "") // WORD JOINER, used by typst-omni-gb7714 for URLs
       .replaceAll("\u{00a0}", " ") // NO-BREAK SPACE, used by citeproc-js html export
       // 1. Add spaces
       .replaceAll(

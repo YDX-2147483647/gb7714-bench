@@ -1,5 +1,6 @@
 import type { JSX } from "react";
 import { MarkdownPage } from "~/components/MarkdownPage";
+import { loadVersions, type Versions } from "~/lib/version.server";
 import type { Route } from "./+types/version";
 
 const description = "列出各引擎的版本信息，方便检查更新。";
@@ -14,14 +15,21 @@ export function meta(_: Route.MetaArgs) {
   ];
 }
 
-export default function VersionPage(_: Route.ComponentProps) {
+export async function loader(_: Route.LoaderArgs) {
+  const versions = await loadVersions();
+  return { versions };
+}
+
+export default function VersionPage({
+  loaderData: { versions },
+}: Route.ComponentProps) {
   return (
     <MarkdownPage
       heading="引擎版本"
       description={description}
       epilogue={
         <div className="prose mx-auto mt-8 w-max max-w-full overflow-x-auto">
-          <VersionTable />
+          <VersionTable versions={versions} />
         </div>
       }
     >
@@ -33,7 +41,7 @@ export default function VersionPage(_: Route.ComponentProps) {
   );
 }
 
-function VersionTable(): JSX.Element {
+function VersionTable({ versions }: { versions: Versions }): JSX.Element {
   return (
     <table className="min-w-lg">
       <thead>
@@ -53,28 +61,15 @@ function VersionTable(): JSX.Element {
             <Processor name="zotero" />
           </td>
           <td>
-            <DynamicBadge
-              alt="citation.js resolved from package.json"
-              urlHuman="https://github.com/YDX-2147483647/gb7714-bench/blob/main/processors/zotero/package.json"
-              url="https://github.com/YDX-2147483647/gb7714-bench/raw/refs/heads/main/processors/zotero/pnpm-lock.yaml"
-              format="yaml"
-              query="$.importers['.'].dependencies['@citation-js/core'].version"
-              params={{
-                label: "citation.js",
-                logo: "pnpm",
-              }}
-            />
-            <DynamicBadge
-              alt="citeproc-js in pnpm-lock.yaml"
-              urlHuman="https://github.com/YDX-2147483647/gb7714-bench/blob/main/processors/zotero/pnpm-lock.yaml"
-              url="https://github.com/YDX-2147483647/gb7714-bench/raw/refs/heads/main/processors/zotero/pnpm-lock.yaml"
-              format="yaml"
-              query="$.snapshots.*.dependencies.citeproc"
-              params={{
-                label: "citeproc-js",
-                logo: "pnpm",
-              }}
-            />
+            <a
+              href="https://github.com/YDX-2147483647/gb7714-bench/blob/main/processors/zotero/package.json"
+              target="_blank"
+              rel="noopener"
+            >
+              citation.js {versions.zotero["citation.js"]}
+              <br />
+              citeproc-js {versions.zotero["citeproc-js"]}
+            </a>
           </td>
           <td>
             <Badge
@@ -146,19 +141,13 @@ function VersionTable(): JSX.Element {
             <Processor name="typst" />
           </td>
           <td>
-            <DynamicBadge
-              alt="typst-py in pyproject.toml"
-              urlHuman="https://github.com/YDX-2147483647/gb7714-bench/blob/main/processors/typst_etc/pyproject.toml"
-              url="https://github.com/YDX-2147483647/gb7714-bench/raw/refs/heads/main/processors/typst_etc/pyproject.toml"
-              format="toml"
-              query="$.project.dependencies[-1:]"
-              params={{
-                logo: "toml",
-                logoColor: "#9C4121",
-                label: "",
-                color: "white",
-              }}
-            />
+            <a
+              href="https://github.com/YDX-2147483647/gb7714-bench/blob/main/processors/typst_etc/pyproject.toml"
+              target="_blank"
+              rel="noopener"
+            >
+              typst-py {versions["typst-py"]}
+            </a>
           </td>
           <td>
             <Badge kind="git-hub-release" pkg="typst/typst" />
@@ -178,7 +167,7 @@ function VersionTable(): JSX.Element {
             <Processor name="typst-modern-nju-thesis" />
           </td>
           <td>
-            <TypstLocalPkg version="0.4.1" />
+            <TypstLocalPkg version={versions.typst["modern-nju-thesis"]} />
           </td>
           <td>
             <Badge kind="typst-version" pkg="modern-nju-thesis" />
@@ -195,7 +184,7 @@ function VersionTable(): JSX.Element {
             <Processor name="typst-gb7714-bilingual" />
           </td>
           <td>
-            <TypstLocalPkg version="2026-04-21 3a19c8e9" />
+            <TypstLocalPkg version={versions.typst["gb7714-bilingual"]} />
           </td>
           <td>
             <Badge kind="typst-version" pkg="gb7714-bilingual" />
@@ -212,7 +201,7 @@ function VersionTable(): JSX.Element {
             <Processor name="typst-citrus" />
           </td>
           <td>
-            <TypstLocalPkg version="0.2.1" />
+            <TypstLocalPkg version={versions.typst.citrus} />
           </td>
           <td>
             <Badge kind="typst-version" pkg="citrus" />
@@ -226,7 +215,7 @@ function VersionTable(): JSX.Element {
             <Processor name="typst-omni-gb7714" />
           </td>
           <td>
-            <TypstLocalPkg version="2026-04-27 a1e3e2f8" />
+            <TypstLocalPkg version={versions.typst["omni-gb7714"]} />
           </td>
           <td>N/A</td>
           <td>
@@ -246,7 +235,7 @@ function VersionTable(): JSX.Element {
               target="_blank"
               rel="noopener"
             >
-              3.10
+              {versions.pandoc}
             </a>
           </td>
           <td>
@@ -276,7 +265,7 @@ function Processor({ name }: { name: string }): JSX.Element {
 function TypstLocalPkg({ version }: { version: string }): JSX.Element {
   return (
     <a
-      href="https://github.com/YDX-2147483647/gb7714-bench/blob/main/scripts/setup-typst-local-pkg.nu"
+      href="https://github.com/YDX-2147483647/gb7714-bench/blob/main/scripts/typst-local-pkg.toml"
       target="_blank"
       rel="noopener"
     >
@@ -462,14 +451,12 @@ function Badge({
 
 function DynamicBadge({
   alt,
-  urlHuman,
   url,
   format,
   query,
   params = {},
 }: {
   alt: string;
-  urlHuman?: string;
   url: string;
   format: "xml" | "json" | "yaml" | "toml";
   /** @see https://jsonpath-plus.github.io/JSONPath/demo/ */
@@ -485,7 +472,7 @@ function DynamicBadge({
   // https://shields.io/badges/dynamic-xml-badge, etc.
   return (
     <ImgLink
-      href={urlHuman ?? url}
+      href={url}
       src={shieldsIo(`/badge/dynamic/${format}`, { url, query, ...params })}
       alt={alt}
     />

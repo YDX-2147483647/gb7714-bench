@@ -1,16 +1,5 @@
 import assert from "node:assert";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const ROOT_DIR = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "../../../",
-);
-
-function readRepoFile(relativePath: string): Promise<string> {
-  return readFile(path.join(ROOT_DIR, relativePath), "utf-8");
-}
+import { readRepoFile } from "./util.server";
 
 function fixLinks(md: string): string {
   return md
