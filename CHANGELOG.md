@@ -16,6 +16,10 @@ Processors:
 
 - typst-omni-gb7714: Update [from 2026-04-27 `a1e3e2f` to v0.0.717 (2026-07-16 `c3b056d`)](https://github.com/typst-omni-gb7714/omni-gb7714/compare/a1e3e2f82915e438f7e567dc3b781e01cecd60ec...c3b056d9e86ac24c70657ef3a372b22c643db986), and then to [v0.0.718](https://github.com/typst-omni-gb7714/omni-gb7714/pull/7). ([#26](https://github.com/YDX-2147483647/gb7714-bench/pull/26), [#28](https://github.com/YDX-2147483647/gb7714-bench/pull/28))
 
+- zotero: Update `@citation-js/*` packages from v0.8.1 to [v0.8.2](https://github.com/citation-js/citation-js/blob/main/CHANGELOG.md#-2026-07-13). ([#28](https://github.com/YDX-2147483647/gb7714-bench/pull/28))
+
+  This change does not affect the results.
+
 ## [2026-07-11](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-11)
 
 ### Changed
