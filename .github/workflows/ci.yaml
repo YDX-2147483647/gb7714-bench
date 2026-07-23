@@ -29,8 +29,7 @@ jobs:
       - uses: typst-community/setup-typst@v5
         with:
           # Required by setup-typst-local-pkg.nu.
-          # NOTE: Sync the typst version with typst_etc/pyproject.toml.
-          typst-version: v0.15
+          typst-versions-file: .github/typst-versions.yaml
       - uses: hustcer/setup-nu@v3
         with:
           version: "0.113.1"
@@ -195,6 +194,19 @@ jobs:
         with:
           name: target-out
           path: target/out/
+
+      # Required by diagram.typ.
+      - uses: typst-community/setup-typst@v5
+        with:
+          typst-versions-file: .github/typst-versions.yaml
+      - name: Install fonts
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p ~/.fonts/
+          curl -LO https://github.com/adobe-fonts/source-han-serif/raw/release/Variable/OTF/SourceHanSerifSC-VF.otf
+          mv SourceHanSerifSC-VF.otf ~/.fonts/
+          typst fonts
 
       - uses: pnpm/action-setup@v6
         with:

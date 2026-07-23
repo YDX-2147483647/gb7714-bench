@@ -8,4 +8,6 @@ export default [
   route("entry/:entryId/", "routes/entry.tsx"),
   route("compare/", "routes/compare.tsx"),
   route("converge/", "routes/converge.tsx"),
+  route("diagram.svg", "routes/diagram.svg.ts"),
+  route("diagram.pdf", "routes/diagram.pdf.ts"),
 ] satisfies RouteConfig;

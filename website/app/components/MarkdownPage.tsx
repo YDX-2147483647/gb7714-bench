@@ -2,6 +2,7 @@ import type { JSX, ReactNode } from "react";
 import Markdown from "react-markdown";
 import { Link } from "react-router";
 import rehypeExternalLinks from "rehype-external-links";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import remarkGithub from "remark-github";
 
@@ -34,6 +35,7 @@ export function MarkdownPage({
               [remarkGithub, { repository: "YDX-2147483647/gb7714-bench" }],
             ]}
             rehypePlugins={[
+              rehypeRaw,
               [
                 rehypeExternalLinks,
                 {
@@ -44,12 +46,18 @@ export function MarkdownPage({
             ]}
             components={{
               a({ node, href, ...rest }) {
-                return href?.startsWith("/") ? (
+                if (href?.startsWith("/")) {
                   // Make internal links progressively enhanced.
-                  <Link to={href} {...rest} />
-                ) : (
-                  <a href={href} {...rest} />
-                );
+                  if (href.startsWith("/diagram.pdf")) {
+                    // Except resource routes.
+                    // https://reactrouter.com/how-to/resource-routes#linking-to-resource-routes
+                    return <Link reloadDocument to={href} {...rest} />;
+                  } else {
+                    return <Link to={href} {...rest} />;
+                  }
+                } else {
+                  return <a href={href} {...rest} />;
+                }
               },
             }}
           >
