@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@citation-js/core':
-        specifier: ^0.8.1
-        version: 0.8.1
+        specifier: ^0.8.2
+        version: 0.8.2
       '@citation-js/plugin-bibtex':
-        specifier: ^0.8.1
-        version: 0.8.1(@citation-js/core@0.8.1)
+        specifier: ^0.8.2
+        version: 0.8.2(@citation-js/core@0.8.2)
       '@citation-js/plugin-csl':
-        specifier: ^0.8.1
-        version: 0.8.1(@citation-js/core@0.8.1)
+        specifier: ^0.8.2
+        version: 0.8.2(@citation-js/core@0.8.2)
     devDependencies:
       '@types/node':
         specifier: ^25.9.2
@@ -24,8 +24,8 @@ importers:
 
 packages:
 
-  '@citation-js/core@0.8.1':
-    resolution: {integrity: sha512-fjDrD6jxxjm8zOMit4O5jXaDRdMJeowlOSWnqUi1gGZMDkeTLa/L3qVQrGZpMWeZIaTcB4ohl47U5I7XCjvoig==}
+  '@citation-js/core@0.8.2':
+    resolution: {integrity: sha512-poAcV+QQOsoZ8TGqR0B76D/G2DrnMnVeAROIpNsgavm1wECTupj3a4WqbiGje2KzuZLQ496e2ZD1pl9twzyM4g==}
     engines: {node: '>=20.19.0'}
 
   '@citation-js/date@0.5.1':
@@ -36,14 +36,14 @@ packages:
     resolution: {integrity: sha512-brSPsjs2fOVzSnARLKu0qncn6suWjHVQtrqSUrnqyaRH95r/Ad4wPF5EsoWr+Dx8HzkCGb/ogmoAzfCsqlTwTQ==}
     engines: {node: '>=6'}
 
-  '@citation-js/plugin-bibtex@0.8.1':
-    resolution: {integrity: sha512-q1LVVxV5ft4GdqTmJUGM0S39qyV9smuzFq40/aCIjBJwLR7444eux7TNK1v43NeU/Zb6Uw6/C5aL+eFHlJYNvA==}
+  '@citation-js/plugin-bibtex@0.8.2':
+    resolution: {integrity: sha512-H9NXF5jTXxIvpc/87I9Lz79QZ02q5O+WKSSNetK5RiDkxeCo6USt44uOTeHkuFEkVWUpb9ol0T8GSwXdGl+/bw==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       '@citation-js/core': ^0.8.0
 
-  '@citation-js/plugin-csl@0.8.1':
-    resolution: {integrity: sha512-sNsOurODHoNE3W1RcYokh2fG2jdZZ1QAIf8oUygqoLF/DR+wELucus3VW4wfNYWqtgSJMRCfel74oRwyYYuL5A==}
+  '@citation-js/plugin-csl@0.8.2':
+    resolution: {integrity: sha512-MHdPrhsbsitWST4tP+bxk4vSSYoPfbxah01fZvxv23qm/FjyW6yJCEpkV/x3f2ofT+v4RN0OEBQboN/MTIyPyQ==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       '@citation-js/core': ^0.8.0
@@ -99,7 +99,7 @@ packages:
 
 snapshots:
 
-  '@citation-js/core@0.8.1':
+  '@citation-js/core@0.8.2':
     dependencies:
       '@citation-js/date': 0.5.1
       '@citation-js/name': 0.4.2
@@ -110,16 +110,16 @@ snapshots:
 
   '@citation-js/name@0.4.2': {}
 
-  '@citation-js/plugin-bibtex@0.8.1(@citation-js/core@0.8.1)':
+  '@citation-js/plugin-bibtex@0.8.2(@citation-js/core@0.8.2)':
     dependencies:
-      '@citation-js/core': 0.8.1
+      '@citation-js/core': 0.8.2
       '@citation-js/date': 0.5.1
       '@citation-js/name': 0.4.2
       moo: 0.5.3
 
-  '@citation-js/plugin-csl@0.8.1(@citation-js/core@0.8.1)':
+  '@citation-js/plugin-csl@0.8.2(@citation-js/core@0.8.2)':
     dependencies:
-      '@citation-js/core': 0.8.1
+      '@citation-js/core': 0.8.2
       '@citation-js/date': 0.5.1
       citeproc: 2.4.63
 
