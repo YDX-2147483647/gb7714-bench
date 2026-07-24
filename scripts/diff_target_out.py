@@ -120,12 +120,12 @@ Ref → Actual
         # https://github.com/python/cpython/blob/v3.13.14/Lib/difflib.py#L1705-L1730
         (
             html_differ._file_template  # type: ignore
-            % dict(
-                styles=html_differ._styles,  # type: ignore
-                legend=html_differ._legend,  # type: ignore
-                table="\n".join(html_result_parts),
-                charset="utf-8",
-            )
+            % {
+                "styles": html_differ._styles,  # type: ignore
+                "legend": html_differ._legend,  # type: ignore
+                "table": "\n".join(html_result_parts),
+                "charset": "utf-8",
+            }
         )
         .encode("utf-8", "xmlcharrefreplace")
         .decode("utf-8")

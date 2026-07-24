@@ -13,5 +13,7 @@ export default {
     "/entry/",
     "/compare/",
     "/converge/",
+    "/diagram.svg",
+    "/diagram.pdf",
   ],
 } satisfies Config;

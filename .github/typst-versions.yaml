@@ -1,0 +1,3 @@
+# NOTE: Sync the typst version with typst_etc/pyproject.toml.
+typst:
+  version: v0.15.1
