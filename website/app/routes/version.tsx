@@ -235,7 +235,7 @@ function VersionTable({ versions }: { versions: Versions }): JSX.Element {
               target="_blank"
               rel="noopener"
             >
-              {versions.pandoc}
+              {versions.ci.pandoc}
             </a>
           </td>
           <td>
@@ -243,6 +243,26 @@ function VersionTable({ versions }: { versions: Versions }): JSX.Element {
           </td>
           <td>
             <Badge kind="git-hub-release-date" pkg="jgm/pandoc" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <Processor name="citum" />
+          </td>
+          <td>
+            <a
+              href="https://github.com/YDX-2147483647/gb7714-bench/blob/main/.github/workflows/ci.yaml"
+              target="_blank"
+              rel="noopener"
+            >
+              {versions.ci.citum}
+            </a>
+          </td>
+          <td>
+            <Badge kind="git-hub-release" pkg="citum/citum-core" />
+          </td>
+          <td>
+            <Badge kind="git-hub-release-date" pkg="citum/citum-core" />
           </td>
         </tr>
       </tbody>

@@ -29,6 +29,7 @@ export function humanizeResultKey(key: Result.Key): string {
     "biblatex-gb7714-2025": "BibLaTeX",
     "citeproc-lua": "Lua",
     "gbt7714-bibtex-style": "BibTeX",
+    citum: "Citum",
     pandoc: "Pandoc",
     typst: "Typst",
     "typst-citrus": "Citrus",

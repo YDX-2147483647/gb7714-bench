@@ -8,7 +8,7 @@
 
 推荐性国家标准 [GB/T 7714—2025《信息与文献　参考文献著录规则》](https://std.samr.gov.cn/gb/search/gbDetailed?id=4507EFE13D37CB6AE06397BE0A0A601F)（PDF：[知网影印版](https://publishmedia.cbpt.cnki.net/portal/minio/webs/hbxy/media/web/2026/01/20/GBT%207714—2025%20信息与文献%20参考文献著录规则.pdf)／[标网数字正版](https://www.spc.org.cn/online/c6ce52e55ac09b9c79a20aea77cedd14.html)）已于2026年7月1日实施。
 
-此项目利用 [Zotero 中文 CSL 开发组的测试文献数据](https://github.com/typst-doc-cn/bib-csl-dev-data)，测试了十种支持 GB/T 7714 的参考文献引擎。测试初步结果可在[网站 gb7714.zhtyp.art](https://gb7714.zhtyp.art) 查看（加载可能比较慢）：
+此项目利用 [Zotero 中文 CSL 开发组的测试文献数据](https://github.com/typst-doc-cn/bib-csl-dev-data)，测试了十余种支持 GB/T 7714 的参考文献引擎。测试初步结果可在[网站 gb7714.zhtyp.art](https://gb7714.zhtyp.art) 查看（加载可能比较慢）：
 
 - [`/converge/`](https://gb7714.zhtyp.art/converge/)——评估处理结果趋同程度
 - [`/compare/`](https://gb7714.zhtyp.art/compare/)——比较「数据源 · 引擎 · 样式」组合
@@ -83,6 +83,12 @@
   Pandoc 有命令行接口，指定`--to plain`即可按纯文本导出文献处理结果。
 
   Pandoc 支持多种文献处理方式。这里只测试`pandoc --citeproc`调用 [haskell citeproc](https://hackage.haskell.org/package/citeproc) 的方式，不测试它调用 LaTeX 的方式。
+
+- **[Citum](./processors/citum.nu)**
+
+  Citum 有命令行接口，默认即按纯文本导出文献处理结果。
+
+  数据源方面，`*.json`直接支持，而`*.bib`需要`citum convert refs`转换成 Citum-YAML 才能支持。样式方面，Citum 内置支持 GB/T 7714，同时也支持用`citum-migrate`导入 CSL 样式。不过前者有专门优化，故这里测试前者。
 
 另外，有的引擎直接加载文献数据源会报错（主要是因为`*.better.*`的奇异字段），无法正常生成参考文献表；还有引擎不支持保持条目原始顺序，输出的参考文献表难以与其它引擎比较。针对这些情况，此项目对很多引擎做了适当修补，具体请参考各引擎测试脚本。
 

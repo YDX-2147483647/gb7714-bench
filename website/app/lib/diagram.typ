@@ -32,6 +32,7 @@
     biblatex-gb7714-2025: rgb("#008080"), // https://simpleicons.org/?q=latex
     citeproc-lua: rgb("#000080"), // https://simpleicons.org/?q=lua
     zotero: rgb("#CC2936"), // https://simpleicons.org/?q=zotero
+    citum: rgb("#5F5F5A"), // https://citum.org `--graphite`
     pandoc: rgb("#4093DA"), // https://simpleicons.org/?q=pandoc
     typst: rgb("#239DAD"), // https://simpleicons.org/?q=typst
     typst-modern-nju-thesis: rgb("#63065f"), // https://www.nju.edu.cn

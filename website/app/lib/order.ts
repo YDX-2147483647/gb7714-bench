@@ -50,7 +50,7 @@ export function compareKey(
         "gb-7714-2015",
         "typst-omni-gb7714",
       ],
-      ["lua", "pandoc", "typst/", "typst-"],
+      ["lua", "pandoc", "typst/", "typst-", "citum"],
       ["compliant", "extended"],
     ])(aRest.join("/"), bRest.join("/"));
   }

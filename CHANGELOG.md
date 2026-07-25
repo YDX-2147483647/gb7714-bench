@@ -10,6 +10,14 @@ All dates in this file are in UTC+8.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- Add citum. ([#25](https://github.com/YDX-2147483647/gb7714-bench/pull/25))
+
+  Citum is a new processor created in 2026. Its support for GB/T 7714 improved significantly in [citum v0.77](https://github.com/citum/citum-core/releases/tag/v0.77.0) and [v0.78](https://github.com/citum/citum-core/releases/tag/v0.78.0).
+
 ## [2026-07-24](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-24)
 
 ### Changed
