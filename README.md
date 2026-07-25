@@ -76,7 +76,7 @@
 
   Typst 系列统一调用 [typst-py](https://pypi.org/project/typst/) 生成 HTML，然后从 HTML 提取文本作为文献处理结果。
 
-  HTML 不存在 PDF 那样的文本碎片问题；不过有些引擎对 HTML 支持不好，需要额外适配，具体请参考[定制修补 Typst 包的脚本](./scripts/setup-typst-local-pkg.nu)与各引擎的测试脚本。
+  HTML 不存在 PDF 那样的文本碎片问题；不过有些引擎对 HTML 支持不好，需要额外适配，具体请参考[各 Typst 包的定制修补](./scripts/typst-local-pkg.toml)与各引擎的测试脚本。
 
 - **[Pandoc](./processors/pandoc.nu)** 🔮
 
