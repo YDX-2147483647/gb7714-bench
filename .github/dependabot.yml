@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: quarterly
+    cooldown:
+      default-days: 10
+  - package-ecosystem: npm
+    directory: "/website/"
+    schedule:
+      interval: quarterly
+    cooldown:
+      default-days: 10
+  - package-ecosystem: npm
+    directory: "/processors/zotero/"
+    schedule:
+      interval: quarterly
+    cooldown:
+      default-days: 10
+  - package-ecosystem: uv
+    directory: "/processors/typst_etc/"
+    schedule:
+      interval: quarterly
+    cooldown:
+      default-days: 10
