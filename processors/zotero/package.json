@@ -6,6 +6,6 @@
     "@citation-js/plugin-csl": "^0.8.2"
   },
   "devDependencies": {
-    "@types/node": "^25.9.2"
+    "@types/node": "^26.1.1"
   }
 }
