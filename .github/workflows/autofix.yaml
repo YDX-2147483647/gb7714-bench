@@ -19,7 +19,7 @@ jobs:
           version: 11
       - run: pnpm install
         working-directory: website
-      - uses: taiki-e/install-action@v2
+      - uses: taiki-e/install-action@v2.83.4
         with:
           tool: ruff@0.16.0, typstyle@0.15.0
 

@@ -33,7 +33,7 @@ jobs:
       - uses: hustcer/setup-nu@v3
         with:
           version: "0.113.1"
-      - uses: taiki-e/install-action@v2
+      - uses: taiki-e/install-action@v2.83.4
         with:
           tool: ripgrep
       - uses: pandoc/actions/setup@v1
