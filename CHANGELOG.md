@@ -14,6 +14,10 @@ All dates in this file are in UTC+8.
 
 Processors:
 
+- typst-omni-gb7714: Update [from v0.0.718 to v0.0.807](https://github.com/typst-omni-gb7714/omni-gb7714/compare/0a00735fd450aaee640ee5e68a3e19e6e3c0cfd2...b99abb8f81aeb6b2bfe06fa52d6767b0d02028ee). ([#36](https://github.com/YDX-2147483647/gb7714-bench/pull/36))
+
+  `*.{builtin,better}.json` have been supported since omni-gb7714 [v0.0.801](https://github.com/typst-omni-gb7714/omni-gb7714/commit/93983231e01b88dd101e30f331e341b66a90350a).
+
 - citum: Update from v0.78.0 to [v0.79.0](https://github.com/citum/citum-core/releases/tag/v0.79.0). ([#36](https://github.com/YDX-2147483647/gb7714-bench/pull/36))
 
 - pandoc: Update from v3.10 to [v3.10.1](https://github.com/jgm/pandoc/releases/tag/3.10.1). ([#36](https://github.com/YDX-2147483647/gb7714-bench/pull/36))
