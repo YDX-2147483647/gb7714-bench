@@ -46,7 +46,7 @@ jobs:
           curl -fsSL https://github.com/citum/citum-core/releases/latest/download/install.sh | sh
           citum --version
         env:
-          CITUM_VERSION: v0.78.0
+          CITUM_VERSION: v0.79.0
 
       - uses: pnpm/action-setup@v6
         with:

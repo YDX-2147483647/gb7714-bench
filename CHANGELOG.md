@@ -10,6 +10,12 @@ All dates in this file are in UTC+8.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- citum: Update from v0.78.0 to [v0.79.0](https://github.com/citum/citum-core/releases/tag/v0.79.0). ([#36](https://github.com/YDX-2147483647/gb7714-bench/pull/36))
+
 ## [2026-08-01](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-08-01)
 
 ### Changed
