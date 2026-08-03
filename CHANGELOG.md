@@ -16,6 +16,10 @@ Processors:
 
 - citum: Update from v0.78.0 to [v0.79.0](https://github.com/citum/citum-core/releases/tag/v0.79.0). ([#36](https://github.com/YDX-2147483647/gb7714-bench/pull/36))
 
+- pandoc: Update from v3.10 to [v3.10.1](https://github.com/jgm/pandoc/releases/tag/3.10.1). ([#36](https://github.com/YDX-2147483647/gb7714-bench/pull/36))
+
+  This change does not affect the results.
+
 ## [2026-08-01](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-08-01)
 
 ### Changed

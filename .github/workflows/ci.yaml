@@ -38,7 +38,7 @@ jobs:
           tool: ripgrep
       - uses: pandoc/actions/setup@v1
         with:
-          version: "3.10"
+          version: "3.10.1"
       - name: Setup citum
         shell: bash
         run: |
