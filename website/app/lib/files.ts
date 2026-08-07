@@ -236,7 +236,8 @@ if (import.meta.vitest) {
           "9.2.1 正文中的引用",
           "9.2.1.3 多次引用同一责任者的同一文献时……",
         ],
-        "notes": "此节示例1重复序号，示例2不重复序号并标注「同上」。此处抄录前者。",
+        "notes": "此节示例1重复序号，示例2不重复序号并标注「同上」。此处抄录前者。
+      示例[2]题名原文如此。不过原书题为 Why the West rules—for now，其中破折号是修辞用法，暗示西方仅暂时统治，与副标题无关，故恐怕不应转为冒号。",
       }
     `);
     expect(info.meta).toMatchInlineSnapshot(`
@@ -302,7 +303,10 @@ if (import.meta.vitest) {
         "5.1 参考文献应用信息资源本身的语种著录。",
       ]
     `);
-    expect(sections[0].notes).toMatchInlineSnapshot(`null`);
+    expect(sections[0].notes).toMatchInlineSnapshot(`
+      "示例[2]中的「編」在原文是张图片。
+      示例[4]中 Рябиновсе 原文如此。按常理推断，应为 Рябиновое。"
+    `);
     expect(sections[0].entries.length).toMatchInlineSnapshot(`4`);
     expect(sections[0].entries[0]).toMatchInlineSnapshot(`
       {
@@ -314,6 +318,8 @@ if (import.meta.vitest) {
         },
       }
     `);
+
+    expect(sections[7].notes).toMatchInlineSnapshot(`null`);
   });
 
   test("buildName", () => {
