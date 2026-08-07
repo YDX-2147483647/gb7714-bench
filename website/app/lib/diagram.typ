@@ -120,6 +120,10 @@
         -0.1em
       } else if processor-style == "Typst · 2015 CSL" {
         0.4em
+      } else if processor-style == "Lua · 2025 CSL-M⁺" {
+        -0.2em
+      } else if processor-style == "Zotero · 2025 CSL-M⁺" {
+        0.1em
       } else if processor-style == "Citrus · 2025 CSL-M⁺" {
         -0.3em
       } else if processor-style == "Citrus · 2025 CSL" {
