@@ -10,6 +10,8 @@ All dates in this file are in UTC+8.
 
 ## [Unreleased]
 
+## [2026-08-07](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-08-07)
+
 ### Changed
 
 Processors:
