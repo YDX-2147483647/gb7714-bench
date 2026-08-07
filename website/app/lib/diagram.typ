@@ -69,7 +69,7 @@
     }
 
     // Grid lines
-    for metric in range(4).map(i => i * 50) {
+    for metric in range(calc.floor(max-metric / 50), inclusive: true).map(i => i * 50) {
       let x = as-x(metric)
       place(dx: x, {
         show: box.with(width: 0em)
