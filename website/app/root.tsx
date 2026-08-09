@@ -91,7 +91,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 icon: mdiBookshelf,
               },
               {
-                title: "国标影印 PDF",
+                title: "国标影印 PDF（2026 年初版本）",
                 href: "https://publishmedia.cbpt.cnki.net/portal/minio/webs/hbxy/media/web/2026/01/20/GBT 7714—2025 信息与文献 参考文献著录规则.pdf",
                 icon: mdiFileDocumentOutline,
               },

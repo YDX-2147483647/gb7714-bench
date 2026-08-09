@@ -6,7 +6,9 @@
 
 <!-- NOTE: The following will be included in the website. -->
 
-推荐性国家标准 [GB/T 7714—2025《信息与文献　参考文献著录规则》](https://std.samr.gov.cn/gb/search/gbDetailed?id=4507EFE13D37CB6AE06397BE0A0A601F)（PDF：[知网影印版](https://publishmedia.cbpt.cnki.net/portal/minio/webs/hbxy/media/web/2026/01/20/GBT%207714—2025%20信息与文献%20参考文献著录规则.pdf)／[标网数字正版](https://www.spc.org.cn/online/c6ce52e55ac09b9c79a20aea77cedd14.html)）已于2026年7月1日实施。
+推荐性国家标准 [GB/T 7714—2025《信息与文献　参考文献著录规则》](https://std.samr.gov.cn/gb/search/gbDetailed?id=4507EFE13D37CB6AE06397BE0A0A601F)（PDF：[知网影印版](https://publishmedia.cbpt.cnki.net/portal/minio/webs/hbxy/media/web/2026/01/20/GBT%207714—2025%20信息与文献%20参考文献著录规则.pdf)[^version]／[标网数字正版](https://www.spc.org.cn/online/c6ce52e55ac09b9c79a20aea77cedd14.html)）已于2026年7月1日实施。
+
+[^version]: 中国标网先后售卖了两种版本的「2025年12月第1版」国标。2026年夏版本与2026年初版本相比，改正了多处缺漏（可参考 [Zotero 中文社区 GitHub Wiki](https://github.com/zotero-chinese/styles/wiki/GB-T-7714—2025-勘误)），另外将末页定价从76元升至87元。此处链接的知网影印版是2026年初版本。
 
 此项目利用 [Zotero 中文 CSL 开发组的测试文献数据](https://github.com/typst-doc-cn/bib-csl-dev-data)，测试了十余种支持 GB/T 7714 的参考文献引擎。测试初步结果可在[网站 gb7714.zhtyp.art](https://gb7714.zhtyp.art) 查看（加载可能比较慢）：
 
@@ -42,7 +44,7 @@
 
 数据源从 Zotero 导出，有`GB-T_7714—2025.{builtin,better}.{bib,json}`共 2×2 = 4 个版本。详情请移步 [bib-csl-dev-data](https://github.com/typst-doc-cn/bib-csl-dev-data)。
 
-为方便对比，此项目还引用了[`GB-T_7714—2025.original.toml`](https://github.com/typst-doc-cn/bib-csl-dev-data/blob/main/data/GB-T_7714—2025.original.toml)。该文件的内容提取自 [Z-Library 上2025版国标数字版 PDF](https://z-lib.sk/book/Eq8yZgnY5D/gbt-77142025-信息与文献-参考文献著录规则.html) 中嵌入的文本，数据质量较差，请谨慎参考。详见文件开头的`notes`。
+为方便对比，此项目还引用了[`GB-T_7714—2025.original.toml`](https://github.com/typst-doc-cn/bib-csl-dev-data/blob/main/data/GB-T_7714—2025.original.toml)。该文件的内容提取自标网数字版国标PDF中嵌入的文本，数据质量较差，请谨慎参考。详见文件开头的`notes`。
 
 ### 引擎
 
