@@ -1,21 +1,21 @@
 [[pkg]]
 # This package has not been published to https://typst.app/universe/.
 name = 'omni-gb7714'
-version = '0.0.807'
+version = '0.0.813'
 src.git = 'https://github.com/typst-omni-gb7714/omni-gb7714'
-src.rev = 'b99abb8f81aeb6b2bfe06fa52d6767b0d02028ee'
-src.committer_date = 2026-08-07 04:06:24+08:00
+src.rev = 'ccae6cc2e331827e1ef7bcee70987f99a1783567'
+src.committer_date = 2026-08-13 02:28:12+08:00
 src.dir = 'preview/0.1.0/'
 patch = '''
 diff --git a/preview/0.1.0/typst.toml b/preview/0.1.0/typst.toml
-index f022bb8..3de5d1f 100644
+index f022bb8..b667767 100644
 --- a/preview/0.1.0/typst.toml
 +++ b/preview/0.1.0/typst.toml
 @@ -1,6 +1,6 @@
  [package]
  name = "omni-gb7714"
 -version = "0.1.0"
-+version = "0.0.807"
++version = "0.0.813"
  entrypoint = "lib.typ"
  authors = ["吴俊豪"]
  license = "Apache-2.0"'''
