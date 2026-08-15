@@ -10,6 +10,20 @@ All dates in this file are in UTC+8.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- typst-omni-gb7714: Update [from v0.0.807 to v0.0.813](https://github.com/typst-omni-gb7714/omni-gb7714/compare/b99abb8f81aeb6b2bfe06fa52d6767b0d02028ee...ccae6cc2e331827e1ef7bcee70987f99a1783567). ([#43](https://github.com/YDX-2147483647/gb7714-bench/pull/43))
+
+- citum: Update from v0.79.0 to [v0.80.0](https://github.com/citum/citum-core/releases/tag/v0.80.0). ([#43](https://github.com/YDX-2147483647/gb7714-bench/pull/43))
+
+  This change does not affect the results.
+
+- pandoc: Update from v3.10.1 to [v3.10.2](https://github.com/jgm/pandoc/releases/tag/3.10.2). ([#43](https://github.com/YDX-2147483647/gb7714-bench/pull/43))
+
+  This change does not affect the results.
+
 ## [2026-08-09](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-08-09)
 
 ### Changed
