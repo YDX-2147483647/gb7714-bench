@@ -14,10 +14,10 @@
     "@mdi/js": "^7.4.47",
     "@react-router/node": "^8.3.0",
     "@react-router/serve": "^8.3.0",
-    "@shikijs/langs": "^4.3.1",
-    "@shikijs/themes": "^4.3.1",
+    "@shikijs/langs": "^4.4.2",
+    "@shikijs/themes": "^4.4.2",
     "@std/toml": "jsr:^1.0.11",
-    "@std/yaml": "jsr:^1.1.2",
+    "@std/yaml": "jsr:^1.2.0",
     "diff": "^9.0.0",
     "isbot": "^5.2.1",
     "leven": "^4.1.0",
@@ -29,20 +29,20 @@
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
     "remark-github": "^12.0.0",
-    "shiki": "^4.3.1"
+    "shiki": "^4.4.2"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.5",
     "@react-router/dev": "^8.3.0",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
-    "@types/node": "^26.1.1",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "execa": "^10.0.0",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "execa": "^10.0.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
-    "vite": "^8.1.5",
+    "vite": "^8.2.1",
     "vitest": "^4.1.10"
   }
 }
