@@ -10,6 +10,14 @@ All dates in this file are in UTC+8.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- pandoc: Update from v3.10.2 to [v3.11](https://github.com/jgm/pandoc/releases/tag/3.11). ([#45](https://github.com/YDX-2147483647/gb7714-bench/pull/45))
+
+  This change does not affect the results.
+
 ## [2026-08-30](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-08-30)
 
 ### Changed
