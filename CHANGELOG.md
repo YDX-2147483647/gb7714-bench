@@ -10,6 +10,12 @@ All dates in this file are in UTC+8.
 
 ## [Unreleased]
 
+### Changed
+
+Data:
+
+- Update [from 2026-08-30 `4b9df6a` to TODO](https://github.com/typst-doc-cn/bib-csl-dev-data/pull/7). ([#46](https://github.com/YDX-2147483647/gb7714-bench/pull/46))
+
 ## [2026-08-31](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-08-31)
 
 ### Changed
