@@ -44,7 +44,7 @@
 
 数据源从 Zotero 导出，有`GB-T_7714—2025.{builtin,better}.{bib,json}`共 2×2 = 4 个版本。详情请移步 [bib-csl-dev-data](https://github.com/typst-doc-cn/bib-csl-dev-data)。
 
-为方便对比，此项目还引用了[`GB-T_7714—2025.original.toml`](https://github.com/typst-doc-cn/bib-csl-dev-data/blob/main/data/GB-T_7714—2025.original.toml)。该文件的内容提取自标网数字版国标PDF中嵌入的文本，数据质量较差，请谨慎参考。详见文件开头的`notes`。
+为方便对比，此项目还引用了[`GB-T_7714—2025.original.toml`](https://github.com/typst-doc-cn/bib-csl-dev-data/blob/main/data/GB-T_7714—2025.original.toml)。该文件的内容提取自标网数字版国标PDF（亦可[从“安娜的档案”下载](https://zh.annas-archive.gl/md5/fff3a063c74ac77d02f148063704cd0a)）中嵌入的文本，数据质量较差，请谨慎参考。详见文件开头的`notes`。
 
 ### 引擎
 
