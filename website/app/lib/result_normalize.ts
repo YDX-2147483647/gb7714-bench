@@ -15,7 +15,7 @@ export function normalizeResult(s: string): string {
   const removeMatchSpaces = (match: string): string =>
     match.replaceAll(" ", "");
 
-  return (
+  let result =
     // See https://www.unicode.org/reports/tr44/tr44-24.html#GC_Values_Table
     s
       // 0. Normalize spaces
@@ -52,8 +52,13 @@ export function normalizeResult(s: string): string {
       .replaceAll("[S. l.]", "[S.l.]")
       .replaceAll("[s. n.]", "[s.n.]")
       .replaceAll(/[\p{sc=Latin}\p{Number}]\s+\p{sc=Han}/gu, removeMatchSpaces)
-      .replaceAll(/\p{sc=Han}\s+[\p{sc=Latin}\p{Number}]/gu, removeMatchSpaces)
-  );
+      .replaceAll(/\p{sc=Han}\s+[\p{sc=Latin}\p{Number}]/gu, removeMatchSpaces);
+
+  if (result.endsWith(".") && !result.slice(0, -1).includes(".")) {
+    result = result.slice(0, -1).replace("[M]", "").trim();
+  }
+
+  return result;
 }
 
 if (import.meta.vitest) {
