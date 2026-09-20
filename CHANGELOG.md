@@ -10,6 +10,14 @@ All dates in this file are in UTC+8.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- zotero: Update `@citation-js/*` packages from v0.8.2 to [v0.9.0](https://github.com/citation-js/citation-js/blob/main/CHANGELOG.md#-2026-09-18). ([#50](https://github.com/YDX-2147483647/gb7714-bench/pull/50))
+
+  This change does not affect the results.
+
 ## [2026-09-11](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-09-11)
 
 ### Changed
