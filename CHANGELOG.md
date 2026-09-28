@@ -20,6 +20,10 @@ Processors:
 
 - citum: 👻 Update from v0.80.0 to [v0.81.0](https://github.com/citum/citum-core/releases/tag/v0.81.0). ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
 
+- biblatex-gb7714-2025: 👻 Update the version pattern for biblatex. ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
+
+  Previously, the pattern matches v3.22, but not v3.22a.
+
 ## [2026-09-21](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-09-21)
 
 ### Changed

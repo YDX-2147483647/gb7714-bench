@@ -47,7 +47,7 @@ def "main collect-versions" [] {
 
     $INFRA_VERSION_PATTERNS
     | append [
-        '^Package: (biblatex \d{4}/\d{2}/\d{2} v\d+\.\d+) programmable bibliographies',
+        '^Package: (biblatex \d{4}/\d{2}/\d{2} v\d+\.\d+[a-z]*) programmable bibliographies',
         '^File: (gb7714-2025\.bbx \d{4}/\d{2}/\d{2} v\d+\.\d+[a-z])\s*biblatex bibliography style',
         # 截至 gb7714-2025.bbx 2026/06/10 v1.1x，版本号和后面的说明之间并没有空格
         # https://github.com/hushidong/biblatex-gb7714-2025/blob/4eaf7f1cc91954d4337704be8ce72dd730df44fa/gb7714-2025.bbx#L14-L16
