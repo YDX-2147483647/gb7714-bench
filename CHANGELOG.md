@@ -8,7 +8,17 @@ All notable changes to this project will be documented in this file, with the fo
 
 All dates in this file are in UTC+8.
 
+Changes to the processors that do not affect the results are marked with 👻.
+
 ## [Unreleased]
+
+### Changed
+
+Processors:
+
+- typst-omni-gb7714: 👻 Update [from v0.0.813 to v0.0.921](https://github.com/typst-omni-gb7714/omni-gb7714/compare/ccae6cc2e331827e1ef7bcee70987f99a1783567...e7301afd10bcf1fa7b6bc38938594c22f2091280). ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
+
+- citum: 👻 Update from v0.80.0 to [v0.81.0](https://github.com/citum/citum-core/releases/tag/v0.81.0). ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
 
 ## [2026-09-21](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-09-21)
 
@@ -16,9 +26,7 @@ All dates in this file are in UTC+8.
 
 Processors:
 
-- zotero: Update `@citation-js/*` packages from v0.8.2 to [v0.9.0](https://github.com/citation-js/citation-js/blob/main/CHANGELOG.md#-2026-09-18). ([#50](https://github.com/YDX-2147483647/gb7714-bench/pull/50))
-
-  This change does not affect the results.
+- zotero: 👻 Update `@citation-js/*` packages from v0.8.2 to [v0.9.0](https://github.com/citation-js/citation-js/blob/main/CHANGELOG.md#-2026-09-18). ([#50](https://github.com/YDX-2147483647/gb7714-bench/pull/50))
 
 ## [2026-09-11](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-09-11)
 
@@ -34,9 +42,7 @@ Data:
 
 Processors:
 
-- pandoc: Update from v3.10.2 to [v3.11](https://github.com/jgm/pandoc/releases/tag/3.11). ([#45](https://github.com/YDX-2147483647/gb7714-bench/pull/45))
-
-  This change does not affect the results.
+- pandoc: 👻 Update from v3.10.2 to [v3.11](https://github.com/jgm/pandoc/releases/tag/3.11). ([#45](https://github.com/YDX-2147483647/gb7714-bench/pull/45))
 
 ## [2026-08-30](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-08-30)
 
@@ -54,13 +60,9 @@ Processors:
 
 - typst-omni-gb7714: Update [from v0.0.807 to v0.0.813](https://github.com/typst-omni-gb7714/omni-gb7714/compare/b99abb8f81aeb6b2bfe06fa52d6767b0d02028ee...ccae6cc2e331827e1ef7bcee70987f99a1783567). ([#43](https://github.com/YDX-2147483647/gb7714-bench/pull/43))
 
-- citum: Update from v0.79.0 to [v0.80.0](https://github.com/citum/citum-core/releases/tag/v0.80.0). ([#43](https://github.com/YDX-2147483647/gb7714-bench/pull/43))
+- citum: 👻 Update from v0.79.0 to [v0.80.0](https://github.com/citum/citum-core/releases/tag/v0.80.0). ([#43](https://github.com/YDX-2147483647/gb7714-bench/pull/43))
 
-  This change does not affect the results.
-
-- pandoc: Update from v3.10.1 to [v3.10.2](https://github.com/jgm/pandoc/releases/tag/3.10.2). ([#43](https://github.com/YDX-2147483647/gb7714-bench/pull/43))
-
-  This change does not affect the results.
+- pandoc: 👻 Update from v3.10.1 to [v3.10.2](https://github.com/jgm/pandoc/releases/tag/3.10.2). ([#43](https://github.com/YDX-2147483647/gb7714-bench/pull/43))
 
 ## [2026-08-09](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-08-09)
 
@@ -82,9 +84,7 @@ Processors:
 
 - citum: Update from v0.78.0 to [v0.79.0](https://github.com/citum/citum-core/releases/tag/v0.79.0). ([#36](https://github.com/YDX-2147483647/gb7714-bench/pull/36))
 
-- pandoc: Update from v3.10 to [v3.10.1](https://github.com/jgm/pandoc/releases/tag/3.10.1). ([#36](https://github.com/YDX-2147483647/gb7714-bench/pull/36))
-
-  This change does not affect the results.
+- pandoc: 👻 Update from v3.10 to [v3.10.1](https://github.com/jgm/pandoc/releases/tag/3.10.1). ([#36](https://github.com/YDX-2147483647/gb7714-bench/pull/36))
 
 ## [2026-08-01](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-08-01)
 
@@ -112,9 +112,7 @@ Processors:
 
 - typst-omni-gb7714: Update [from 2026-04-27 `a1e3e2f` to v0.0.717 (2026-07-16 `c3b056d`)](https://github.com/typst-omni-gb7714/omni-gb7714/compare/a1e3e2f82915e438f7e567dc3b781e01cecd60ec...c3b056d9e86ac24c70657ef3a372b22c643db986), and then to [v0.0.718](https://github.com/typst-omni-gb7714/omni-gb7714/pull/7). ([#26](https://github.com/YDX-2147483647/gb7714-bench/pull/26), [#28](https://github.com/YDX-2147483647/gb7714-bench/pull/28))
 
-- zotero: Update `@citation-js/*` packages from v0.8.1 to [v0.8.2](https://github.com/citation-js/citation-js/blob/main/CHANGELOG.md#-2026-07-13). ([#28](https://github.com/YDX-2147483647/gb7714-bench/pull/28))
-
-  This change does not affect the results.
+- zotero: 👻 Update `@citation-js/*` packages from v0.8.1 to [v0.8.2](https://github.com/citation-js/citation-js/blob/main/CHANGELOG.md#-2026-07-13). ([#28](https://github.com/YDX-2147483647/gb7714-bench/pull/28))
 
 ## [2026-07-11](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-07-11)
 
@@ -130,17 +128,13 @@ Data:
 
 Processors:
 
-- zotero: Update `@citation-js/*` packages from v0.7 to [v0.8.1](https://github.com/citation-js/citation-js/blob/main/CHANGELOG.md#081-2026-07-05). ([#15](https://github.com/YDX-2147483647/gb7714-bench/pull/15))
+- zotero: 👻 Update `@citation-js/*` packages from v0.7 to [v0.8.1](https://github.com/citation-js/citation-js/blob/main/CHANGELOG.md#081-2026-07-05). ([#15](https://github.com/YDX-2147483647/gb7714-bench/pull/15))
 
   `@citation-js/plugin-csl` now defaults to CSL 1.0.2. Therefore, the patch added in the release 2026-07-03 is no longer necessary.
 
-  This change does not affect the results.
-
-- typst-citrus, typst-gb7714-bilingual: Bump citegeist used in patches from v0.2.2 to [v0.3.0](https://typst.app/universe/package/citegeist/0.3.0). ([#21](https://github.com/YDX-2147483647/gb7714-bench/pull/21))
+- typst-citrus, typst-gb7714-bilingual: 👻 Bump citegeist used in patches from v0.2.2 to [v0.3.0](https://typst.app/universe/package/citegeist/0.3.0). ([#21](https://github.com/YDX-2147483647/gb7714-bench/pull/21))
 
   These two processors use citegeist to load `*.bib` and do not maintain the order of uncited entries as typst-omni-gb7714 does. As a result, they were patched with a regex hack. Citegeist v0.3.0 (submitted in [typst/packages#5302](https://github.com/typst/packages/pull/5302)) now keeps the order of entries in the original `*.bib` ([alexanderkoller/typst-citegeist#7](https://github.com/alexanderkoller/typst-citegeist/issues/7)), so the patches added for them can be simplified.
-
-  This change does not affect the results.
 
 ### Fixed
 
@@ -155,7 +149,7 @@ Processors:
 
   Previously, LaTeX errors were ignored, and the cache from previous runs would be taken as the result. This affected `GB-T_7714—2025.better.bib/gbt7714-bibtex-style/default.txt`. They were actually exact copies of `GB-T_7714—2025.builtin.bib/gbt7714-bibtex-style/default.txt`.
 
-  Other results were not affected.
+  👻 Other results were not affected.
 
 - gbt7714-bibtex-style: Strip unsupported BibLaTeX syntaxes in `*.better.bib`. ([#17](https://github.com/YDX-2147483647/gb7714-bench/pull/17))
 
@@ -180,7 +174,7 @@ Processors:
 
 - typst_etc: Update the Typst compiler [from v0.14 to v0.15](https://typst.app/docs/changelog/0.15.0/). (02d4c11, 819d2c9)
 
-  This affects the results of typst and typst-modern-nju-thesis, but not other Typst processors.
+  This affects the results of typst and typst-modern-nju-thesis, but 👻 not other Typst processors.
 
 - typst-citrus: Update [from a git revision to the recently published v0.2.1](https://github.com/pku-typst/citeproc-typst/compare/1a74b82de6680dcb3b3629b6db2467c4c9b22808...81e1d91a94417c2e1f80dc19537be275f779563d). (8d8524d)
 
@@ -190,7 +184,7 @@ Processors:
 
 Processors:
 
-- zotero: Remove `devEngines` from `package.json`. (2a8c38a)
+- zotero: 👻 Remove `devEngines` from `package.json`. (2a8c38a)
 
   This makes it possible to use any package manager, not just pnpm. The package manager does not affect the result.
 
