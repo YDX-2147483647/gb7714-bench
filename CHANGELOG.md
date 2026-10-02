@@ -24,6 +24,10 @@ Processors:
 
   Previously, the pattern matches v3.22, but not v3.22a.
 
+- typst_etc: 👻 Update lxml from 6.1.1 to 6.1.3. ([#57](https://github.com/YDX-2147483647/gb7714-bench/pull/57))
+
+  The lxml package is used to parse the HTML compiled by Typst.
+
 ## [2026-09-21](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-09-21)
 
 ### Changed
