@@ -18,7 +18,7 @@ Processors:
 
 - typst-omni-gb7714: 👻 Update [from v0.0.813 to v0.0.921](https://github.com/typst-omni-gb7714/omni-gb7714/compare/ccae6cc2e331827e1ef7bcee70987f99a1783567...e7301afd10bcf1fa7b6bc38938594c22f2091280). ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
 
-- citum: 👻 Update from v0.80.0 to [v0.81.0](https://github.com/citum/citum-core/releases/tag/v0.81.0). ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
+- citum: 👻 Update from v0.80.0 to [v0.81.0](https://github.com/citum/citum-core/releases/tag/v0.81.0), and then to [v0.82.0](https://github.com/citum/citum-core/releases/tag/v0.82.0). ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51), [#58](https://github.com/YDX-2147483647/gb7714-bench/pull/58))
 
 - biblatex-gb7714-2025: 👻 Update the version pattern for biblatex. ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
 
@@ -27,6 +27,8 @@ Processors:
 - typst_etc: 👻 Update lxml from 6.1.1 to 6.1.3. ([#57](https://github.com/YDX-2147483647/gb7714-bench/pull/57))
 
   The lxml package is used to parse the HTML compiled by Typst.
+
+- pandoc: 👻 Update from v3.11 to [v3.12](https://github.com/jgm/pandoc/releases/tag/3.12). ([#58](https://github.com/YDX-2147483647/gb7714-bench/pull/58))
 
 ## [2026-09-21](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-09-21)
 

@@ -38,7 +38,7 @@ jobs:
           tool: ripgrep
       - uses: pandoc/actions/setup@v1
         with:
-          version: "3.11"
+          version: "3.12"
       - name: Setup citum
         shell: bash
         run: |
@@ -46,7 +46,7 @@ jobs:
           curl -fsSL https://github.com/citum/citum-core/releases/latest/download/install.sh | sh
           citum --version
         env:
-          CITUM_VERSION: v0.81.0
+          CITUM_VERSION: v0.82.0
 
       - uses: pnpm/action-setup@v6
         with:
