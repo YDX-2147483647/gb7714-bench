@@ -10,6 +10,18 @@ All dates in this file are in UTC+8.
 
 Changes to the processors that do not affect the results are marked with 👻.
 
+<!-- TODO: This line will reduce merge conflicts. Please remove before merging. -->
+
+### Changed
+
+Styles:
+
+- Update gb-7714-2025-numeric.extended from 2026-01-02 to 2026-08-09. ([#47](https://github.com/YDX-2147483647/gb7714-bench/pull/47))
+
+  - [期刊起讫年份由一字线改为短横线](https://github.com/zotero-chinese/styles/commit/eca3a03b73a97ac20160029c9f4842d33298791e)
+  - [改进文献类型标识](https://github.com/zotero-chinese/styles/commit/a57a7057a88d57f35dee15a743fedc3cdd5c237d) ([zotero-chinese/styles#709](https://github.com/zotero-chinese/styles/pull/709))
+
+
 ## [Unreleased]
 
 ## [2026-10-06](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-10-06)
