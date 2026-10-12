@@ -155,7 +155,7 @@ Processors:
 - tex_etc: Improve the process of extracting text from PDF. ([#14](https://github.com/YDX-2147483647/gb7714-bench/pull/14))
 
   - Set `pdftotext -raw` to avoid mixing the lines of different entries.
-  - Increase the page width from `200em` to `400em` to keep entries with long URLs (e.g., [gbt7714.b.4:10](https://gb7714.zhtyp.art/entry/gbt7714.b.4-10/)) in a single line.
+  - Increase the page width from `200em` to `400em` to keep entries with long URLs (e.g., [gbt7714.b.4:10](https://gb7714.zhtyp.top/entry/gbt7714.b.4-10/)) in a single line.
 
 - tex_etc: Handle LaTeX errors correctly. ([#17](https://github.com/YDX-2147483647/gb7714-bench/pull/17))
 

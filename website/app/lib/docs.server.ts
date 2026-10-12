@@ -3,7 +3,7 @@ import { readRepoFile } from "./util.server";
 
 function fixLinks(md: string): string {
   return md
-    .replaceAll("https://gb7714.zhtyp.art/", "/")
+    .replaceAll("https://gb7714.zhtyp.top/", "/")
     .replaceAll("](./CHANGELOG.md)", "](/changelog/)")
     .replaceAll(
       "](./",
