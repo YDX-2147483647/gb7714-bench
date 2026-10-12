@@ -1,7 +1,7 @@
 # GB/T 7714 格式参考文献引擎哪家强？
 
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/YDX-2147483647/gb7714-bench/ci.yaml?style=flat-square)](https://github.com/YDX-2147483647/gb7714-bench/actions/workflows/ci.yaml)
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fgb7714.zhtyp.art&style=flat-square)](https://gb7714.zhtyp.art)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fgb7714.zhtyp.top&style=flat-square)](https://gb7714.zhtyp.top)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/4ba176ba-8c79-4f96-abf5-8e83c744fcda/deploy-status)](https://app.netlify.com/projects/gb7714-bench/deploys)
 
 <!-- NOTE: The following will be included in the website. -->
@@ -10,19 +10,19 @@
 
 [^version]: 中国标网先后售卖了两种版本的「2025年12月第1版」国标。2026年夏版本与2026年初版本相比，改正了多处缺漏（可参考 [Zotero 中文社区 GitHub Wiki](https://github.com/zotero-chinese/styles/wiki/GB-T-7714—2025-勘误)），另外将末页定价从76元升至87元。此处链接的知网影印版是2026年初版本。
 
-此项目利用 [Zotero 中文 CSL 开发组的测试文献数据](https://github.com/typst-doc-cn/bib-csl-dev-data)，测试了十余种支持 GB/T 7714 的参考文献引擎。测试初步结果可在[网站 gb7714.zhtyp.art](https://gb7714.zhtyp.art) 查看（加载可能比较慢）：
+此项目利用 [Zotero 中文 CSL 开发组的测试文献数据](https://github.com/typst-doc-cn/bib-csl-dev-data)，测试了十余种支持 GB/T 7714 的参考文献引擎。测试初步结果可在[网站 gb7714.zhtyp.top](https://gb7714.zhtyp.top) 查看（加载可能比较慢）：
 
-- [`/converge/`](https://gb7714.zhtyp.art/converge/)——评估处理结果趋同程度
-- [`/compare/`](https://gb7714.zhtyp.art/compare/)——比较「数据源 · 引擎 · 样式」组合
-- [`/entry/`](https://gb7714.zhtyp.art/entry/)——逐条目浏览
+- [`/converge/`](https://gb7714.zhtyp.top/converge/)——评估处理结果趋同程度
+- [`/compare/`](https://gb7714.zhtyp.top/compare/)——比较「数据源 · 引擎 · 样式」组合
+- [`/entry/`](https://gb7714.zhtyp.top/entry/)——逐条目浏览
 
 历史结果可从 [GitHub Releases](https://github.com/YDX-2147483647/gb7714-bench/releases) 下载。更新记录见 [CHANGELOG](./CHANGELOG.md)。
 
 对于广大文章作者，希望此项目能帮助评估各引擎成熟程度与文献数据兼容性，选择省心组合舒服地写作；对于参考文献引擎与样式开发者，希望此项目能帮助查找各家程序缺陷，并提升跨引擎、跨文献数据格式的兼容性。
 
 <figure>
-  <a href="https://gb7714.zhtyp.art/diagram.pdf">
-    <img src="https://gb7714.zhtyp.art/diagram.svg" alt="概览图：各种处理结果与国标原文一致的条目数量">
+  <a href="https://gb7714.zhtyp.top/diagram.pdf">
+    <img src="https://gb7714.zhtyp.top/diagram.svg" alt="概览图：各种处理结果与国标原文一致的条目数量">
   </a>
 </figure>
 
@@ -48,7 +48,7 @@
 
 ### 引擎
 
-各引擎的测试脚本位于[`processors/`](./processors/)，版本信息总结于[网站`/version/`页](https://gb7714.zhtyp.art/version/)。
+各引擎的测试脚本位于[`processors/`](./processors/)，版本信息总结于[网站`/version/`页](https://gb7714.zhtyp.top/version/)。
 
 - **[Zotero](./processors/zotero/main.ts)** 🔮
 
