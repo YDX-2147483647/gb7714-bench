@@ -12,6 +12,12 @@ Changes to the processors that do not affect the results are marked with 👻.
 
 ## [Unreleased]
 
+### Changed
+
+Data:
+
+- Update [from 2026-09-11 `037d844` to 2026-10-12 `2001618`](https://github.com/typst-doc-cn/bib-csl-dev-data/pull/8). ([#60](https://github.com/YDX-2147483647/gb7714-bench/pull/60))
+
 ## [2026-10-06](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-10-06)
 
 ### Changed
