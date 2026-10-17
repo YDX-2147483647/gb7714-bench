@@ -24,17 +24,33 @@ Styles:
 
 ## [Unreleased]
 
+## [2026-10-17](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-10-17)
+
+### Changed
+
+Data:
+
+- Update [from 2026-09-11 `037d844` to 2026-10-12 `2001618`](https://github.com/typst-doc-cn/bib-csl-dev-data/pull/8). ([#60](https://github.com/YDX-2147483647/gb7714-bench/pull/60))
+
+## [2026-10-06](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-10-06)
+
 ### Changed
 
 Processors:
 
 - typst-omni-gb7714: 👻 Update [from v0.0.813 to v0.0.921](https://github.com/typst-omni-gb7714/omni-gb7714/compare/ccae6cc2e331827e1ef7bcee70987f99a1783567...e7301afd10bcf1fa7b6bc38938594c22f2091280). ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
 
-- citum: 👻 Update from v0.80.0 to [v0.81.0](https://github.com/citum/citum-core/releases/tag/v0.81.0). ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
+- citum: 👻 Update from v0.80.0 to [v0.81.0](https://github.com/citum/citum-core/releases/tag/v0.81.0), and then to [v0.82.0](https://github.com/citum/citum-core/releases/tag/v0.82.0). ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51), [#58](https://github.com/YDX-2147483647/gb7714-bench/pull/58))
 
 - biblatex-gb7714-2025: 👻 Update the version pattern for biblatex. ([#51](https://github.com/YDX-2147483647/gb7714-bench/pull/51))
 
   Previously, the pattern matches v3.22, but not v3.22a.
+
+- typst_etc: 👻 Update lxml from 6.1.1 to 6.1.3. ([#57](https://github.com/YDX-2147483647/gb7714-bench/pull/57))
+
+  The lxml package is used to parse the HTML compiled by Typst.
+
+- pandoc: 👻 Update from v3.11 to [v3.12](https://github.com/jgm/pandoc/releases/tag/3.12). ([#58](https://github.com/YDX-2147483647/gb7714-bench/pull/58))
 
 ## [2026-09-21](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-09-21)
 
@@ -159,7 +175,7 @@ Processors:
 - tex_etc: Improve the process of extracting text from PDF. ([#14](https://github.com/YDX-2147483647/gb7714-bench/pull/14))
 
   - Set `pdftotext -raw` to avoid mixing the lines of different entries.
-  - Increase the page width from `200em` to `400em` to keep entries with long URLs (e.g., [gbt7714.b.4:10](https://gb7714.zhtyp.art/entry/gbt7714.b.4-10/)) in a single line.
+  - Increase the page width from `200em` to `400em` to keep entries with long URLs (e.g., [gbt7714.b.4:10](https://gb7714.zhtyp.top/entry/gbt7714.b.4-10/)) in a single line.
 
 - tex_etc: Handle LaTeX errors correctly. ([#17](https://github.com/YDX-2147483647/gb7714-bench/pull/17))
 

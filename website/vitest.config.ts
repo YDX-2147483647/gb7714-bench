@@ -1,6 +1,6 @@
 import { defineConfig } from "vitest/config";
 
-import { loadFiles } from "./plugin/load_files";
+import { loadFiles } from "./plugin/load_files.ts";
 
 export default defineConfig({
   test: {

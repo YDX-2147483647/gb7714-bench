@@ -38,7 +38,7 @@ jobs:
           tool: ripgrep
       - uses: pandoc/actions/setup@v1
         with:
-          version: "3.11"
+          version: "3.12"
       - name: Setup citum
         shell: bash
         run: |
@@ -46,7 +46,7 @@ jobs:
           curl -fsSL https://github.com/citum/citum-core/releases/latest/download/install.sh | sh
           citum --version
         env:
-          CITUM_VERSION: v0.81.0
+          CITUM_VERSION: v0.82.0
 
       - uses: pnpm/action-setup@v6
         with:
@@ -54,7 +54,7 @@ jobs:
       - run: pnpm install
         working-directory: processors/zotero
 
-      - uses: astral-sh/setup-uv@v8.3.2
+      - uses: astral-sh/setup-uv@v10.2.0
       - run: uv sync
         working-directory: processors/typst_etc
 
@@ -104,7 +104,7 @@ jobs:
         with:
           name: target-out
           path: target/out/
-      - uses: astral-sh/setup-uv@v8.3.2
+      - uses: astral-sh/setup-uv@v10.2.0
       - run: uv run scripts/diff_target_out.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

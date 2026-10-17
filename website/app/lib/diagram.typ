@@ -14,7 +14,7 @@
 #set document(title: [各种处理结果与国标原文一致的条目数量])
 #show title: set text(0.8em)
 
-#text(blue.darken(20%), link("https://gb7714.zhtyp.art/")[gb7714.zhtyp.art])
+#text(blue.darken(20%), link("https://gb7714.zhtyp.top/")[gb7714.zhtyp.top])
 #v(weak: true, 0.3em)
 #title()
 #v(weak: true, 0.5em)
