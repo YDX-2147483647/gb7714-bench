@@ -16,7 +16,7 @@ Changes to the processors that do not affect the results are marked with 👻.
 
 Processors:
 
-- citum: 👻 Update from v0.82.0 to [v0.83.0](https://github.com/citum/citum-core/releases/tag/v0.83.0). ([#61](https://github.com/YDX-2147483647/gb7714-bench/pull/61))
+- citum: Update from v0.82.0 to [v0.83.0](https://github.com/citum/citum-core/releases/tag/v0.83.0). ([#61](https://github.com/YDX-2147483647/gb7714-bench/pull/61))
 
 - pandoc: 👻 Update from v3.12 to [v3.12.1](https://github.com/jgm/pandoc/releases/tag/3.12.1). ([#61](https://github.com/YDX-2147483647/gb7714-bench/pull/61))
 
