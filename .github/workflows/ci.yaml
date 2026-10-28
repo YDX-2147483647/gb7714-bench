@@ -62,11 +62,15 @@ jobs:
         with:
           texlive_version: 2026
           package_file: .github/tl_packages
+
+      # The following two steps are unnecessary for Windows because of `tlmgr install wintools.windows` and `fontset=windows`.
+      - uses: jdx/mise-action@v5
       - name: Install pdftotext and Noto CJK fontset
-        # This step is unnecessary for Windows because of `tlmgr install wintools.windows` and `fontset=windows`.
         run: |
           sudo apt update
-          sudo apt install poppler-utils fonts-noto-cjk
+          sudo apt install fonts-noto-cjk
+          # As of 2026-10, poppler-utils on apt is 26.01. The output of pdftotext changed between these two versions, and the old version gives better output.
+          mise use --global poppler@25.12
 
       - run: nu scripts/setup-style-cache.nu
       - run: nu scripts/setup-typst-local-pkg.nu
