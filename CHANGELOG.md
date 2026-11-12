@@ -12,6 +12,12 @@ Changes to the processors that do not affect the results are marked with 👻.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- citum: 👻 Update from v0.83.0 to [v0.84.0](https://github.com/citum/citum-core/releases/tag/v0.84.0). ([#65](https://github.com/YDX-2147483647/gb7714-bench/pull/65))
+
 ## [2026-10-29](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-10-29)
 
 ### Changed
