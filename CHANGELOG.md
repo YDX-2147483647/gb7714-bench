@@ -12,6 +12,14 @@ Changes to the processors that do not affect the results are marked with 👻.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- typst_etc: 👻 Update typst-py [from v0.15.0 to v0.15.2](https://github.com/messense/typst-py/compare/v0.15.0...v0.15.2). ([#66](https://github.com/YDX-2147483647/gb7714-bench/pull/66))
+
+  This updates the underlying Typst compiler from v0.15.0 to [v0.15.1](https://typst.app/docs/changelog/0.15.1/).
+
 ## [2026-11-19](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-11-19)
 
 ### Changed
