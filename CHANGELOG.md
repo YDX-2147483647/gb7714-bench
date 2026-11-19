@@ -24,6 +24,34 @@ Styles:
 
 ## [Unreleased]
 
+## [2026-11-19](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-11-19)
+
+### Changed
+
+Processors:
+
+- citum: 👻 Update from v0.83.0 to [v0.84.0](https://github.com/citum/citum-core/releases/tag/v0.84.0). ([#65](https://github.com/YDX-2147483647/gb7714-bench/pull/65))
+
+- pandoc: 👻 Update from v3.13 to [v3.14](https://github.com/jgm/pandoc/releases/tag/3.14). ([#65](https://github.com/YDX-2147483647/gb7714-bench/pull/65))
+
+- typst-omni-gb7714: Update [from v0.0.921 to v0.0.1114](https://github.com/typst-omni-gb7714/omni-gb7714/compare/e7301afd10bcf1fa7b6bc38938594c22f2091280...b24ecb3e2e9b01572ccf814eb387961407f53fe4). ([#65](https://github.com/YDX-2147483647/gb7714-bench/pull/65))
+
+  v0.0.1113 introduced a regression bug that changed some `[J/OL]` to `[J]`. ([omni-gb7714#27](https://github.com/typst-omni-gb7714/omni-gb7714/issues/27 "0.0.1113 导致很多 [J/OL] 变成 [J]，是否是预期行为？ · Issue #27 · typst-omni-gb7714/omni-gb7714"))
+
+## [2026-10-29](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-10-29)
+
+### Changed
+
+Processors:
+
+- citum: Update from v0.82.0 to [v0.83.0](https://github.com/citum/citum-core/releases/tag/v0.83.0). ([#61](https://github.com/YDX-2147483647/gb7714-bench/pull/61))
+
+- pandoc: 👻 Update from v3.12 to [v3.12.1](https://github.com/jgm/pandoc/releases/tag/3.12.1), and then to [v3.13](https://github.com/jgm/pandoc/releases/tag/3.13). ([#61](https://github.com/YDX-2147483647/gb7714-bench/pull/61))
+
+- tex_etc: 👻 Pin the version of pdftotext to 25.12. ([#61](https://github.com/YDX-2147483647/gb7714-bench/pull/61))
+
+  This is a CLI tool provided by [poppler](https://poppler.freedesktop.org/). Previously, pdftotext versions from 24.02 to 25.12 were used, and its outputs were always the same. However, the outputs changed in [`poppler-25.12.0-42-g46236104`](https://gitlab.freedesktop.org/poppler/poppler/-/commit/46236104112bd853ca6c7158a376097725909324 "TextOutputDev: Fix erroneous newline for flipped pages") in [poppler!1971](https://gitlab.freedesktop.org/poppler/poppler/-/merge_requests/1971 "TextOutputDev: Unifiy TextOutputDev::dump() and getText() (!1971)"), so now it is necessary to pin its version.
+
 ## [2026-10-17](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-10-17)
 
 ### Changed
