@@ -12,6 +12,18 @@ Changes to the processors that do not affect the results are marked with 👻.
 
 ## [Unreleased]
 
+### Changed
+
+Processors:
+
+- citum: 👻 Update from v0.83.0 to [v0.84.0](https://github.com/citum/citum-core/releases/tag/v0.84.0). ([#65](https://github.com/YDX-2147483647/gb7714-bench/pull/65))
+
+- pandoc: 👻 Update from v3.13 to [v3.14](https://github.com/jgm/pandoc/releases/tag/3.14). ([#65](https://github.com/YDX-2147483647/gb7714-bench/pull/65))
+
+- typst-omni-gb7714: Update [from v0.0.921 to v0.0.1114](https://github.com/typst-omni-gb7714/omni-gb7714/compare/e7301afd10bcf1fa7b6bc38938594c22f2091280...b24ecb3e2e9b01572ccf814eb387961407f53fe4). ([#65](https://github.com/YDX-2147483647/gb7714-bench/pull/65))
+
+  v0.0.1113 introduced a regression bug that changed some `[J/OL]` to `[J]`. ([omni-gb7714#27](https://github.com/typst-omni-gb7714/omni-gb7714/issues/27 "0.0.1113 导致很多 [J/OL] 变成 [J]，是否是预期行为？ · Issue #27 · typst-omni-gb7714/omni-gb7714"))
+
 ## [2026-10-29](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-10-29)
 
 ### Changed
