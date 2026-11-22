@@ -12,6 +12,8 @@ Changes to the processors that do not affect the results are marked with 👻.
 
 ## [Unreleased]
 
+## [2026-11-22](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-11-22)
+
 ### Changed
 
 Processors:
