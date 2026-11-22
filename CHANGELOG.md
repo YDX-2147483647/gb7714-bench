@@ -20,6 +20,10 @@ Processors:
 
   This updates the underlying Typst compiler from v0.15.0 to [v0.15.1](https://typst.app/docs/changelog/0.15.1/).
 
+- typst-omni-gb7714: Update from v0.0.1114 to [v0.0.1121](https://github.com/typst-omni-gb7714/omni-gb7714/commit/a352f807c6b1e1bcda07e75e7602cb853156487d). ([#67](https://github.com/YDX-2147483647/gb7714-bench/pull/67))
+
+  v0.0.1121 fixed the regression bug introduced in v0.0.1113 that changed some `[J/OL]` to `[J]`. ([omni-gb7714#27](https://github.com/typst-omni-gb7714/omni-gb7714/issues/27 "0.0.1113 导致很多 [J/OL] 变成 [J]，是否是预期行为？ · Issue #27 · typst-omni-gb7714/omni-gb7714"))
+
 ## [2026-11-19](https://github.com/YDX-2147483647/gb7714-bench/releases/tag/2026-11-19)
 
 ### Changed
